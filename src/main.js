@@ -6,6 +6,16 @@ import router from './router' //vue-router
 import store from './store' // vuex
 import axios_conf from './server' //axios
 
+import MuseUI from 'muse-ui' //Muse-ui
+import 'muse-ui/dist/muse-ui.css'
+import 'muse-ui/dist/theme-carbon.css' // 使用 carbon 主题
+Vue.use(MuseUI)
+
+/* 全局插件 */
+import Toast from './plugins/Toast/Toast'
+Vue.use(Toast)
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
