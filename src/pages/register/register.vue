@@ -94,9 +94,6 @@
 		      </mu-step-content>
 		    </mu-step>
 		</mu-stepper>
-		<p v-if="finished">
-		    都完成啦!<a href="javascript:;" @click="reset">点这里</a>可以重置
-		</p>
 	</div>
 </template>
 

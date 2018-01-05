@@ -17,11 +17,6 @@ export default {
 			},
 		}
 	},
-	computed: {
-	    finished () {
-	      return this.activeStep > 2
-	    }
-	},
 	methods: {
 		/**
 		 * 下一步
