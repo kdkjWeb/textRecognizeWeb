@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const axios_conf = axios.create({
 	baseURL: '',
-	timeout: '',
+	timeout: 30000, //所有请求30s后过期
 	withCredentials: false, //跨域凭证
 })
 

@@ -1,5 +1,6 @@
 <template>
 	<div class="loginContainer">
+		<h2 class="text_center">登录</h2>
 		<mu-text-field
 		v-model="userName" 
 		hintText="请输入用户名"
@@ -12,7 +13,7 @@
 		v-model="password"
 		hintText="请输入密码"
 		type="password" 
-		label="密码" 
+		label="密码"
 		fullWidth
 		labelFloat/>
 
@@ -35,7 +36,9 @@
 
 <style type="text/css" scoped>
     .loginContainer{
-    	padding: 0 5%;
+    	position: relative;
+    	top: 20%;
+    	padding: 5%;
     }
 	.other_link_div{
 		margin-top: 10px;

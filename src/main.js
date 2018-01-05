@@ -9,6 +9,7 @@ import axios_conf from './server' //axios
 import MuseUI from 'muse-ui' //Muse-ui
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-carbon.css' // 使用 carbon 主题
+import '@/css/reset.css'
 Vue.use(MuseUI)
 
 /* 全局插件 */
