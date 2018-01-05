@@ -1,38 +1,20 @@
 <template>
-	<div>
-		<div class="header">
-			<mu-appbar title="Title">
-			    <mu-icon-button icon="chevron_left" 
-			    slot="left"/>
-			    <mu-icon-menu 
-			    icon="more_vert" 
-			    slot="right"
-			    :anchorOrigin="{
-			    	vertical: 'top',
-			    	horizontal: 'right'
-			    }"
-			    :targetOrigin="{
-			    	vertical: 'bottom',
-			    	horizontal: 'right'
-			    }">
-			      <mu-menu-item title="菜单 1"/>
-			      <mu-menu-item title="菜单 2"/>
-			      <mu-menu-item title="菜单 3"/>
-			    </mu-icon-menu>
-			</mu-appbar>
-		</div>
+	<div class="indexContainer">
 		<div class="main">
-			<router-view></router-view>
+			<router-view/>
 		</div>
 		<div class="footer">
 			<mu-paper>
-			  <mu-bottom-nav 
-
+			  <mu-bottom-nav
+			  shift 
 			  :value="bottomNav" 
 			  @change="handleChange">
 			    <mu-bottom-nav-item 
-			    value="chat" 
-			    title="聊天" 
+			    value="chatList" 
+			    title="消息"
+			    :to="{
+			    	name: 'ChatList'
+			    }" 
 			    icon="chat"/>
 
 			    <mu-bottom-nav-item 
@@ -56,12 +38,14 @@
 </script>
 
 <style type="text/css" scoped>
-	.header{
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-	}
+    .indexContainer{
+    	height: 100%;
+    }
+    .main{
+    	position: relative;
+    	height: calc(100% - 56px);
+    	overflow: hidden;
+    }
 	.footer{
 		position: fixed;
 		bottom: 0;
