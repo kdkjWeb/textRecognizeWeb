@@ -4,7 +4,7 @@
 
 /**
  * 手机正则验证
- * @param  需要验证的string
+ * @str  需要验证的string
  * @return Boolean 
  */
 export function phoneRegExp(str){

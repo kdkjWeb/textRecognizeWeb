@@ -4,7 +4,7 @@ let Toast = {};
 Toast.install = (Vue, options) =>{
     let opt = {
         position:'middle',   // 默认显示位置
-        duration:'1300'         // 持续时间
+        duration:'2000'         // 持续时间
     }
     
 

@@ -22,3 +22,10 @@ input,select,textarea,button{outline: none;}
 textarea{resize: none;}
 a{text-decoration: none;}
 .text_center{text-align: center}
+
+.header{
+	position: relative;
+	top: 0;
+	right: 0;
+	left: 0;
+}

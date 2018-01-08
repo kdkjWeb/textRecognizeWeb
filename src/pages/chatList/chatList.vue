@@ -31,7 +31,6 @@
 				    <mu-menu-item title="删除"/>
 				  </mu-icon-menu>
 			    </mu-list-item>
-
 			</mu-list>
 			<mu-divider/>
 			<mu-list>
@@ -39,17 +38,20 @@
 				<mu-list-item
 				v-for="room in selfChatRoomList"
 				:key="room.id"
-				:title="room.title">
+				:title="room.title"
+				@click="enterSelfChatRoom(room)">
 			      <mu-avatar :src="room.url" slot="leftAvatar"/>
 			      <mu-icon value="chat_bubble" slot="right"/>
 			      <mu-icon-menu
+			      style="position:relative;"
 			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
 			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
 			      icon="more_vert" 
 			      slot="right">
-				    <mu-menu-item title="删除"/>
+					    <mu-menu-item title="删除"/>
 				  </mu-icon-menu>
 			    </mu-list-item>
+			    
 			</mu-list>
 		</div>
 	</div>
@@ -60,12 +62,12 @@
 </script>
 
 <style type="text/css" scoped>
-	.header{
+	/*.header{
 		position: relative;
 		top: 0;
 		right: 0;
 		left: 0;
-	}
+	}*/
 	.content{
 		height: calc(100% - 56px);
 		overflow-y: scroll;

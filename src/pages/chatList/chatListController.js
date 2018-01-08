@@ -53,6 +53,13 @@ export default {
 		}
 	},
 	methods:{
-		
+		enterSelfChatRoom(room) {
+			const {id: roomId, title} = room
+			console.log(roomId, title)
+			this.$router.push({
+				name: 'SelfChatRoom',
+				query: { roomId, title }
+			})
+		},
 	}
 }

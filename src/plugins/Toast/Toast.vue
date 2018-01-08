@@ -53,9 +53,9 @@
   }
   .toast_main{
     display: inline-block;
-    width: 30%;
+    width: 60%;
     border-radius: 15px;
-    padding:  1% ;
+    padding:  3% ;
     color:  #fff;
     background-color: #000;
     opacity: 0.7;
