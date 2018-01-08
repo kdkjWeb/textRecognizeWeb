@@ -1,7 +1,6 @@
 /* 管理项目整个路由的加载 */
 
-const FriendsList = ()=>import('@/pages/friendslist/friendslist'),  //好友列表
-	  FriendsNote = ()=>import('@/pages/friendsnote/friendsnote'),  //修改备注
+const FriendsNote = ()=>import('@/pages/friendsnote/friendsnote'),  //修改备注
 	  ChangePassword = ()=>import('@/pages/changePassword/changePassword'),   //修改密码
 	  Mine = ()=>import('@/pages/mine/mine'),   //我的
 	  changeName = ()=>import('@/pages/changeName/changename'),   //修改昵称
@@ -55,7 +54,6 @@ export default {
 			path: '/register',
 			name: 'Register',
 			component: Register
-<<<<<<< HEAD
 		},{
 			path: '/changename',
 			name: '/changeName',
@@ -72,7 +70,6 @@ export default {
 			path: '/systemnews',
 			name: '/systemNews',
 			component: systemNews
-=======
 		},
 		{
 			path: '/selfChatRoom',
@@ -83,7 +80,6 @@ export default {
 			path: '/selfChatRoomConfig',
 			name: 'SelfChatRoomConfig',
 			component: SelfChatRoomConfig
->>>>>>> b55a7c76f8b69ddb2c931ac20d03fdd2d3db831d
 		}
 	]
 }
