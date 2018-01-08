@@ -1,5 +1,5 @@
 /**
- * 对localStorage 方法的操作
+ * 对localStorage 的操作方法
  */
 
 const KEY = 'textRecognize_app',
@@ -39,23 +39,24 @@ export function getItem(key) {
   return false
 }
 
-export function setItem(key, value, duration = Number.MAX_SAFE_INTEGER) {
+export function setItem({key, value }) {
+  const duration = Number.MAX_SAFE_INTEGER
   myStorage[key] = {
     value,
     duration,
     time: Date.now()
   }
-  store()
+  init()
 }
 
 export function removeItem(key) {
   if (has(key)) {
     delete myStorage[key]
-    store()
+    init()
   }
 }
 
 export function clear() {
   myStorage = {}
-  store()
+  init()
 }

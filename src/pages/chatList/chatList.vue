@@ -1,28 +1,58 @@
 <template>
-	<div>
+	<div style="height:100%">
 		<div class="header">
 			<mu-appbar 
 			style="text-align:center"
 			title="消息">
-			    <!-- <mu-icon-button
-			    icon="chevron_left" 
-			    slot="left"/> -->
-			    <!-- <mu-icon-menu 
-			    icon="more_vert" 
-			    slot="right"
-			    :anchorOrigin="{
-			    	vertical: 'top',
-			    	horizontal: 'right'
-			    }"
-			    :targetOrigin="{
-			    	vertical: 'bottom',
-			    	horizontal: 'right'
-			    }">
-			      <mu-menu-item title="菜单 1"/>
-			      <mu-menu-item title="菜单 2"/>
-			      <mu-menu-item title="菜单 3"/>
-			    </mu-icon-menu> -->
+			    <mu-icon-button
+			    style="position:absolute;right: 0;top:4px"
+			    icon="add" 
+			    slot="right"/>
 			</mu-appbar>
+		</div>
+
+		<div class="content">
+			<mu-list>
+				<mu-sub-header>群聊天</mu-sub-header>
+				<mu-list-item
+				v-for="room in groupChatRoomList"
+				:key="room.id" 
+				:title="room.title">
+			      <mu-avatar :src="room.url" 
+			      slot="leftAvatar"/>
+			      <mu-icon 
+			      value="chat_bubble" 
+			      slot="right"/>
+			      <mu-icon-menu
+			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
+			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
+			      icon="more_vert" 
+			      slot="right">
+				    <mu-menu-item title="删除"/>
+				  </mu-icon-menu>
+			    </mu-list-item>
+			</mu-list>
+			<mu-divider/>
+			<mu-list>
+				<mu-sub-header>好友聊天记录</mu-sub-header>
+				<mu-list-item
+				v-for="room in selfChatRoomList"
+				:key="room.id"
+				:title="room.title"
+				@click="enterSelfChatRoom(room)">
+			      <mu-avatar :src="room.url" slot="leftAvatar"/>
+			      <mu-icon value="chat_bubble" slot="right"/>
+			      <mu-icon-menu
+			      style="position:relative;"
+			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
+			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
+			      icon="more_vert" 
+			      slot="right">
+					    <mu-menu-item title="删除"/>
+				  </mu-icon-menu>
+			    </mu-list-item>
+			    
+			</mu-list>
 		</div>
 	</div>
 </template>
@@ -32,10 +62,14 @@
 </script>
 
 <style type="text/css" scoped>
-	.header{
-		position: fixed;
+	/*.header{
+		position: relative;
 		top: 0;
 		right: 0;
 		left: 0;
+	}*/
+	.content{
+		height: calc(100% - 56px);
+		overflow-y: scroll;
 	}
 </style>
