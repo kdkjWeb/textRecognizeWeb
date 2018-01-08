@@ -18,14 +18,20 @@
 			    icon="chat"/>
 
 			    <mu-bottom-nav-item 
-			    value="friends" 
-			    title="好友" 
+			    value="friendslist" 
+			    title="好友"
+			    :to="{
+			    	name: 'FriendsList'
+			    }"  
 			    icon="people"/>
 
 			    <mu-bottom-nav-item 
-			    value="nearby" 
+			    value="mine" 
 			    title="个人中心" 
-			    icon="account_circle"/>
+			    icon="account_circle"
+			    :to="{
+			    	name: 'Mine'
+			    }"/>
 			  </mu-bottom-nav>
 			</mu-paper>
 		</div>

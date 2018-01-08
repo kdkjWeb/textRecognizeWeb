@@ -1,22 +1,36 @@
 <template>
 	<div class="FriendsList">
-		<div v-show="isShow">
-			<div class="FriendsList_search">
-				<div>
-					<input type="text" name="" placeholder="搜索好友">
+		<div>
+			<div class="header">
+				<mu-appbar :title="title" class="header_title">
+				    <mu-icon-button icon="search" 
+				    slot="right"/>
+				</mu-appbar>		
+			</div>
+			<div>
+				<!-- <div class="FriendsList_search">
+					<div>
+						<input type="text" name="" placeholder="搜索好友">
+					</div>
+				</div> -->
+				<div class="FriendsList_content" ref="FriendsListWrapper" :style="{height:height}">
+					 <div>
+						 <friendsDel v-for="(item,index) in friendsList" 
+						 :key="item.friendsId" 
+						 @deleteItem="deleteItem(index)"
+						 :index = index>
+						 	<mu-list class="FriendsList_content_title">
+							 	<mu-list-item :title="item.friendsName">
+							      <mu-avatar :src="item.friendsSrc" slot="leftAvatar"/>
+							      <mu-icon value="chat_bubble" slot="right" @click="nodeList(item)"/>
+							    </mu-list-item>
+							 </mu-list>
+						 </friendsDel>
+					 </div>
 				</div>
 			</div>
-			<div class="FriendsList_content">
-				 <mu-list v-for="item in friendsList" class="FriendsList_content_title" :key="item.friendsId">
-				 	<mu-list-item :title="item.friendsName">
-				      <!-- <mu-icon value="account_circle" slot="left"/> -->
-				      <mu-avatar :src="item.friendsSrc" slot="leftAvatar"/>
-				      <mu-icon value="chat_bubble" slot="right" @click="nodeList(item)"/>
-				    </mu-list-item>
-				 </mu-list>	
-			</div>
 		</div>
-		 <friendsNote :nodeShowList="nodeShowList" ref="nodeShowList"></friendsNote>
+		<!-- <friendsNote ref="nodeShowList" v-show="isShow"></friendsNote> -->
 	</div>
 </template>
 
@@ -25,10 +39,13 @@
 </script>
 
 <style type="text/css" scoped>
+.header_title{
+	text-align: center;
+}
 .FriendsList_search div{
 	width: 95%;
 	height: 30px;
-	margin: 0 auto;
+	margin: 10px auto 0;
 }
 .FriendsList_search input{
 	width: 100%;
@@ -38,12 +55,33 @@
 	text-align: center;
 }
 .FriendsList_content{
-	margin: 20px auto 0;
+	margin: 10px auto 0;
+	overflow: hidden;
+	/*height: 500px;*/
+	width: 100%;
 }
 .FriendsList_content_title{
 	padding: 0 5%;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+}
+.FriendsList_model{
+	position: relative;
+}
+.del{
+	position: absolute;
+	top: 0;
+	right: -101px;
+	line-height: 56px;
+	background: red;
+	width: 100px;
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	font-size: 16px;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
 }
 </style>
 

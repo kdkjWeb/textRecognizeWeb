@@ -1,44 +1,57 @@
 import friendsNote from '../friendsnote/friendsnote'
+import friendsDel from '../delete/delete'
+import scroll from 'better-scroll'
+import axios from 'axios'
 export default {
 	data() {
 		return {
-			isShow: true,
-			friendsList: [{
-				friendsId: 1,
-				friendsName: '好友1',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			},{
-				friendsId: 2,
-				friendsName: '好友2',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			},{
-				friendsId: 3,
-				friendsName: '好友4',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			},{
-				friendsId: 4,
-				friendsName: '好友4',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			},{
-				friendsId: 5,
-				friendsName: '好友5',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			},{
-				friendsId: 6,
-				friendsName: '好友6',
-				friendsSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
-			}],
-			nodeShowList: {}
+			height: 0,
+			title: null,
+			friendsList: [],
+			isShow: false
 		}
 	},
 	components: {
-		friendsNote
+		friendsNote,
+		friendsDel
+	},
+	created() {
+		this.height = (window.innerHeight-156) + 'px';
 	},
 	methods: {
 		nodeList(val) {
-			this.isShow = false;
-			this.nodeShowList = val;
-			this.$refs['nodeShowList'].nodeList()
+	
+			let data = val;
+			this.$router.push({name:'FriendsNote',params:data})
+
+			
+		},
+		deleteItem(index){
+			this.friendsList.splice(index,1);
 		}
+	},
+	mounted() {
+		//使用better-scroll添加滚动效果
+		this.$nextTick(()=>{
+	      new scroll(this.$refs['FriendsListWrapper'],{
+	      	click: true
+	      })
+	    })
+	    // 监听窗口改变重置高度
+        window.addEventListener('resize', () => {
+            this.height = (window.innerHeight-156) + 'px';
+        })
+
+        // 请求接口数据
+        axios.get('/static/data.json')
+        .then(res=>{
+        	//console.log(res.data)
+        	this.title = res.data.title;
+        	this.friendsList = res.data.friendsList;
+        })
+        .catch(error=>{
+        	console.log(error)
+        })
+
 	}
 }

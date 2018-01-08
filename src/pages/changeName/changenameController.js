@@ -1,15 +1,12 @@
 export default {
 	data() {
 		return {
-			title: '修改备注',
-			noteName: ''
+			userName: ''
 		}
 	},
 	methods: {
 		save(){
-			console.log(this.$route.params.friendsName)
-			console.log(this.noteName)
-			
+			console.log(this.userName)
 		},
 		backFriends(){
 			this.$router.back(-1)
