@@ -3,8 +3,10 @@
 		<div class="header">
 			<mu-appbar 
 			title="推送标题" 
+			class="header_title"
 			style="text-align:center">
 			    <mu-icon-button
+			    style="position:absolute;left: 0;top:4px"
 			    icon="chevron_left" 
 			    slot="left"
 			    @click="goBack"/>

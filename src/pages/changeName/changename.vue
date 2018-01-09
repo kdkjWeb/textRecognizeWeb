@@ -1,8 +1,12 @@
 <template>
 	<div class="mine">
 		<div class="header">
-			<mu-appbar title="修改昵称" class="header_title">
+			<mu-appbar 
+			title="修改昵称" 
+			class="header_title"
+			style="text-align:center">
 			    <mu-icon-button
+			    style="position:absolute;left: 0;top:4px"
 			    icon="chevron_left" 
 			    slot="left"
 			    @click="backFriends"/>

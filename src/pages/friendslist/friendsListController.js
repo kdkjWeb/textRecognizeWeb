@@ -16,7 +16,7 @@ export default {
 		friendsDel
 	},
 	created() {
-		this.height = (window.innerHeight-156) + 'px';
+		this.height = (window.innerHeight-112) + 'px';
 	},
 	methods: {
 		nodeList(val) {
@@ -28,6 +28,9 @@ export default {
 		},
 		deleteItem(index){
 			this.friendsList.splice(index,1);
+		},
+		search() {
+			this.$router.push('/friendssearch')
 		}
 	},
 	mounted() {
@@ -39,7 +42,7 @@ export default {
 	    })
 	    // 监听窗口改变重置高度
         window.addEventListener('resize', () => {
-            this.height = (window.innerHeight-156) + 'px';
+            this.height = (window.innerHeight-112) + 'px';
         })
 
         // 请求接口数据
