@@ -4,7 +4,8 @@ export default {
 	data() {
 		return {
 			groupMembers: [],
-			selectArr: []
+			selectArr: [],
+			isShow: false
 		}
 	},
 	methods: {
@@ -12,17 +13,23 @@ export default {
 			this.$router.back(-1)
 		},
 		deleteMember() {
-			/*let arr = [];
-			var len = this.groupMembers.length;
-			for(var i=0; i<len; i++){
-				if(this.selectArr.indexOf(i)>=0){
-					console.log(this.selectArr.indexOf(i))
-				}else{
-		            arr.push(groupMembers[i])
-		        }
+			//var userId = this.selectArr.map(item => item).join();
+			//console.log(userId)
+			
+			if(!this.selectArr.length){
+				this.$toast('你还没选择要删除的成员');
+			}else{
+				this.isShow = true;
 			}
-			this.groupMembers = arr;
-			this.selectArr = []*/
+		},
+		success() {
+			let userId = this.selectArr.map(item => item).join();
+				console.log(userId);
+			this.isShow = false;
+			this.selectArr = []
+		},
+		cancel() {
+			this.isShow = false;
 		}
 	},
 	created() {
