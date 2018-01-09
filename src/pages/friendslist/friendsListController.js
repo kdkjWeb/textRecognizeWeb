@@ -26,11 +26,12 @@ export default {
 
 			
 		},
-		deleteItem(index){
+		deleteItem(index,item){
 			this.friendsList.splice(index,1);
+			console.log(item)
 		},
 		search() {
-			this.$router.push('/friendssearch')
+			this.$router.push('friendssearch')
 		}
 	},
 	mounted() {

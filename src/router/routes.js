@@ -45,15 +45,16 @@ export default {
 					component: FriendsList
 				},
 				{
-					path: 'friendsnote',
-					name: 'FriendsNote',
-					component: FriendsNote
-				},{
 					path: 'mine',
 					name: 'Mine',
 					component: Mine		
 				}
 			]
+		},
+		{
+			path: '/friendsnote',
+			name: 'FriendsNote',
+			component: FriendsNote
 		},
 		{
 			path: '/register',
