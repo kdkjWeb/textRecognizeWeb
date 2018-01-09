@@ -2,10 +2,16 @@
 	<div class="FriendsList">
 		<div>
 			<div class="header">
-				<mu-appbar :title="title" class="header_title">
-				    <mu-icon-button icon="search" 
-				    slot="right"/>
-				</mu-appbar>		
+				<mu-appbar 
+				:title="title" 
+				class="header_title"
+				style="text-align:center">
+				    <mu-icon-button 
+				    style="position:absolute;right: 0;top:4px"
+				    icon="search" 
+				    slot="right"
+				    @click="search"/>
+				</mu-appbar>	
 			</div>
 			<div>
 				<!-- <div class="FriendsList_search">
@@ -55,14 +61,13 @@
 	text-align: center;
 }
 .FriendsList_content{
-	margin: 10px auto 0;
+	margin: 0 auto;
 	overflow: hidden;
 	/*height: 500px;*/
 	width: 100%;
 }
 .FriendsList_content_title{
-	padding: 0 5%;
-	text-align: left;
+	padding: 0;
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #ddd;
 }

@@ -1,8 +1,8 @@
 <template>
-	<div class="mine">
+	<div class="FriendsNote">
 		<div class="header">
 			<mu-appbar 
-			title="修改手机号" 
+			title="好友搜索" 
 			class="header_title"
 			style="text-align:center">
 			    <mu-icon-button
@@ -13,13 +13,14 @@
 			</mu-appbar>
 		</div>
 		<div class="mine_wrapper">
-			<mu-text-field
-			hintText="请输入手机号"
+			<mu-text-field 
+			v-model="FriendsAccount"
+			icon="search"
 			type="text" 
-			fullWidth
-			v-model="userPhone"
-			class="demo-divider-form"
-			/>
+			class="appbar-search-field"  
+			slot="right" 
+			hintText="请输入搜索账号"
+			fullWidth/>
 		</div>
 		<div class="passBtn">
 			<mu-raised-button label="保存" 
@@ -27,28 +28,23 @@
 			secondary
 			@click="save"/>
 		</div>
+		
 	</div>
 </template>
 
 <script type="text/javascript">
 
-	export {default} from './changephoneController';
+	
+	export {default} from './friendsSearchController';
 
+	
 </script>
 
 <style type="text/css" scoped>
-.mine{
-	background: #f2f2f2;
-	width: 100%;
-	height: 100%;
-}
 .mine_wrapper{
 	background-color: #fff;
-	padding: 0 5% 10px;
+	padding: 0 5% 10px 0;
 	margin-top: 5%;
-}
-.demo-divider-form{
-	font-size: 12px;
 }
 .passBtn{
 	margin: 30px auto;

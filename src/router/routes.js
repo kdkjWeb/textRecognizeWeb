@@ -13,7 +13,10 @@ const Login = ()=>import('@/pages/login/login'), // 登录
 	  FriendsList = ()=>import('@/pages/friendslist/friendslist'), //好友列表
 	  ChatList = ()=>import('@/pages/chatList/chatList'), //消息列表
 	  SelfChatRoom = ()=>import('@/pages/selfChatRoom/selfChatRoom'), //个人聊天室
-	  SelfChatRoomConfig = ()=>import('@/pages/selfChatRoomConfig/selfChatRoomConfig') //个人聊天室设置
+	  SelfChatRoomConfig = ()=>import('@/pages/selfChatRoomConfig/selfChatRoomConfig'), //个人聊天室设置
+	  FriendsSearch = ()=>import('@/pages/friendssearch/friendssearch'),    //好友搜索
+	  CreateGroup = ()=>import('@/pages/creategroup/creategroup'),  //新建群
+	  ProposedMembers = ()=>import('@/pages/proposedmembers/proposedmembers')   //踢出群成员
 
 
 export default {
@@ -75,11 +78,22 @@ export default {
 			path: '/selfChatRoom',
 			name: 'SelfChatRoom',
 			component: SelfChatRoom
-		},
-		{
+		},{
 			path: '/selfChatRoomConfig',
 			name: 'SelfChatRoomConfig',
 			component: SelfChatRoomConfig
+		},{
+			path: '/friendssearch',
+			name: 'FriendsSearch',
+			component: FriendsSearch
+		},{
+			path: '/creategroup',
+			name: 'CreateGroup',
+			component: CreateGroup
+		},{
+			path: '/proposedmembers',
+			name: 'ProposedMembers',
+			component: ProposedMembers
 		}
 	]
 }

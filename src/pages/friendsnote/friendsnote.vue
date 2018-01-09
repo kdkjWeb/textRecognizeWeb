@@ -1,8 +1,12 @@
 <template>
 	<div class="FriendsNote">
 		<div class="header">
-			<mu-appbar :title="title" class="header_title">
+			<mu-appbar 
+			:title="title" 
+			class="header_title"
+			style="text-align:center">
 			    <mu-icon-button
+			    style="position:absolute;left: 0;top:4px"
 			    icon="chevron_left" 
 			    slot="left"
 			    @click="backFriends"/>
@@ -25,7 +29,7 @@
 			v-model="noteName"
 			class="demo-divider-form"/>
 			<p>更多介绍</p>
-			<div class="userMessage" contenteditable="true" placeholder="暂无"></div>
+			<textarea class="userMessage" placeholder="暂无" v-model="noteRudece"></textarea>
 			<div class="userBtn" @click="save">保存</div>
 		</div>
 	</div>
@@ -70,13 +74,13 @@
 	padding: 5px 10px;
 	outline: none;
 }
-.userMessage:empty::before{
+/*.userMessage:empty::before{
  	content:attr(placeholder); 
 	color:#bbb;
 }
 .userMessage:focus::before{
 	content:none;
-}
+}*/
 .userBtn{
 	margin: 50px auto;
 	text-align: center;

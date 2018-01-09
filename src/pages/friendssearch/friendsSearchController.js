@@ -2,14 +2,13 @@ export default {
 	data() {
 		return {
 			title: '修改备注',
-			noteName: '',
-			noteRudece: ''
+			FriendsAccount: ''
 		}
 	},
 	methods: {
 		save(){
-			console.log(this.$route.params.friendsName)
-			console.log(this.noteName,this.noteRudece)
+			
+			console.log(this.FriendsAccount)
 			
 		},
 		backFriends(){
