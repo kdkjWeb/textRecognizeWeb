@@ -1,3 +1,5 @@
+import services from './sysMessageDetailServices'
+
 export default {
 	data() {
 		return {
@@ -11,8 +13,8 @@ export default {
 		save(){
 			console.log(this.userPhone)
 		},
-		backFriends(){
-			this.$router.back(-1)
+		goBack(){
+			this.$router.goBack()
 		}
 	}
 }

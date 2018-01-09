@@ -9,7 +9,10 @@
 			    style="position:absolute;left: 0;top:4px"
 			    icon="chevron_left" 
 			    slot="left"
-			    @click="backFriends"/>
+			    @click="goBack"/>
+			    <mu-icon-button
+			    icon="" 
+			    slot="right"/>
 			</mu-appbar>
 		</div>
 		<div class="systemnews_title">
@@ -25,17 +28,18 @@
 
 <script type="text/javascript">
 
-	
-	export {default} from './systemnewsController';
-
+	export {default} from './sysMessageDetailController';
 	
 </script>
 
 <style type="text/css">
 .titleSize{
 	font-size: 20px !important;
-	color: red !important;
 }
+</style>
+
+<style type="text/css" scoped>
+
 .systemnews_title{
 	border-bottom: 1px solid #ddd;
 }
