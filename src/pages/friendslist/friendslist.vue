@@ -4,7 +4,13 @@
 			<div class="header">
 				<mu-appbar :title="title" class="header_title">
 				    <mu-icon-button icon="search" 
-				    slot="right"/>
+				    slot="right"
+				    @click="$router.push({
+				    	name: 'UserSearch'
+				    })"/>
+				    <mu-icon-button 
+				    icon="" 
+				    slot="left"/>
 				</mu-appbar>		
 			</div>
 			<div>

@@ -15,7 +15,8 @@ const Login = ()=>import('@/pages/login/login'), // 登录
 	  SelfChatRoomConfig = ()=>import('@/pages/selfChatRoomConfig/selfChatRoomConfig'), //个人聊天室设置
 	  SysMessageList = ()=>import('@/pages/sysMessageList/sysMessageList'), //推送消息列表
 	  SysMessageDetail = ()=>import('@/pages/sysMessageDetail/sysMessageDetail'), //系统消息
-	  DiscreteUserList = ()=>import('@/pages/discreteUserList/discreteUserList')  //离散用户列表
+	  DiscreteUserList = ()=>import('@/pages/discreteUserList/discreteUserList'),  //离散用户列表
+	  UserSearch = ()=>import('@/pages/userSearch/userSearch') 
 
 
 export default {
@@ -96,6 +97,11 @@ export default {
 			path: '/discreteUserList',
 			name: 'DiscreteUserList',
 			component: DiscreteUserList
+		},
+		{
+			path: '/userSearch',
+			name: 'UserSearch',
+			component: UserSearch
 		}
 	]
 }
