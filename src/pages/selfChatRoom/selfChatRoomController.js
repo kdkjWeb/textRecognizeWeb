@@ -111,6 +111,7 @@ export default {
 		 * 发送消息
 		 */
 		send() {
+			if(!this.message) return
 			console.log(this.message)
 			let data = {
 				senderId: '-1',

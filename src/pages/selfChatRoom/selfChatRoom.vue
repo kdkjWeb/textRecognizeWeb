@@ -23,7 +23,8 @@
 				 <mu-avatar :src="msg.header" slot="leftAvatar"/>
 				 <div 
 				 class="content_msg">
-				    <div class="content_msg_icon" :class="[msg.senderId == '-1'?'rightIcon':'leftIcon']"></div>
+				    <div class="content_msg_icon" 
+				    :class="[msg.senderId == '-1'?'rightIcon':'leftIcon']"></div>
 				    <span v-text="msg.message"></span>
 				    <mu-icon
 				    v-if="msg.error && msg.senderId == '-1'" 

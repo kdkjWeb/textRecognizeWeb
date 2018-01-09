@@ -33,7 +33,7 @@ export default {
 				this.$router.push('/changephone')
 				break;
 				case 3:
-				this.$router.push('/systemnews')
+				this.$router.push('/sysMessageList')
 				break;
 			}
 		}

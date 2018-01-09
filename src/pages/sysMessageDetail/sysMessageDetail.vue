@@ -1,11 +1,16 @@
 <template>
 	<div class="systemnews">
 		<div class="header">
-			<mu-appbar title="推送标题" class="header_title">
+			<mu-appbar 
+			title="推送标题" 
+			style="text-align:center">
 			    <mu-icon-button
 			    icon="chevron_left" 
 			    slot="left"
-			    @click="backFriends"/>
+			    @click="goBack"/>
+			    <mu-icon-button
+			    icon="" 
+			    slot="right"/>
 			</mu-appbar>
 		</div>
 		<div class="systemnews_title">
@@ -21,17 +26,18 @@
 
 <script type="text/javascript">
 
-	
-	export {default} from './systemnewsController';
-
+	export {default} from './sysMessageDetailController';
 	
 </script>
 
 <style type="text/css">
 .titleSize{
 	font-size: 20px !important;
-	color: red !important;
 }
+</style>
+
+<style type="text/css" scoped>
+
 .systemnews_title{
 	border-bottom: 1px solid #ddd;
 }
