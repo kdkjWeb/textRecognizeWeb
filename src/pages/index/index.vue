@@ -6,7 +6,6 @@
 		<div class="footer">
 			<mu-paper>
 			  <mu-bottom-nav
-			  shift 
 			  :value="bottomNav" 
 			  @change="handleChange">
 			    <mu-bottom-nav-item 

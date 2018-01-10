@@ -14,7 +14,9 @@ Vue.use(MuseUI)
 
 /* 全局插件 */
 import Toast from './plugins/Toast/Toast'
+import Loading from './plugins/Loading/Loading'
 Vue.use(Toast)
+Vue.use(Loading)
 
 
 Vue.config.productionTip = false

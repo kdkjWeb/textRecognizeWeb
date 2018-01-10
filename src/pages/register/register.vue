@@ -14,7 +14,8 @@
 					type="text" 
 					fullWidth/>
 
-					<div class="get_vc_line">
+					<!-- 获取验证码 -->
+					<!-- <div class="get_vc_line">
 						<mu-text-field
 						v-model="registerForm.verification_code" 
 						hintText="请输入验证码"
@@ -27,7 +28,7 @@
 						:label="get_vc_btn.label" 
 						primary
 						@click="getVerificationCode"/>
-					</div>
+					</div> -->
 		        </div>
 		        <mu-raised-button 
 		        label="下一步" 
@@ -82,18 +83,21 @@
 		        label="立即登录" 
 		        class="demo-step-button" 
 		        @click="handleNext" 
-		        primary/>
+		        secondary/>
 
-		        <mu-raised-button 
-		        label="返回登录" 
-		        class="demo-step-button" 
-		        @click="$router.push({
-		        	path: '/'
-		        })" 
-		        primary/>
 		      </mu-step-content>
 		    </mu-step>
 		</mu-stepper>
+		<footer>
+			<mu-raised-button 
+	        label="返回登录" 
+	        class="demo-step-button" 
+	        @click="$router.push({
+	        	path: '/'
+	        })" 
+           primary
+           fullWidth/>
+		</footer>
 	</div>
 </template>
 
@@ -102,6 +106,10 @@
 </script>
 
 <style type="text/css" scoped>
+    footer{
+    	margin-top: 20px;
+    	padding: 0 10%;
+    }
 	.registerContainer{
 
 	}

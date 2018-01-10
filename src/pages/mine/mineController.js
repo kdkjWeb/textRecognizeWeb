@@ -36,6 +36,12 @@ export default {
 				this.$router.push('/sysMessageList')
 				break;
 			}
-		}
+		},
+		logout() {
+			//消除socket 以及保存的user信息
+			this.$router.push({
+				name: 'Login'
+			})
+		},
 	}
 }
