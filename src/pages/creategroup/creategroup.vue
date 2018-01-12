@@ -43,7 +43,7 @@
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
-	margin: 30px auto;
+	margin: 3% auto;
 }
 .group_header_photo img{
 	border-radius: 50%;
@@ -83,7 +83,7 @@
 	content:none;
 }*/
 .userBtn{
-	margin: 50px auto;
+	margin: 5% auto;
 	text-align: center;
 	width: 40%;
 	height: 40px;

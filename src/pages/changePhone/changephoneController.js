@@ -1,7 +1,12 @@
+import services from '../changeName/changenameServices'
+
 export default {
 	data() {
 		return {
-			userPhone: ''
+			userPhone: '',
+			successDialog: {
+				show: false,
+			}
 		}
 	},
 	methods: {
@@ -11,18 +16,28 @@ export default {
 				this.$toast('手机号格式不正确');
 			}
 			console.log(this.userPhone)
-			axios.post('/userPhone',{
-				userPhone: this.userPhone
-			}).then(res=>{
-				if(res.data.code == '0'){
-					this.$router.push('/mine')
+			services.userInfoUpdate({
+				Vue: this,
+				model: {
+					id: this.$store.state.user.id,
+					phone: this.userPhone
 				}
-			}).catch(error=>{
-				this.$toast('操作失败，请稍后再操作！');
+			})
+			.then(res=>{	
+				console.log(res)
+				this.successDialog.show = true
+			}, err=>{
+				console.log(err)
 			})
 		},
 		backFriends(){
 			this.$router.back(-1)
-		}
+		},
+		comfirmDialog() {
+			this.successDialog.show = false
+			this.$router.push({
+				name: "Mine"
+			})
+		},
 	}
 }

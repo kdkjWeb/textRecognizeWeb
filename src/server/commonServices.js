@@ -41,23 +41,33 @@ export default {
 			})
 		})
 	},
-	fetch: ({url, searchModel, progress})=>{
-		if(progress) 
-			Vue.$progress()
+	//拿数据
+	fetch: ({url, model, Vue, hidenLoading})=>{
+		if(!hidenLoading) 
+			Vue.$Loading.process()
 		return new Promise((resolve, reject)=>{
-			axios.get(url, {
-				params: searchModel
+			Axios.get(url, {
+				params: model
 			})
 			.then(res=>{
-				if(progress)  Vue.$done()
+				if(!hidenLoading)  Vue.$Loading.done()
 				if(res.data.code === 0){
-					resolve(res)
+					resolve(res.data.data)
 				}else{
+					Vue.$toast("网络好像出问题了 = v =")
 					reject(res)
+					console.log(res)
 				}
-			}, err=>{
-				if(progress)  Vue.$done()
-				Vue.$toast('网络好像出问题了 = v =')
+			}, errRes=>{
+				if(!hidenLoading)  Vue.$Loading.done()
+				Vue.$toast(errRes.data.msg || "网络好像出问题了 = v =")
+				console.log(errRes)
+				reject(errRes)
+			})
+			.catch(err=>{
+				if(!hidenLoading)  Vue.$Loading.done()
+				Vue.$toast("网络好像出问题了 = v =")
+				console.log(err)
 				reject(err)
 			})
 		})
@@ -73,15 +83,14 @@ export default {
 			.then(res=>{
 				if(!hidenLoading)  Vue.$Loading.done()
 				if(res.data.code === 0){
-					resolve(res.data.data)
+					resolve(res.data.data || res.data)
 				}else{
-					Vue.$toast("网络好像出问题了 = v =")
 					reject(res)
 					console.log(res)
 				}
 			},errRes=>{
 				if(!hidenLoading)  Vue.$Loading.done()
-				Vue.$toast("网络好像出问题了 = v =")
+				Vue.$toast(errRes.data.msg || "网络好像出问题了 = v =")
 				console.log(errRes)
 				reject(errRes)
 			})

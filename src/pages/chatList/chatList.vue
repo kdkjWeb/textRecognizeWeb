@@ -5,9 +5,13 @@
 			style="text-align:center"
 			title="消息">
 			    <mu-icon-button
+			    v-if="user.type != '0'"
 			    style="position:absolute;right: 0;top:4px"
 			    icon="add" 
-			    slot="right"/>
+			    slot="right"
+			    @click="$router.push({
+			    	name: 'CreateGroup'
+			    })"/>
 			</mu-appbar>
 		</div>
 

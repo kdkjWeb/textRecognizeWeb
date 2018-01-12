@@ -1,11 +1,13 @@
+import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+
 export default {
 	data() {
 		return {
-			user: {
-				userName: '巴拉巴拉',
-				userId: '01',
-				userImg: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg',
-			},
+			// user: {
+			// 	userName: '巴拉巴拉',
+			// 	userId: '01',
+			// 	userImg: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg',
+			// },
 			mineLsit: [{
 				icon: 'icon-wode',
 				color: '#dc8450',
@@ -24,6 +26,14 @@ export default {
 				text: '系统消息'
 			}]
 		}
+	},
+	computed: {
+		user() {
+			return this.$store.getters.getUser
+		}
+	},
+	mounted() {
+		console.log(this.$store.state.user)
 	},
 	methods: {
 		mineList(index){
@@ -50,6 +60,7 @@ export default {
 		},
 		logout() {
 			//消除socket 以及保存的user信息
+			removeItem('token')
 			this.$router.push({
 				name: 'Login'
 			})

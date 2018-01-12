@@ -1,4 +1,5 @@
 import service from './chatListServices'
+import { mapGetters } from 'vuex'
 
 export default {
 	data() {
@@ -51,6 +52,14 @@ export default {
 				},
 			],
 		}
+	},
+	computed:{
+		...mapGetters({
+			user: 'getUser'
+		})
+	},
+	mounted() {
+		console.log(this.$store.getters.getUser, this.$store.state.user)
 	},
 	methods:{
 		enterSelfChatRoom(room) {

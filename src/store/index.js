@@ -22,8 +22,14 @@ const store = new Vuex.Store({
 		messageHistory: {},
 
 	},
-	getters: {},
-	mutations: {},
+	getters: {
+		getUser: state => state.user
+	},
+	mutations: {
+		setUser (state, data){
+			state.user = data
+		},
+	},
 	actions: {},
 })
 
