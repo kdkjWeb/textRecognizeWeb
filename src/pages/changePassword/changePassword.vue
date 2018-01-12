@@ -16,19 +16,22 @@
 		  <mu-text-field hintText="请输入原始密码"
 		  class="demo-divider-form"
 		  v-model="oldPassword"
-		  type="password" 
+		  type="password"
+		  fullWidth
 		  />
 
 		  <mu-text-field hintText="请输入新密码" 
 		  class="demo-divider-form" 
 		  v-model="newPassword"
 		  type="password" 
+		  fullWidth
 		  />
 
 		  <mu-text-field hintText="请再次输入新密码" 
 		  class="demo-divider-form" 
 		  v-model="lastPassword"
           type="password" 
+          fullWidth
 		  />
 
 		</mu-paper>
@@ -56,7 +59,7 @@
 }
 .changePassword_model{
 	box-shadow: none;
-	padding: 5px 5% 25px;
+	padding: 5px 10% 25px 0;
 	margin-top: 5%;
 }
 .demo-divider-form {
@@ -64,6 +67,7 @@
     margin-left: 20px;
     font-size: 12px;
     margin-top: 5px;
+
   }
 .passBtn{
 	margin: 50px auto;

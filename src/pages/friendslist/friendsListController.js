@@ -26,6 +26,15 @@ export default {
 
 			
 		},
+		enterSelfChatRoom(room){
+			console.log(room)
+			 const {friendsId: roomId, friendsName:title} = room
+			 //console.log(roomId, title)
+			  this.$router.push({
+			   	name: 'SelfChatRoom',
+			   	query: { roomId, title }
+			   })
+		},
 		deleteItem(index,item){
 			this.friendsList.splice(index,1);
 			console.log(item)

@@ -6,12 +6,12 @@
 			</mu-appbar>
 		</div>
 		<div id="user">
-			<div class="userImg">
-				<img width="75" height="75" src="http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg">
+			<div class="userImg" @click="changeHeader(user)">
+				<img width="75" height="75" :src="user.userImg">
 			</div>
 			<div class="userName">
 				<h3>昵称</h3>
-				<span>sfss</span>
+				<span>{{user.userName}}</span>
 			</div>
 		</div>
 		<div class="mineContent">
