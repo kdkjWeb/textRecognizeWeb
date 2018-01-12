@@ -1,11 +1,18 @@
 import services from './loginServices'
 import {phoneRegExp} from '@/utils/publicFunctions'
+import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
 
 export default {
 	data() {
 		return {
 			userName: '',
 			password: '',
+		}
+	},
+	created() {
+		console.log(getItem('token'))
+		if(getItem('token')){
+			
 		}
 	},
 	methods: {
@@ -26,13 +33,15 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
-				console.log(res)
+				setItem({
+					key: 'token',
+					value: res.token
+				})
 				this.$router.push({
 					path: '/index'
 				})
 			})
 
-			
 		}
 	},
 }
