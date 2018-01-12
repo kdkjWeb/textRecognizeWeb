@@ -67,26 +67,28 @@ export default {
 		if(!hidenLoading){
 			Vue.$Loading.process()
 		}
-
-		// let params = ''
-		// for(let [index, elem] of Object.entries(model)){
-		// 	params += index + '=' + elem + '&'
-		// }
-		// params = params.substring(0, params.length - 1)
 		
 		return new Promise((resolve, reject)=>{
 			Axios.post(url, model)
 			.then(res=>{
-				if(Loading)  Loading.done()
-				resolve(res.model)
+				if(!hidenLoading)  Vue.$Loading.done()
+				if(res.data.code === 0){
+					resolve(res.data.data)
+				}else{
+					Vue.$toast("网络好像出问题了 = v =")
+					reject(res)
+					console.log(res)
+				}
 			},errRes=>{
 				if(!hidenLoading)  Vue.$Loading.done()
 				Vue.$toast("网络好像出问题了 = v =")
+				console.log(errRes)
 				reject(errRes)
 			})
 			.catch(err=>{
 				if(!hidenLoading)  Vue.$Loading.done()
 				Vue.$toast("网络好像出问题了 = v =")
+				console.log(err)
 				reject(err)
 			})
 		})

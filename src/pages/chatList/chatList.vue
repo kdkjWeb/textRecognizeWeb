@@ -47,11 +47,11 @@
 			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
 			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
 			      icon="more_vert" 
-			      slot="right">
+			      slot="right"
+			      @click.stop="test">
 					    <mu-menu-item title="删除"/>
 				  </mu-icon-menu>
 			    </mu-list-item>
-			    
 			</mu-list>
 		</div>
 	</div>

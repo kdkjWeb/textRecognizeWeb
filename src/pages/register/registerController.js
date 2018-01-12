@@ -47,6 +47,8 @@ export default {
 					})
 					.then(res=>{
 						console.log(res)
+						//将返回的用户信息进行赋值
+						this.activeStep++
 					})
 				}
 					
