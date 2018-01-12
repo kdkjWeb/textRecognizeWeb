@@ -12,6 +12,7 @@ export default {
 			},
 			message: '',//发送的文字消息
 			height: 0,
+			height1: 0,
 			chatHistory: [
 				{
 					senderId: '-1',
@@ -39,7 +40,7 @@ export default {
 	},
 	created() {
 		this.height = (window.innerHeight-113) + 'px';
-
+		this.height = (window.innerHeight) + 'px';
 		this.roomDetail = Object.assign({}, this.$route.query)
 		console.log(this.roomDetail.title)
 
@@ -55,10 +56,9 @@ export default {
 		meunItem(index) {
 			this.menuIndex = index;
 			this.isShow = false;
-			
+			this.flag = !this.flag
 		},
 		menuShow() {
-			
 			if(this.flag){
 				this.isShow = true;
 				this.flag = !this.flag
@@ -67,6 +67,10 @@ export default {
 				this.isShow = false;
 				this.flag = !this.flag
 			}
+		},
+		close() {
+			this.isShow = false;
+			this.flag = !this.flag
 		},
 		// 语音聊天
 		voiceEnter() {

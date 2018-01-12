@@ -11,50 +11,24 @@
 			    @click="goBack"/>   
 			</mu-appbar>
 			<button 
-			class="successMember">确定</button>
+			class="successMember"
+			@click="success">确定</button>
 		</div>
 
 
 		<!-- 可选头像区域 --> 
-		<!-- <div class="changeHead">
-			<ul>
-				<li v-for="item in headImg">
-					<img :src="item.url">
+		<div class="changeHead"
+			:style="{height:height}"
+			ref="ChangeHead" >
+			<ul class="changeHead_wrapper">
+				<li v-for="item,index in headImg" 
+				:key="index" 
+				@click="shooseHead(item,index)"
+				:class="{'active':itemIndex == index}">
+					<img :src="item.url" width="100%" height="100%">
 				</li>
 			</ul>
-		</div> -->
-
-		<div class="gridlist-demo-container">
-		  <mu-grid-list class="gridlist-demo" :style="{height:height}">
-		    <mu-grid-tile v-for="tile, index in headImg" :key="index">
-		      <img :src="tile.url"/>
-		    </mu-grid-tile>
-		  </mu-grid-list>
 		</div>
-
-
-
-		<!-- 显示头像位置 -->
-		<!-- {{this.$route.params.userId}} -->
-		<!-- <img :src="this.$route.params.userImg"> -->
-
-		<!-- <div class="header_photo">
-				<vueCropper
-				ref="cropper3"
-				:img="option.img"
-				:autoCrop="option.autoCrop"
-				:autoCropWidth="option.autoCropWidth"
-				:autoCropHeight="option.autoCropHeight"
-				:fixedBox="option.fixedBox"
-				@realTime="realTime"
-			></vueCropper>
-			<label class="btn" for="uploads">upload</label>
-    		<input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);" accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg($event, 1)">
-		</div>
-		<div class="footer" v-show="crap">
-			<div class="cancel">取消</div>
-			<div class="success" @click＝"startCrop">完成</div>
-		</div> -->
 	</div>
 </template>
 
@@ -63,6 +37,9 @@
 </script>
 
 <style type="text/css" scoped>
+.header{
+	z-index: 999;
+}
 .successMember{
 	position:absolute;
 	right: 20px;
@@ -76,24 +53,25 @@
 	border: none;
 	border-radius: 4px;
 }
-.changeHead ul li{
+.changeHead_wrapper{
+	margin: 0 auto;
+	overflow: hidden;
+	width: 100%;
+}
+.changeHead_wrapper li{
 	float: left;
 	width: 31.3%;
 	text-align: center;
-	border: 1px solid #ddd;
-	padding: 5px 0;
-	margin: 0 1% 10px;
+	margin: 1%;
 }
-.gridlist-demo-container{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.changeHead_wrapper li img{
+	display: block;
+}
+.active{
+	border: 2px solid blue;
+	padding: 5px;
 }
 
-.gridlist-demo{
-  width: 500px;
-  overflow-y: auto;
-}
 
 
 

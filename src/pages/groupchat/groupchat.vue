@@ -74,6 +74,10 @@
 		    @click="send"
 		   />
 		</div>
+		<div class="layout" 
+		:style="{height:height}"  
+		v-show="isShow"
+		@click="close"></div>
 	</div>
 </template>
 
@@ -149,7 +153,16 @@
 	bottom: 0;
 	right:  0;
 	left:  0;
-	}
+	background-color: #fff;
+}
+.layout{
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 999;
+	width: 100%;
+	background-color: rgba(0,0,0,.1);
+}
 </style>
 
 
