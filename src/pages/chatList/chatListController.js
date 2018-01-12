@@ -54,10 +54,19 @@ export default {
 	},
 	methods:{
 		enterSelfChatRoom(room) {
+			console.log(room)
 			const {id: roomId, title} = room
 			this.$router.push({
-				name: 'SelfChatRoom',
-				query: { roomId, title }
+			name: 'SelfChatRoom',
+			query: { roomId, title }
+			})
+		},
+		enterGroupChatRoom(room) {
+			const {id: roomId, title} = room
+			//console.log(roomId, title)
+			this.$router.push({
+				name: 'GroupChat',
+				query: {roomId, title}
 			})
 		},
 		test() {

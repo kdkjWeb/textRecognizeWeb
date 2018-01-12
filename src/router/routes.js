@@ -7,7 +7,10 @@ const FriendsNote = ()=>import('@/pages/friendsnote/friendsnote'),  //修改备�
 	  changePhone = ()=>import('@/pages/changePhone/changephone'),   //修改手机号
 	  FriendsSearch = ()=>import('@/pages/friendssearch/friendssearch'),    //好友搜索
 	  CreateGroup = ()=>import('@/pages/creategroup/creategroup'),  //新建群
-	  ProposedMembers = ()=>import('@/pages/proposedmembers/proposedmembers')   //踢出群成员
+	  ProposedMembers = ()=>import('@/pages/proposedmembers/proposedmembers'),   //踢出群成员
+	  GroupChat = ()=>import('@/pages/groupchat/groupchat'),   //群聊天
+	  InviteFriends = ()=>import('@/pages/invitefriends/invitefriends'),    //邀请好友
+	  ChangeHeader = ()=>import('@/pages/changeheader/changeheader')    //修改头像
 
 const Login = ()=>import('@/pages/login/login'), // 登录
 	  Index = ()=>import('@/pages/index/index'), //主要一级页面
@@ -116,6 +119,21 @@ export default {
 			path: '/discreteUserList',
 			name: 'DiscreteUserList',
 			component: DiscreteUserList
+		},
+		{
+			path: '/groupchat',
+			name: 'GroupChat',
+			component: GroupChat
+		},
+		{
+			path: '/invitefriends',
+			name: 'InviteFriends',
+			component: InviteFriends
+		},
+		{
+			path: '/changeheader',
+			name: 'ChangeHeader',
+			component: ChangeHeader
 		},
 		{
 			path: '/userSearch',

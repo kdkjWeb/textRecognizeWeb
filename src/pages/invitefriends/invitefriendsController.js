@@ -12,9 +12,9 @@ export default {
 		goBack() {
 			this.$router.back(-1)
 		},
-		deleteMember() {
+		addMember() {
 			if(!this.selectArr.length){
-				this.$toast('你还没选择要删除的成员');
+				this.$toast('你还没选择要邀请的好友');
 			}else{
 				this.isShow = true;
 			}

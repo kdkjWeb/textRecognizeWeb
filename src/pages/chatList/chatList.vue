@@ -17,7 +17,8 @@
 				<mu-list-item
 				v-for="room in groupChatRoomList"
 				:key="room.id" 
-				:title="room.title">
+				:title="room.title"
+				@click="enterGroupChatRoom(room)">
 			      <mu-avatar :src="room.url" 
 			      slot="leftAvatar"/>
 			      <mu-icon 

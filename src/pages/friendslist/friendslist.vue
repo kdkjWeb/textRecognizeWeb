@@ -26,7 +26,8 @@
 						 @deleteItem="deleteItem(index,item)"
 						 :index = "index">
 						 	<mu-list class="FriendsList_content_title">
-							 	<mu-list-item :title="item.friendsName">
+							 	<mu-list-item :title="item.friendsName"
+							 	@click="enterSelfChatRoom(item)">
 							      <mu-avatar :src="item.friendsSrc" slot="leftAvatar"/>
 							      <mu-icon value="chat_bubble" slot="right" @click="nodeList(item)"/>
 							    </mu-list-item>

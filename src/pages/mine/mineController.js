@@ -1,6 +1,11 @@
 export default {
 	data() {
 		return {
+			user: {
+				userName: '巴拉巴拉',
+				userId: '01',
+				userImg: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg',
+			},
 			mineLsit: [{
 				icon: 'icon-wode',
 				color: '#dc8450',
@@ -37,11 +42,17 @@ export default {
 				break;
 			}
 		},
+		changeHeader(val) {
+			let data = val
+			this.$router.push({name:'ChangeHeader',params:data})
+			//console.log(val)
+			//this.$router.push({name:'FriendsNote',params:val})
+		},
 		logout() {
 			//消除socket 以及保存的user信息
 			this.$router.push({
 				name: 'Login'
 			})
-		},
+		}
 	}
 }
