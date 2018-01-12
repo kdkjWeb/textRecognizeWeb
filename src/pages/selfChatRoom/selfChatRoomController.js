@@ -12,22 +12,7 @@ export default {
 				title: '',//房间名
 				roomId: '',//房间id
 			},
-			chatHistory: [
-				// {
-				// 	senderId: '-1',
-				// 	message: '你好呀',
-				// 	time: new Date(),
-				// 	img: '/static/header1.jpeg',
-				// 	header: '/static/header2.jpg'
-				// },
-				// {
-				// 	senderId: '01',
-				// 	message: '萨拉黑哟',
-				// 	time: new Date(),
-				// 	img: '/static/header3.jpg',
-				// 	header: '/static/header3.jpg'
-				// }
-			]
+			chatHistory: []
 		}
 	},
 	created() {
@@ -36,7 +21,8 @@ export default {
 		//获取localStorage的聊天历史记录
 		const res = getItem(this.roomDetail.roomId)
 		console.log(res)
-		this.$set(this, 'chatHistory', res)
+		if(res)
+			this.$set(this, 'chatHistory', res)
 	},
 	methods: {
 		goBack() {
@@ -112,7 +98,6 @@ export default {
 		 */
 		send() {
 			if(!this.message) return
-			console.log(this.message)
 			let data = {
 				senderId: '-1',
 				message: this.message,
@@ -121,6 +106,7 @@ export default {
 			this.message = ''
 			//1.将消息push到model中
 			//2.发送消息到后台,回调如果发送失败将此消息的状态设置为error,将结果存入localStorage
+			console.log(this.chatHistory)
 			this.chatHistory.push(data)
 			setTimeout(()=>{
 				this.$set(data, 'error', true)

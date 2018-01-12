@@ -36,13 +36,22 @@ export default {
 
 				case 1:
 				//验证 两次密码是否正确
-				if(this._verifyPassword())
+				if(this._verifyPassword()){
 					//验证通过 将用户数据传递给后端
-					this._submit()
-					.then(res=>{
-						if(res)
-							this.activeStep++
+					services.register({
+						model: {
+							phone: this.registerForm.userName,
+							password: this.registerForm.password
+						},
+						Vue: this
 					})
+					.then(res=>{
+						console.log(res)
+						//将返回的用户信息进行赋值
+						this.activeStep++
+					})
+				}
+					
 				break;
 
 				case 2:
@@ -109,9 +118,10 @@ export default {
 	    		return false
 	    	}
 	    	//后端验证 是否正确
-	    	const result = await services.verifyVerificationCode() 
-	    	console.log(result)
-	    	return result
+	    	// const result = await services.verifyVerificationCode() 
+	    	// console.log(result)
+	    	// return result
+	    	return true
 	    },
 
 	    /**
@@ -129,13 +139,5 @@ export default {
 	    	return true
 	    },
 
-		/**
-		 * 注册
-		 * @return Promise
-		 */
-	    async _submit(){
-	    	//api 传入: {url, data:{userName, password}}
-	    	return true
-	    }
 	}
 }

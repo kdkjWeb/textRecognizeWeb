@@ -9,13 +9,16 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		//存放用户
+		//用户
 		user: {},
 
-		//存放房间信息
-		roomInfo: {},
+		//房间信息
+		roomInfo: {
+			id: '',
+			users: []
+		},
 
-		//存放聊天信息
+		//聊天历史
 		messageHistory: {},
 
 	},

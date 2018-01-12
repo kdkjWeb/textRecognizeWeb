@@ -25,6 +25,14 @@
 				</li>
 			</ul>
 		</div>
+
+		<footer>
+			<mu-raised-button 
+			label="注销"
+			secondary
+			fullWidth
+			@click="logout"/>
+		</footer>
 	</div>
 </template>
 
@@ -35,6 +43,11 @@
 </script>
 
 <style type="text/css" scoped>
+footer{
+	margin-top: 10px;
+	padding: 0 20%;
+}
+
 .mine{
 	background: #f2f2f2;
 	width: 100%;

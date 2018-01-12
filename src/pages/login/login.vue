@@ -24,7 +24,7 @@
 		@click="login"/>
 
 		<div class="other_link_div">
-			<router-link to="" v-text="'忘记密码?'"></router-link>
+			<!-- <router-link to="" v-text="'忘记密码?'"></router-link> -->
 			<router-link to="register" v-text="'立即注册'"></router-link>
 		</div>
 	</div>
@@ -43,6 +43,6 @@
 	.other_link_div{
 		margin-top: 10px;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 	}
 </style>
