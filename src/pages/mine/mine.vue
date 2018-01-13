@@ -7,7 +7,7 @@
 		</div>
 		<div id="user">
 			<div class="userImg" @click="changeHeader(user)">
-				<img width="75" height="75" :src="user.userImg || '/static/headImg/6.jpg'">
+				<img width="75" height="75" :src="user.pictureAddress ? '/static/headImg/' + user.pictureAddress + '.jpg' : '/static/headImg/6.jpg'">
 			</div>
 			<div class="userName">
 				<h3>昵称</h3>

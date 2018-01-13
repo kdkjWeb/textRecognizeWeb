@@ -60,6 +60,7 @@ export default {
 	},
 	mounted() {
 		this._fetchGroupList()
+		console.log(this.groupChatRoomList)
 	},
 	methods:{
 		enterSelfChatRoom(room) {

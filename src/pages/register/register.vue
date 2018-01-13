@@ -79,11 +79,11 @@
 		          注册成功!!!
 		        </p>
 
-		        <mu-raised-button 
+		        <!-- <mu-raised-button 
 		        label="立即登录" 
 		        class="demo-step-button" 
 		        @click="handleNext" 
-		        secondary/>
+		        secondary/> -->
 
 		      </mu-step-content>
 		    </mu-step>

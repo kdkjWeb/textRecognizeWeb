@@ -12,15 +12,17 @@ export default {
 				title: '',//房间名
 				roomId: '',//房间id
 			},
+			friendInfo: {},
 			chatHistory: []
 		}
 	},
 	created() {
 		this.roomDetail = Object.assign({}, this.$route.query)
+		console.log(this.$route.params)
+		this.friendInfo = this.$route.params
 
 		//获取localStorage的聊天历史记录
 		const res = getItem(this.roomDetail.roomId)
-		console.log(res)
 		if(res)
 			this.$set(this, 'chatHistory', res)
 	},

@@ -1,13 +1,13 @@
 import friendsNote from '../friendsnote/friendsnote'
 import friendsDel from '../delete/delete'
 import scroll from 'better-scroll'
-import axios from 'axios'
+import services from './friendsListServices'
 export default {
 	data() {
 		return {
 			height: 0,
-			title: null,
-			friendsList: [],
+			title: '好友',
+			friendsList: [], //{uid2: 用户id}
 			isShow: false
 		}
 	},
@@ -27,12 +27,10 @@ export default {
 			
 		},
 		enterSelfChatRoom(room){
-			console.log(room)
-			 const {friendsId: roomId, friendsName:title} = room
-			 //console.log(roomId, title)
+			 const {id, nickname} = room
 			  this.$router.push({
 			   	name: 'SelfChatRoom',
-			   	query: { roomId, title }
+			   	params: {id, nickname }
 			   })
 		},
 		deleteItem(index,item){
@@ -53,15 +51,17 @@ export default {
         })
 
         // 请求接口数据
-        axios.get('/static/data.json')
+        services.searchFriendList({
+        	Vue: this,
+        	model: {
+        		id: this.$store.state.user.id
+        	}
+        })
         .then(res=>{
-        	//console.log(res.data)
-        	this.title = res.data.title;
-        	this.friendsList = res.data.friendsList;
+        	console.log(res)
+        	this.$set(this, 'friendsList', res)
         })
-        .catch(error=>{
-        	console.log(error)
-        })
+        
 
 	}
 }

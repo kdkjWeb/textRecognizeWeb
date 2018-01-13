@@ -51,7 +51,9 @@ export default {
 	},
 	methods: {
 		goBack() {
-			this.$router.back(-1)
+			this.$router.push({
+				name: 'ChatList'
+			})
 		},
 		meunItem(index) {
 			this.menuIndex = index;

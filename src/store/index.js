@@ -29,6 +29,10 @@ const store = new Vuex.Store({
 		setUser (state, data){
 			state.user = data
 		},
+		setUserHead (state, data) {
+			if(state.user)
+				state.user.pictureAddress = data
+		},
 	},
 	actions: {
 		

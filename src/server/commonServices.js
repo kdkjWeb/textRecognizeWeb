@@ -54,13 +54,14 @@ export default {
 				if(res.data.code === 0){
 					resolve(res.data.data)
 				}else{
-					Vue.$toast("网络好像出问题了 = v =")
+					Vue.$toast(res?res.data.msg:"网络好像出问题了 = v =")
 					reject(res)
 					console.log(res)
 				}
 			}, errRes=>{
+				console.log()
 				if(!hidenLoading)  Vue.$Loading.done()
-				Vue.$toast(errRes.data.msg || "网络好像出问题了 = v =")
+				Vue.$toast(errRes && errRes.data?errRes.data.msg : "网络好像出问题了 = v =")
 				console.log(errRes)
 				reject(errRes)
 			})
@@ -85,12 +86,13 @@ export default {
 				if(res.data.code === 0){
 					resolve(res.data.data || res.data)
 				}else{
+					Vue.$toast(res?res.data.msg:"网络好像出问题了 = v =")
 					reject(res)
 					console.log(res)
 				}
 			},errRes=>{
 				if(!hidenLoading)  Vue.$Loading.done()
-				Vue.$toast(errRes.data.msg || "网络好像出问题了 = v =")
+				Vue.$toast(errRes && errRes.data?errRes.data.msg : "网络好像出问题了 = v =")
 				console.log(errRes)
 				reject(errRes)
 			})

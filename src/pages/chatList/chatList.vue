@@ -38,7 +38,7 @@
 				  </mu-icon-menu>
 			    </mu-list-item>
 			    <mu-content-block
-			    v-else>
+			    v-if="groupChatRoomList.length == 0">
 			    	您暂无群哟，赶紧去加一个吧
 			    </mu-content-block>
 			</mu-list>

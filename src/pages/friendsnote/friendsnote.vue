@@ -15,11 +15,14 @@
 		
 		<div id="user">
 			<div class="userImg">
-				<img width="75" height="75" :src="this.pictureAddress  || '/static/headImg/6.jpg'">
+				<img 
+				width="75" 
+				height="75" 
+				:src="userInfo.pictureAddress? '/static/headImg/' + userInfo.pictureAddress + '.jpg' : '/static/headImg/6.jpg'">
 			</div>
 			<div class="userName">
 				<h3>昵称</h3>
-				<span v-text="nickname || '暂未设置'"></span>
+				<span v-text="userInfo.nickname || '暂未设置'"></span>
 			</div>
 		</div>
 		<div class="userInfo">

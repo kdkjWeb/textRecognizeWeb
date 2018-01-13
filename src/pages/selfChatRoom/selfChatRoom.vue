@@ -3,7 +3,7 @@
 		<div class="header">
 			<mu-appbar 
 			style="text-align:center"
-			:title="roomDetail.title">
+			:title="friendInfo.nickname || '暂未设置昵称'">
 				<mu-icon-button 
 			    icon="chevron_left" 
 			    slot="left"

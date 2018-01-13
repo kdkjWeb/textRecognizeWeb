@@ -1,4 +1,5 @@
 import scroll from 'better-scroll'
+import services from '../changeName/changenameServices'
 export default{
 	data() {
 		return {
@@ -87,7 +88,7 @@ export default{
 	methods: {
 		//返回上一个页面
 		goBack(){
-			this.$router.back(-1)
+			this.$router.goBack()
 		},
 		//选择头像
 		shooseHead(item,index) {
@@ -96,7 +97,23 @@ export default{
 		},
 		//提交所选择的头像
 		success() {
-			console.log(this.userHead)
+			if(!this.userHead.id)
+				return this.goBack()
+			services.userInfoUpdate({
+				Vue: this,
+				model: {
+					pictureAddress: this.userHead.id,
+					id: this.$store.state.user.id
+				}
+			})
+			.then(res=>{
+				// 修改成功
+				if(res.code === 0){
+					this.$store.commit('setUserHead', this.userHead.id)
+					this.goBack()
+				}
+				
+			})
 		}
 	},
 	created() {

@@ -46,8 +46,9 @@ export default {
 						Vue: this
 					})
 					.then(res=>{
-						console.log(res)
+						// console.log(res)
 						//将返回的用户信息进行赋值
+						
 						this.activeStep++
 					})
 				}
@@ -56,7 +57,7 @@ export default {
 
 				case 2:
 				//注册成功
-				this.reset()
+				// this.reset()
 				break 
 			}
 	    },

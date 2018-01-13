@@ -23,10 +23,17 @@
 						 @deleteItem="deleteItem(index,item)"
 						 :index = "index">
 						 	<mu-list class="FriendsList_content_title">
-							 	<mu-list-item :title="item.friendsName"
+							 	<mu-list-item 
+							 	:title="item.password?item.password:item.nickname || '暂未设置昵称'"
 							 	@click="enterSelfChatRoom(item)">
-							      <mu-avatar :src="item.friendsSrc" slot="leftAvatar"/>
-							      <mu-icon value="chat_bubble" slot="right" @click="nodeList(item)"/>
+							      <mu-avatar 
+							      :src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+							      slot="leftAvatar"/>
+							      <mu-icon 
+							      value="border_color" 
+							      :size="18" 
+							      slot="right" 
+							      @click.stop="nodeList(item)"/>
 							    </mu-list-item>
 							 </mu-list>
 						 </friendsDel>
