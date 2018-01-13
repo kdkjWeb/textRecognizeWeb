@@ -15,11 +15,11 @@
 		
 		<div id="user">
 			<div class="userImg">
-				<img width="75" height="75" :src="this.$route.params.friendsSrc">
+				<img width="75" height="75" :src="this.pictureAddress  || '/static/headImg/6.jpg'">
 			</div>
 			<div class="userName">
 				<h3>昵称</h3>
-				<span>{{this.$route.params.friendsName}}</span>
+				<span v-text="nickname || '暂未设置'"></span>
 			</div>
 		</div>
 		<div class="userInfo">
@@ -30,7 +30,16 @@
 			class="demo-divider-form"/>
 			<p>更多介绍</p>
 			<textarea class="userMessage" placeholder="暂无" v-model="noteRudece"></textarea>
-			<div class="userBtn" @click="save">保存</div>
+			<div
+			v-if="status == 'add'"
+			class="userBtn"
+			v-text="'添加好友'" 
+			@click="addFriend"></div>
+			<div 
+			v-else
+			v-text="'保存'" 
+			class="userBtn" 
+			@click="save"></div>
 		</div>
 	</div>
 </template>

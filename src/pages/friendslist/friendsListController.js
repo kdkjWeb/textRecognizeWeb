@@ -39,9 +39,6 @@ export default {
 			this.friendsList.splice(index,1);
 			console.log(item)
 		},
-		search() {
-			this.$router.push('friendssearch')
-		}
 	},
 	mounted() {
 		//使用better-scroll添加滚动效果

@@ -2,12 +2,13 @@ import commonServices from '@/server/commonServices'
 
 export default {
 	/**
-	 * 查询用户
+	 * 创建群
+	 * @return Promise
 	 */
-	search({model, Vue, hidenLoading}) {
+	create({model, Vue, hidenLoading}) {
 		return new Promise((resolve, reject)=>{
 			commonServices.transport({
-				url: 'user/selectListByUser',
+				url: 'group/addGroup',
 				model,
 				Vue,
 				hidenLoading 
@@ -18,5 +19,5 @@ export default {
 				reject(err)
 			})
 		})
-	},
+	}
 }

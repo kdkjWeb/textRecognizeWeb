@@ -19,9 +19,10 @@
 			<mu-list>
 				<mu-sub-header>群聊天</mu-sub-header>
 				<mu-list-item
+				v-if="groupChatRoomList.length > 0"
 				v-for="room in groupChatRoomList"
 				:key="room.id" 
-				:title="room.title"
+				:title="room.groupName"
 				@click="enterGroupChatRoom(room)">
 			      <mu-avatar :src="room.url" 
 			      slot="leftAvatar"/>
@@ -36,6 +37,10 @@
 				    <mu-menu-item title="删除"/>
 				  </mu-icon-menu>
 			    </mu-list-item>
+			    <mu-content-block
+			    v-else>
+			    	您暂无群哟，赶紧去加一个吧
+			    </mu-content-block>
 			</mu-list>
 			<mu-divider/>
 			<mu-list>

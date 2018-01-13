@@ -18,8 +18,12 @@ Loading.install = (Vue, options) =>{
 	        })
 		},
 		done() {
-			tpl.show = false
-        	document.body.removeChild(tpl.$el)
+			if(document.getElementsByClassName('loading').length){
+	            // 如果loading还在，则不再执行
+	            tpl.show = false
+	        	document.body.removeChild(tpl.$el)
+	            return
+	        }
 		},
 	}
 }

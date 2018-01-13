@@ -10,7 +10,9 @@
 				    style="position:absolute;right: 0;top:4px"
 				    icon="search" 
 				    slot="right"
-				    @click="search"/>
+				    @click="$router.push({
+				    	name: 'UserSearch'
+				    })"/>
 				</mu-appbar>	
 			</div>
 			<div>

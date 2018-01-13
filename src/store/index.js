@@ -30,7 +30,9 @@ const store = new Vuex.Store({
 			state.user = data
 		},
 	},
-	actions: {},
+	actions: {
+		
+	},
 })
 
 export default store

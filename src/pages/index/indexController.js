@@ -37,7 +37,6 @@ export default {
 					Vue: this
 				})
 				.then(res=>{
-					console.log(res)
 					//存入vuex
 					this.$store.commit('setUser', res)
 				})
