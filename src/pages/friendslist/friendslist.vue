@@ -16,11 +16,6 @@
 				</mu-appbar>	
 			</div>
 			<div>
-				<!-- <div class="FriendsList_search">
-					<div>
-						<input type="text" name="" placeholder="搜索好友">
-					</div>
-				</div> -->
 				<div class="FriendsList_content" ref="FriendsListWrapper" :style="{height:height}">
 					 <div>
 						 <friendsDel v-for="(item,index) in friendsList" 

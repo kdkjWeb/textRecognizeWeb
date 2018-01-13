@@ -1,73 +1,10 @@
-/*import vueCropper from 'vue-cropper'
-export default {
-	data() {
-		return {
-      crap: false,
-      previews: {},
-			option: {
-				img: 'https://o90cnn3g2.qnssl.com/0C3ABE8D05322EAC3120DDB11F9D1F72.png',
-				autoCrop: true,
-				autoCropWidth: 200,
-				autoCropHeight: 200,
-				fixedBox: true
-			}
-		}
-	},
-	methods: {
-		goBack(){
-			this.$router.back(-1)
-		},
-		uploadImg (e, num) {
-	      //上传图片
-        this.crap = true;
-	      // this.option.img
-	      var file = e.target.files[0]
-	      if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
-	         alert('图片类型必须是.gif,jpeg,jpg,png,bmp中的一种')
-	         return false
-	       }
-	      var reader = new FileReader()
-	      reader.onload = (e) => {
-	        let data
-	        if (typeof e.target.result === 'object') {
-	          // 把Array Buffer转化为blob 如果是base64不需要
-	          data = window.URL.createObjectURL(new Blob([e.target.result]))
-	        } else {
-	          data = e.target.result
-	        }
-	        if (num === 1) {
-	          this.option.img = data
-	        } else if (num === 2) {
-	          this.example2.img = data
-	        }
-	      }
-	      // 转化为base64
-	      // reader.readAsDataURL(file)
-	      // 转化为blob
-	      reader.readAsArrayBuffer(file)
-	    },
-      // 实时预览函数
-      realTime (data) {
-        this.previews = data
-      },
-      // start 开始截图
-      startCrop () {
-      
-      //this.crap = true
-      this.$refs.cropper.startCrop()
-    },
-	},
-	components: {
-		vueCropper
-	}
-}*/
-
-
-
+import scroll from 'better-scroll'
 export default{
 	data() {
 		return {
 			height: 0,
+			itemIndex: null,
+			userHead: {},
 			headImg: [
 				{
 					id: '1',
@@ -148,13 +85,35 @@ export default{
 		}
 	},
 	methods: {
+		//返回上一个页面
 		goBack(){
 			this.$router.back(-1)
+		},
+		//选择头像
+		shooseHead(item,index) {
+			this.itemIndex = index;
+			this.userHead = item;
+		},
+		//提交所选择的头像
+		success() {
+			console.log(this.userHead)
 		}
 	},
 	created() {
 		this.height = (window.innerHeight-56) + 'px';
 	},
+	mounted() {
+		//使用better-scroll添加滚动效果
+		this.$nextTick(()=>{
+	      new scroll(this.$refs['ChangeHead'],{
+	      	click: true
+	      })
+	    })
+	    // 监听窗口改变重置高度
+        window.addEventListener('resize', () => {
+            this.height = (window.innerHeight-56) + 'px';
+        })
+	}
 }
 
 
