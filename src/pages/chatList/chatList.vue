@@ -15,54 +15,56 @@
 			</mu-appbar>
 		</div>
 
-		<div class="content">
-			<mu-list>
-				<mu-sub-header>群聊天</mu-sub-header>
-				<mu-list-item
-				v-if="groupChatRoomList.length > 0"
-				v-for="room in groupChatRoomList"
-				:key="room.id" 
-				:title="room.groupName"
-				@click="enterGroupChatRoom(room)">
-			      <mu-avatar :src="room.url" 
-			      slot="leftAvatar"/>
-			      <mu-icon 
-			      value="chat_bubble" 
-			      slot="right"/>
-			      <mu-icon-menu
-			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
-			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
-			      icon="more_vert" 
-			      slot="right">
-				    <mu-menu-item title="删除"/>
-				  </mu-icon-menu>
-			    </mu-list-item>
-			    <mu-content-block
-			    v-else>
-			    	您暂无群哟，赶紧去加一个吧
-			    </mu-content-block>
-			</mu-list>
-			<mu-divider/>
-			<mu-list>
-				<mu-sub-header>好友聊天记录</mu-sub-header>
-				<mu-list-item
-				v-for="room in selfChatRoomList"
-				:key="room.id"
-				:title="room.title"
-				@click="enterSelfChatRoom(room)">
-			      <mu-avatar :src="room.url" slot="leftAvatar"/>
-			      <mu-icon value="chat_bubble" slot="right"/>
-			      <mu-icon-menu
-			      style="position:relative;"
-			      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
-			      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
-			      icon="more_vert" 
-			      slot="right"
-			      @click.stop="test">
+		<div class="content" ref="chatList" :style="{height: height}">
+			<div>
+				<mu-list>
+					<mu-sub-header>群聊天</mu-sub-header>
+					<mu-list-item
+					v-if="groupChatRoomList.length > 0"
+					v-for="room in groupChatRoomList"
+					:key="room.id" 
+					:title="room.groupName"
+					@click="enterGroupChatRoom(room)">
+				      <mu-avatar :src="room.url" 
+				      slot="leftAvatar"/>
+				      <mu-icon 
+				      value="chat_bubble" 
+				      slot="right"/>
+				      <mu-icon-menu
+				      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
+				      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
+				      icon="more_vert" 
+				      slot="right">
 					    <mu-menu-item title="删除"/>
-				  </mu-icon-menu>
-			    </mu-list-item>
-			</mu-list>
+					  </mu-icon-menu>
+				    </mu-list-item>
+				    <mu-content-block
+				    v-else>
+				    	您暂无群哟，赶紧去加一个吧
+				    </mu-content-block>
+				</mu-list>
+				<mu-divider/>
+				<mu-list>
+					<mu-sub-header>好友聊天记录</mu-sub-header>
+					<mu-list-item
+					v-for="room in selfChatRoomList"
+					:key="room.id"
+					:title="room.title"
+					@click="enterSelfChatRoom(room)">
+				      <mu-avatar :src="room.url" slot="leftAvatar"/>
+				      <mu-icon value="chat_bubble" slot="right"/>
+				      <mu-icon-menu
+				      style="position:relative;"
+				      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
+				      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
+				      icon="more_vert" 
+				      slot="right"
+				      @click.stop="test">
+						    <mu-menu-item title="删除"/>
+					  </mu-icon-menu>
+				    </mu-list-item>
+				</mu-list>
+			</div>
 		</div>
 	</div>
 </template>
@@ -79,7 +81,8 @@
 		left: 0;
 	}*/
 	.content{
-		height: calc(100% - 56px);
-		overflow-y: scroll;
+		/*height: calc(100% - 56px);
+		overflow-y: scroll;*/
+		overflow: hidden;
 	}
 </style>
