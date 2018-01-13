@@ -1,9 +1,10 @@
 import service from './chatListServices'
 import { mapGetters } from 'vuex'
-
+import scroll from 'better-scroll'
 export default {
 	data() {
 		return {
+			height: 0,
 			//群聊天室
 			groupChatRoomList: [
 				// {
@@ -50,6 +51,31 @@ export default {
 					title: 'Tom',
 					url: '/static/header2.jpg',
 				},
+				{
+					id: '6',
+					title: 'Maco Mai',
+					url: '/static/header1.jpeg',
+				},
+				{
+					id: '7',
+					title: 'Mikey',
+					url: '/static/header2.jpg',
+				},
+				{
+					id: '8',
+					title: 'Makey',
+					url: '/static/header3.jpg',
+				},
+				{
+					id: '9',
+					title: 'Jerry',
+					url: '/static/header1.jpeg',
+				},
+				{
+					id: '10',
+					title: 'Tom',
+					url: '/static/header2.jpg',
+				},
 			],
 		}
 	},
@@ -58,9 +84,24 @@ export default {
 			user: 'getUser'
 		})
 	},
+	created() {
+		this.height = (window.innerHeight - 112) + 'px'
+	},
 	mounted() {
 		this._fetchGroupList()
-		console.log(this.groupChatRoomList)
+
+		//使用滚动插件
+		this.$nextTick(()=>{
+			new scroll(this.$refs['chatList'],{
+				click: true
+			})
+		})
+
+
+		//屏幕发生改变时 
+		window.addEventListener('resize',()=>{
+			this.height = (window.innerHeight - 112) + 'px'
+		})
 	},
 	methods:{
 		enterSelfChatRoom(room) {
