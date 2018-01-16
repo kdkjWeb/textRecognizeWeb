@@ -26,27 +26,27 @@
 		</div>
 
 		<!-- 内容 -->
-		<div class="content" :style="{height: height}">
-			<div 
-			v-for="msg, index in chatHistory"
-			:key="index"
-			class="content_main"
-			:style="{'flex-direction': msg.username == $store.state.user.username?'row-reverse':'row'}">
-				 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
-				 <div 
-				 class="content_msg">
-				    <div class="content_msg_icon" 
-				    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
-				    <span v-text="msg.message"></span>
-				    <mu-icon
-				    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
-				    style="position:absolute;top:8px;left:-27px" 
-				    color="red" 
-				    value="error"
-				    @click="openBottomSheet(index)"/>
-					
-				 </div>
-
+		<div class="content" :style="{height: height}" ref="groupChat">
+			<div class="contentMsg">
+				<div 
+				v-for="msg, index in chatHistory"
+				:key="index"
+				class="content_main"
+				:style="{'flex-direction': msg.username == $store.state.user.username?'row-reverse':'row'}">
+					 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
+					 <div 
+					 class="content_msg">
+					    <div class="content_msg_icon" 
+					    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
+					    <span v-text="msg.message"></span>
+					    <mu-icon
+					    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
+					    style="position:absolute;top:8px;left:-27px" 
+					    color="red" 
+					    value="error"
+					    @click="openBottomSheet(index)"/>		
+					 </div>
+				</div>
 			</div>
 		</div>
 
@@ -73,7 +73,7 @@
 		   />
 		</div>
 		<div class="layout" 
-		:style="{height:height}"  
+		:style="{height:height1}"  
 		v-show="isShow"
 		@click="close"></div>
 
@@ -122,9 +122,13 @@
 	background: #f1f1f1;
 	position: relative;
 	width: 100%;
-	height: calc(100% - 113px);
-	overflow-y: scroll;
-	padding: 5%;
+	/*height: calc(100% - 113px);*/
+	/*overflow-y: scroll;*/
+	overflow: hidden;
+	padding: 0 5%;
+}
+.contentMsg{
+	margin-top: -10px;
 }
 .content_main{
 	display: flex;
