@@ -86,6 +86,7 @@ export default {
 	},
 	created() {
 		this.height = (window.innerHeight - 112) + 'px'
+
 	},
 	mounted() {
 		this._fetchGroupList()
@@ -113,11 +114,12 @@ export default {
 			})
 		},
 		enterGroupChatRoom(room) {
-			const {id: roomId, title} = room
+
+			const {groupId, groupName} = room
 			//console.log(roomId, title)
 			this.$router.push({
 				name: 'GroupChat',
-				query: {roomId, title}
+				params: {groupId, groupName}
 			})
 		},
 		test() {
@@ -132,7 +134,7 @@ export default {
 			})
 			.then(res=>{
 				console.log(res)
-				this.$set(this, 'groupChatRoomList', res)
+				if(res) this.$set(this, 'groupChatRoomList', res)
 			}, err=>{
 				console.log(err)
 			})

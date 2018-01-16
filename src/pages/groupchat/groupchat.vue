@@ -1,11 +1,10 @@
 <template>
-	<div class="groupchat">
+	<div class="groupchat" style="height: 100%">
 		<!-- 头部 -->
 		<div class="header">
 			<mu-appbar 
 			style="text-align:center"
-			:title="roomDetail.title"
-			>
+			:title="roomDetail.groupName">
 				<mu-icon-button
 			    icon="chevron_left" 
 			    slot="left"
@@ -13,8 +12,7 @@
 			    <mu-icon-button
 			    icon="more_vert" 
 			    slot="right"
-			    @click="menuShow"
-			   />
+			    @click="menuShow"/>
 			 
 			</mu-appbar>
 			<!-- 下拉列表 -->
@@ -33,19 +31,19 @@
 			v-for="msg, index in chatHistory"
 			:key="index"
 			class="content_main"
-			:style="{'flex-direction': msg.senderId == '-1'?'row-reverse':'row'}">
-				 <mu-avatar :src="msg.header" slot="leftAvatar"/>
+			:style="{'flex-direction': msg.username == $store.state.user.username?'row-reverse':'row'}">
+				 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
 				 <div 
 				 class="content_msg">
 				    <div class="content_msg_icon" 
-				    :class="[msg.senderId == '-1'?'rightIcon':'leftIcon']"></div>
+				    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
 				    <span v-text="msg.message"></span>
 				    <mu-icon
-				    v-if="msg.error && msg.senderId == '-1'" 
+				    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
 				    style="position:absolute;top:8px;left:-27px" 
 				    color="red" 
 				    value="error"
-				    />
+				    @click="openBottomSheet(index)"/>
 					
 				 </div>
 
@@ -78,6 +76,20 @@
 		:style="{height:height}"  
 		v-show="isShow"
 		@click="close"></div>
+
+		<mu-bottom-sheet :open="bottomSheet.show" @close="closeBottomSheet">
+		    <mu-list @itemClick="closeBottomSheet">
+		      <mu-list-item 
+		      title="重新发送"
+		      @click="sendAgain"/>
+		      <mu-list-item 
+		      title="删除"
+		      @click="deleteMsg"/>
+		      <mu-list-item 
+		      title="取消" 
+		      @click="closeBottomSheet"/>
+		    </mu-list>
+		</mu-bottom-sheet>
 	</div>
 </template>
 
@@ -110,8 +122,8 @@
 	background: #f1f1f1;
 	position: relative;
 	width: 100%;
-	/*height: calc(100% - 113px);*/
-	overflow: hidden;
+	height: calc(100% - 113px);
+	overflow-y: scroll;
 	padding: 5%;
 }
 .content_main{

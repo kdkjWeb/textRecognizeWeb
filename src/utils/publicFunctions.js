@@ -13,3 +13,22 @@ export function phoneRegExp(str){
 		return true
 	return false
 }
+
+/**
+ * 深拷贝
+ * @return Object 拷贝后的对象
+ */
+export function deepClone(obj){
+	let newobj = obj.constructor === Array ? [] : {};
+    if(typeof obj !== 'object'){
+        return;
+    } else if(window.JSON){
+        newobj = JSON.parse(JSON.stringify(obj))//系列化对象,还原
+    } else {
+        for(let i in obj){
+            newobj[i] = typeof obj[i] === 'object' ? 
+            deepClone(obj[i]) : obj[i]; 
+        }
+    }
+    return newobj;
+}

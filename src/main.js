@@ -5,6 +5,8 @@ import App from './App'
 import router from './router' //vue-router
 import store from './store' // vuex
 import axios_conf from './server' //axios
+// import VueSocketio from 'vue-socket.io'
+// Vue.use(VueSocketio, 'ws://192.168.20.122:8080/groupWs')
 
 import MuseUI from 'muse-ui' //Muse-ui
 import 'muse-ui/dist/muse-ui.css'

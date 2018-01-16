@@ -20,7 +20,7 @@
 			:key="index"
 			class="content_main"
 			:style="{'flex-direction': msg.senderId == '-1'?'row-reverse':'row'}">
-				 <mu-avatar :src="msg.header" slot="leftAvatar"/>
+				 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
 				 <div 
 				 class="content_msg">
 				    <div class="content_msg_icon" 
@@ -88,8 +88,8 @@
 		position: relative;
 		width: 100%;
     	height: calc(100% - 113px);
-    	overflow: hidden;
-    	padding: 5%;
+    	overflow-y: scroll;
+    	padding: 0 5%;
 	}
 	.content_main{
 		display: flex;
