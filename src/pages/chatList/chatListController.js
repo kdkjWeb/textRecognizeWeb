@@ -6,23 +6,7 @@ export default {
 		return {
 			height: 0,
 			//群聊天室
-			groupChatRoomList: [
-				// {
-				// 	id: '1',
-				// 	title: '天王盖地虎',
-				// 	url: '/static/header1.jpeg',
-				// },
-				// {
-				// 	id: '2',
-				// 	title: '宝塔镇河妖',
-				// 	url: '/static/header2.jpg',
-				// },
-				// {
-				// 	id: '3',
-				// 	title: '横批:请不要鬼扯',
-				// 	url: '/static/header3.jpg',
-				// }
-			],
+			groupChatRoomList: [],
 
 			//个人聊天室记录
 			selfChatRoomList: [

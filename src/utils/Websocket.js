@@ -21,7 +21,7 @@ export default {
 		ws = new WebSocket(url)
 
 		ws.onopen = (res) =>{
-			console.log`链接成功,成功信息为`
+			console.log('链接成功')
 		}
 
 		ws.onmessage = (res)=>{
@@ -51,10 +51,6 @@ export default {
 
 		ws.onclose = (res)=> {
 			console.log('链接已被关闭')
-		}
-
-		ws.onsend = (res)=>{
-			console.log(res)
 		}
 
 		ws.onerror = (err) =>{

@@ -20,17 +20,16 @@ export default {
 	},
 	methods: {
 		nodeList(val) {
-	
-			let data = val;
-			this.$router.push({name:'FriendsNote',params:data})
+			this.$router.push({name:'FriendsNote',params:val})
 
 			
 		},
 		enterSelfChatRoom(room){
-			 const {id, nickname} = room
+			 const {id, nickname, username, password} = room
+			 console.log(room)
 			  this.$router.push({
 			   	name: 'SelfChatRoom',
-			   	params: {id, nickname }
+			   	params: {id, nickname,  username, password}
 			   })
 		},
 		deleteItem(index,item){

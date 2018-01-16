@@ -3,7 +3,7 @@
 		<div class="header">
 			<mu-appbar 
 			style="text-align:center"
-			:title="friendInfo.nickname || '暂未设置昵称'">
+			:title="friendInfo.password?friendInfo.password:friendInfo.nickname || '暂未设置昵称'">
 				<mu-icon-button 
 			    icon="chevron_left" 
 			    slot="left"
@@ -14,27 +14,29 @@
 			    @click="enterRoomSetting"/>
 			</mu-appbar>
 		</div>
-		<div class="content">
-			<div 
-			v-for="msg, index in chatHistory"
-			:key="index"
-			class="content_main"
-			:style="{'flex-direction': msg.senderId == '-1'?'row-reverse':'row'}">
-				 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
-				 <div 
-				 class="content_msg">
-				    <div class="content_msg_icon" 
-				    :class="[msg.senderId == '-1'?'rightIcon':'leftIcon']"></div>
-				    <span v-text="msg.message"></span>
-				    <mu-icon
-				    v-if="msg.error && msg.senderId == '-1'" 
-				    style="position:absolute;top:8px;left:-27px" 
-				    color="red" 
-				    value="error"
-				    @click="openBottomSheet(index)"/>
-					<!-- <img :src="msg.img"> -->
-				 </div>
+		<div class="wrapper" ref="wrapper">
+			<div class="content">
+				<div 
+				v-for="msg, index in chatHistory"
+				:key="index"
+				class="content_main"
+				:style="{'flex-direction':msg.username == $store.state.user.username?'row-reverse':'row'}">
+					 <mu-avatar :src="msg.header ? '/static/headImg/' + msg.header + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
+					 <div 
+					 class="content_msg">
+					    <div class="content_msg_icon" 
+					    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
+					    <span v-text="msg.message"></span>
+					    <mu-icon
+					     v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
+					    style="position:absolute;top:8px;left:-27px" 
+					    color="red" 
+					    value="error"
+					    @click="openBottomSheet(index)"/>
+						<!-- <img :src="msg.img"> -->
+					 </div>
 
+				</div>
 			</div>
 		</div>
 		<div class="footer">
@@ -83,11 +85,14 @@
 		right:  0;
 		left:  0;
 	}
+	.wrapper{
+		height: calc(100% - 113px);
+	}
 	.content{
 		background: #f1f1f1;
 		position: relative;
 		width: 100%;
-    	height: calc(100% - 113px);
+    	height: 100%;
     	overflow-y: scroll;
     	padding: 0 5%;
 	}
