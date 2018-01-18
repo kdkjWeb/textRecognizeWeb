@@ -30,14 +30,6 @@
 				      <mu-icon 
 				      value="chat_bubble" 
 				      slot="right"/>
-				      <mu-icon-menu
-				      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
-				      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
-				      icon="more_vert" 
-				      slot="right">
-
-					    <mu-menu-item title="删除"/>
-					  </mu-icon-menu>
 				    </mu-list-item>
 				    <mu-content-block
 				    v-if="groupChatRoomList.length == 0">
@@ -48,25 +40,44 @@
 				<mu-list>
 					<mu-sub-header>好友聊天记录</mu-sub-header>
 					<mu-list-item
+					v-if="selfChatRoomList.length > 0"
 					v-for="room in selfChatRoomList"
 					:key="room.id"
-					:title="room.title"
+					:title="room.password?room.password:room.nickname || '暂未设置昵称'"
 					@click="enterSelfChatRoom(room)">
-				      <mu-avatar :src="room.url" slot="leftAvatar"/>
-				      <mu-icon value="chat_bubble" slot="right"/>
-				      <mu-icon-menu
-				      style="position:relative;"
-				      :anchorOrigin="{vertical: 'bottom', horizontal: 'right'}"
-				      :targetOrigin="{vertical: 'top', horizontal: 'right'}" 
-				      icon="more_vert" 
+					  <!-- <mu-badge content="10" class="demo-icon-badge" circle secondary>
+					  	
+					  </mu-badge> -->
+				      <mu-avatar 
+				      :src="room.pictureAddress ? '/static/headImg/' + room.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+				      slot="leftAvatar"/>
+				      <mu-icon 
+				      value="delete_forever"
+				      color="red" 
 				      slot="right"
-				      @click.stop="test">
-						    <mu-menu-item title="删除"/>
-					  </mu-icon-menu>
+				      @click.stop="openDeleteDialog(room)"/>
 				    </mu-list-item>
+				    <mu-content-block
+				    v-if="selfChatRoomList.length == 0">
+				    	当前暂无聊天历史记录
+				    </mu-content-block>
 				</mu-list>
 			</div>
 		</div>
+
+		<mu-dialog :open="deleteDialog.show" @close="deleteCancel">
+			您确定要删除此条聊天记录么?
+			<footer>
+				<mu-raised-button 
+				secondary 
+				@click="deleteSubmit" 
+				label="确定"/>
+				<mu-raised-button 
+				@click="deleteCancel" 
+				primary 
+				label="取消"/>
+			</footer>
+		</mu-dialog>
 	</div>
 </template>
 
@@ -85,5 +96,10 @@
 		/*height: calc(100% - 56px);
 		overflow-y: scroll;*/
 		overflow: hidden;
+	}
+	footer{
+		margin-top: 30px;
+		display: flex;
+		justify-content: space-between;
 	}
 </style>

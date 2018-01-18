@@ -1,4 +1,7 @@
 import services from './sysMessageListServices'
+import commonServices from '@/server/commonServices'
+import dateFormat from '@/utils/dateFormat'
+
 export default {
 	data() {
 		return {
@@ -6,34 +9,11 @@ export default {
 				show: false,
 				model: '', //建议的model
 			},
-			sysMsgList: [
-				{
-					id: '1',
-					title: '推送消息1',
-					date: '2018-1-2'
-				},
-				{
-					id: '2',
-					title: '推送消息2',
-					date:'2018-1-1'
-				},
-				{
-					id: '3',
-					title: '推送消息3',
-					date: '2018-1-1'
-				},
-				{
-					id: '4',
-					title: '推送消息4',
-					date: '2017-12-31'
-				},
-				{
-					id: '5',
-					title: '推送消息5',
-					date: '2017-12-30'
-				}
-			]
+			sysMsgList: []
 		}
+	},
+	created() {
+		this._seachSysMsgList()
 	},
 	methods:{
 		goBack() {
@@ -48,6 +28,24 @@ export default {
 		},
 		suggestCancel() {
 			this.suggestDialog.show = false
+		},
+		_seachSysMsgList() {
+			commonServices.fetch({
+				url: 'message/broadcast',
+				Vue: this,
+			})
+			.then(res=>{
+				if(res.length > 0){
+					console.log(res)
+					for(let elem of Object.values(res)){
+						elem.date = dateFormat(new Date(parseInt(elem.date)), 'yyyy-MM-dd hh:mm:ss')
+					}
+					this.$set(this, 'sysMsgList', res.reverse())
+				}
+				
+			}, err=>{
+				console.log(err)
+			})
 		},
 	}
 }

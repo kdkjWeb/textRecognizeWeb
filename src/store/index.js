@@ -13,13 +13,21 @@ const store = new Vuex.Store({
 		user: {},
 
 		//房间信息
-		roomInfo: {
+		roomDetail: {
 			id: '',
 			users: []
 		},
 
+		//好友信息
+		friendInfo: {
+			nickname: '',  //昵称
+			password: '', //备注
+			pictureAddress: '', //头像
+			username: '', //用户名
+		},
+
 		//聊天历史
-		messageHistory: {},
+		chatHistory: [],
 
 	},
 	getters: {
@@ -33,6 +41,10 @@ const store = new Vuex.Store({
 			if(state.user)
 				state.user.pictureAddress = data
 		},
+		setFriendInfo (state, data) {
+			state.friendInfo = data
+		},
+		setChatHistory (state, data) {},
 	},
 	actions: {
 		

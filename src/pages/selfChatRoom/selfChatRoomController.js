@@ -2,6 +2,7 @@ import services from './selfChatRoomServices'
 import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
 import betterScroll from 'better-scroll'
 import Ws from '@/utils/WebSocket'
+import {deepClone} from '@/utils/publicFunctions'
 
 export default {
 	data() {
@@ -11,26 +12,39 @@ export default {
 				message_index: null,
 				show: false,
 			}, 
-			roomDetail: {},
+			roomDetail: {
+				roomId: null, //房间id
+				title: null, //房间名
+				type: 'self', //房间类型为个人聊天室
+			},
 			friendInfo: {},
-			chatHistory: []
+			chatHistory: [],
+			height: 0,
 		}
 	},
 	created() {
-		this.roomDetail = Object.assign({}, this.$route.params)
 		console.log(this.$route.params)
-		this.friendInfo = this.$route.params
-		console.log(this.friendInfo)
+		if(Object.keys(this.$route.params).length > 0)
+			this.$store.commit('setFriendInfo', this.$route.params)
+		this.friendInfo = Object.keys(this.$route.params).length > 0? this.$route.params : this.$store.state.friendInfo
+
+		console.log(this.$store.state.friendInfo)
+
+		Object.assign(this.roomDetail, {
+			roomId: this.friendInfo.username + '_' + this.$store.state.user.username,
+			title: this.friendInfo.password?
+					this.friendInfo.password:
+					this.friendInfo.nickname || '暂未设置昵称'
+		})
+		
+		
 
 		//获取localStorage的聊天历史记录
-		const res = getItem(this.roomDetail.roomId)
+		const res = getItem(this.roomDetail.roomId) ||
+					getItem(this.$store.state.user.username + '_' + this.$route.params.username )
 		this.$set(this, 'chatHistory', res || [])
 
-		this.$nextTick(() => {
-	        new betterScroll(this.$refs.wrapper, {
-	        	click: true
-	        })
-	    })
+		this.height = (window.innerHeight-113) + 'px';
 
 	    //建立聊天室的websokcet链接
 		Ws.connect({
@@ -44,19 +58,34 @@ export default {
 		})
 
 	},
+	mounted() {
+		this.$nextTick(() => {
+	        new betterScroll(this.$refs.wrapper, {
+	        	click: true
+	        })
+	    })
+
+	    // 监听窗口改变重置高度
+        // window.addEventListener('resize', () => {
+        //     this.height = (window.innerHeight-113) + 'px';
+        // })
+	},
 	destroyed() {
-		// if(Ws !== undefined)
-		// 	Ws.close()
+		if(Ws)
+			Ws.close()
 	},
 
 	methods: {
 		goBack() {
 			//断开socket链接
-			this.$router.goBack()
+			this.$router.push({
+				name: 'FriendsList'
+			})
 		},
 		enterRoomSetting() {
 			this.$router.push({
-				name: 'SelfChatRoomConfig'
+				name: 'SelfChatRoomConfig',
+				params: this.$route.params
 			})
 		},
 
@@ -78,39 +107,50 @@ export default {
 			let data = {
 				username: this.$store.state.user.username,
 				message: this.message,
-				header: this.$store.state.user.pictureAddress ?
-				 '/static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
-				  '6',
+				header:  this.$store.state.user.pictureAddress || '6',
 				date: new Date(),
 			}
 			this.message = ''
 			//1.将消息push到model中
 			//2.发送消息到后台,回调如果发送失败将此消息的状态设置为error,将结果存入localStorage
-			console.log(this.chatHistory)
+
 			this.chatHistory.push(data)
 
 			Ws.send({
 				msg: data.message,
-				msgTo: this.roomDetail.username,
+				msgTo: this.friendInfo.username,
 				msgFrom: this.$store.state.user.username,
 				date: data.date
 			})
 
 			setTimeout(()=>{
 				for(let i = this.chatHistory.length - 1; i > -1; i-- ){
-			 		console.log(this.chatHistory[i])
+
 			 		if(this.chatHistory[i] == data){
 			 			//找到这条发送的信息，检查状态是否发送成功
-			 			console.log(this.chatHistory[i].status)
+
 			 			if(this.chatHistory[i].status != 'success'){
 			 				this.$set(data, 'status', 'error')
 			 			}
 			 			//将聊天记录存入历史localStorage中
 			 			setItem({
-							key: this.roomDetail.groupId,
+							key: this.roomDetail.roomId,
 							value: this.chatHistory
 						})
-						break
+
+						//第一次存在历史记录则将room信息放入 个人聊天记录列表中
+
+						if(this.chatHistory.length == 1){
+
+							let arr = getItem('selfRoomList')
+							arr.push(this.friendInfo)
+
+							setItem({
+								key: 'selfRoomList', 
+								value: arr
+							})
+							break
+						}
 			 		}
 			 	}
 			}, 3000)
@@ -126,10 +166,12 @@ export default {
 		/* 重新发送 */
 		sendAgain() {
 			console.log(this.bottomSheet.message_index)
+
 			let data = {
-				senderId: '-1',
+				username: this.$store.state.user.username,
 				message: this.chatHistory[this.bottomSheet.message_index].message,
-				header: '/static/header2.jpg'
+				header:  this.$store.state.user.pictureAddress || '6',
+				date: new Date(),
 			}
 
 			//clear 
@@ -141,13 +183,32 @@ export default {
 
 
 			this.chatHistory.push(data)
+			
+			Ws.send({
+				msg: data.message,
+				msgTo: this.friendInfo.username,
+				msgFrom: this.$store.state.user.username,
+				date: data.date
+			})
+
 			setTimeout(()=>{
-				this.$set(data, 'error', true)
-				setItem({
-					key: this.roomDetail.roomId,
-					value: this.chatHistory
-				})
-			}, 2000)
+				for(let i = this.chatHistory.length - 1; i > -1; i-- ){
+			 		console.log(this.chatHistory[i])
+			 		if(this.chatHistory[i] == data){
+			 			//找到这条发送的信息，检查状态是否发送成功
+			 			console.log(this.chatHistory[i].status)
+			 			if(this.chatHistory[i].status != 'success'){
+			 				this.$set(data, 'status', 'error')
+			 			}
+			 			//将聊天记录存入历史localStorage中
+			 			setItem({
+							key: this.roomDetail.roomId,
+							value: this.chatHistory
+						})
+						break
+			 		}
+			 	}
+			}, 3000)
 		},
 
 		/* 删除 */

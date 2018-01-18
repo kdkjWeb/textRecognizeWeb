@@ -3,7 +3,7 @@
 		<div class="header">
 			<mu-appbar 
 			style="text-align:center"
-			:title="friendInfo.password?friendInfo.password:friendInfo.nickname || '暂未设置昵称'">
+			:title="roomDetail.title">
 				<mu-icon-button 
 			    icon="chevron_left" 
 			    slot="left"
@@ -14,7 +14,7 @@
 			    @click="enterRoomSetting"/>
 			</mu-appbar>
 		</div>
-		<div class="wrapper" ref="wrapper">
+		<div class="wrapper" :style="{height: height}" ref="wrapper">
 			<div class="content">
 				<div 
 				v-for="msg, index in chatHistory"
@@ -28,7 +28,7 @@
 					    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
 					    <span v-text="msg.message"></span>
 					    <mu-icon
-					     v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
+					    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
 					    style="position:absolute;top:8px;left:-27px" 
 					    color="red" 
 					    value="error"
@@ -86,15 +86,17 @@
 		left:  0;
 	}
 	.wrapper{
-		height: calc(100% - 113px);
+		overflow: hidden;
+		background: #f1f1f1;
+		/*height: calc(100% - 113px);*/
 	}
 	.content{
-		background: #f1f1f1;
+		
 		position: relative;
 		width: 100%;
-    	height: 100%;
-    	overflow-y: scroll;
-    	padding: 0 5%;
+		/*height: 100%;*/
+    	/*overflow: hidden;*/
+    	padding: 0 5% 8% 5%;
 	}
 	.content_main{
 		display: flex;

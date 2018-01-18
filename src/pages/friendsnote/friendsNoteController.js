@@ -3,7 +3,7 @@ import commonServices from '@/server/commonServices'
 export default {
 	data() {
 		return {
-			noteName: '', //备注信心
+			noteName: '', //备注名
 			noteRudece: '',
 			userInfo: {//用户信息
 				nickname: '', //昵称
@@ -55,7 +55,9 @@ export default {
 				if(res == '添加好友成功'){
 					this.$router.push({
 						name: 'SelfChatRoom',
-						params: this.userInfo
+						params: Object.assign(this.userInfo, {
+							password: this.noteName
+						})
 					})
 				}
 			})

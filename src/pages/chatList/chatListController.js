@@ -1,6 +1,9 @@
 import service from './chatListServices'
 import { mapGetters } from 'vuex'
 import scroll from 'better-scroll'
+import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+// import {deepClone} from '@/utils/publicFunctions'
+
 export default {
 	data() {
 		return {
@@ -9,58 +12,14 @@ export default {
 			groupChatRoomList: [],
 
 			//个人聊天室记录
-			selfChatRoomList: [
-				{
-					id: '1',
-					title: 'Maco Mai',
-					url: '/static/header1.jpeg',
-				},
-				{
-					id: '2',
-					title: 'Mikey',
-					url: '/static/header2.jpg',
-				},
-				{
-					id: '3',
-					title: 'Makey',
-					url: '/static/header3.jpg',
-				},
-				{
-					id: '4',
-					title: 'Jerry',
-					url: '/static/header1.jpeg',
-				},
-				{
-					id: '5',
-					title: 'Tom',
-					url: '/static/header2.jpg',
-				},
-				{
-					id: '6',
-					title: 'Maco Mai',
-					url: '/static/header1.jpeg',
-				},
-				{
-					id: '7',
-					title: 'Mikey',
-					url: '/static/header2.jpg',
-				},
-				{
-					id: '8',
-					title: 'Makey',
-					url: '/static/header3.jpg',
-				},
-				{
-					id: '9',
-					title: 'Jerry',
-					url: '/static/header1.jpeg',
-				},
-				{
-					id: '10',
-					title: 'Tom',
-					url: '/static/header2.jpg',
-				},
-			],
+			selfChatRoomList: [],
+
+			//删除确认框
+			deleteDialog: {
+				show: false,
+				roomId: null,
+				roomDetail: {},
+			},
 		}
 	},
 	computed:{
@@ -70,7 +29,8 @@ export default {
 	},
 	created() {
 		this.height = (window.innerHeight - 112) + 'px'
-
+		console.log(getItem('selfRoomList'))
+		this.$set(this, 'selfChatRoomList', getItem('selfRoomList').reverse())
 	},
 	mounted() {
 		this._fetchGroupList()
@@ -90,11 +50,9 @@ export default {
 	},
 	methods:{
 		enterSelfChatRoom(room) {
-			console.log(room)
-			const {id: roomId, title} = room
 			this.$router.push({
 				name: 'SelfChatRoom',
-				query: { roomId, title }
+				params: room
 			})
 		},
 		enterGroupChatRoom(room) {
@@ -106,8 +64,31 @@ export default {
 				params: {groupId, groupName}
 			})
 		},
-		test() {
-			console.log(1)
+		openDeleteDialog(room) {
+			this.deleteDialog.roomDetail = room
+			this.deleteDialog.roomId = room.username + '_' + this.$store.state.user.username
+			this.deleteDialog.show = true
+		},
+		deleteSubmit() {
+			//1.删除该聊天室的消息记录
+			removeItem(this.deleteDialog.roomId)
+			//2.从个人聊天室记录列表中删除该聊天室信息
+			console.log(getItem('selfRoomList'))
+			let selfRoomList = getItem('selfRoomList')
+			for(let [index, elem] of Object.entries(selfRoomList)){
+				if(elem.username == this.deleteDialog.roomDetail.username){
+					selfRoomList.splice(index, 1)
+					break
+				}
+			}
+			setItem({
+				key: 'selfRoomList', 
+				value: selfRoomList
+			})
+			this.deleteDialog.show = false
+		},
+		deleteCancel() {
+			this.deleteDialog.show = false
 		},
 		_fetchGroupList() {
 			service.fetchGroupList({
@@ -117,7 +98,6 @@ export default {
 				Vue: this,
 			})
 			.then(res=>{
-				console.log(res)
 				if(res) this.$set(this, 'groupChatRoomList', res)
 			}, err=>{
 				console.log(err)
