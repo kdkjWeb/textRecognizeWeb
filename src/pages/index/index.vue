@@ -1,7 +1,9 @@
 <template>
 	<div class="indexContainer">
 		<div class="main">
+		
 			<router-view/>
+			
 		</div>
 		<div class="footer">
 			<mu-paper>

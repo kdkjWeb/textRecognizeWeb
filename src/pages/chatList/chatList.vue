@@ -25,7 +25,7 @@
 					:key="room.id" 
 					:title="room.groupName"
 					@click="enterGroupChatRoom(room)">
-				      <mu-avatar :src="room.url" 
+				      <mu-avatar src="static/headImg/6.jpg" 
 				      slot="leftAvatar"/>
 				      <mu-icon 
 				      value="chat_bubble" 

@@ -20,12 +20,14 @@
 				v-for="(item,index) in groupMembers" 
 				:key="index"
 				class="proposedmembers_wrapper_title">
-					<mu-list-item disableRipple :title="item.friendsName">
+					<mu-list-item disableRipple 
+						:title="item.nickname"
+						@click.stop="inviteUser(item.id)">
 						<mu-avatar 
-						:src="item.friendsSrc" 
+						:src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
 						slot="leftAvatar"/>
 				        <mu-checkbox 
-				        :nativeValue="item.friendsId"
+				        :nativeValue="item.id.toString()"
 				        v-model="selectArr" 
 				        slot="right" 
 				        />

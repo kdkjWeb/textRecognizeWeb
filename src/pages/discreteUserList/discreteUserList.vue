@@ -44,6 +44,17 @@
 				</mu-list>
 			</div>
 		</div>
+		<div class="delDilog" v-show="isShow">
+			<div class="delDilog_text">
+				确认邀请该用户吗？
+			</div>
+			<div class="delDilog_btn">
+				<div class="delDilog_btn_success" 
+				@click="success">确定</div>
+				<div class="delDilog_btn_cancel"
+				@click="cancel">取消</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -86,4 +97,46 @@
 	.userList{
 		background-color: #fff;
 	}
+	
+	
+/*弹出弹框样式*/
+.delDilog{
+	position: fixed;
+	z-index: 999;
+	left: 50%;
+	top: 50%;
+	margin-top: -75px;
+	margin-left: -100px;
+	width: 200px;
+	height: 150px;
+	border-radius: 6px;
+	box-shadow: 3px 0px 5px 5px #ddd;
+}
+.delDilog_text{
+	width: 100%;
+	height: 110px;
+	text-align: center;
+	line-height: 110px;
+	background-color: #fff;
+	border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+}
+.delDilog_btn{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	display: flex;
+}
+.delDilog_btn div{
+	flex: 1;
+	text-align: center;
+}
+.delDilog_btn div.delDilog_btn_success{
+	background-color: red;
+	border-bottom-left-radius: 6px;
+}
+.delDilog_btn div.delDilog_btn_cancel{
+	background-color: #e6e6e6;
+	border-bottom-right-radius: 6px;
+}
 </style>

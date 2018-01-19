@@ -3,6 +3,7 @@ import services from './discreteUserListServices'
 export default {
 	data() {
 		return {
+			isShow: false,
 			//所查询到的用户列表
 			userList: [
 				{
@@ -36,7 +37,11 @@ export default {
 			this.$router.goBack()
 		},
 		submit() {
-			console.log(this.model)
+			if(!this.model.length){
+				this.$toast('你还没选择要邀请的好友');
+			}else{
+				this.isShow = true;
+			}
 		},
 		//添加选中的用户到model
 		pushUser(id) {
@@ -50,6 +55,33 @@ export default {
 			}else{
 				this.model.splice(result, 1)
 			}
+		},
+		//点击确定提交选中的成员
+		success() {
+			let userId = this.model.map(item => item).join();
+			console.log(userId);
+			//console.log(this.selectArr);
+			
+			/*services.addMembersList({
+				Vue: this,
+				model: {
+					id: this.$route.params.id,
+					userIds: userId
+				}
+			}).then(res=>{
+				if(res.code == 0){
+					this.$router.push({
+						name: 'ChatList'
+					})
+				}
+			})*/
+			this.isShow = false;
+			this.model = []
+		},
+		//取消弹出框并清空选中选项
+		cancel() {
+			this.isShow = false;
+			this.model = []
 		},
 		search() {
 			if(this.model.length)

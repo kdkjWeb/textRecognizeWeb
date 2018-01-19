@@ -33,9 +33,9 @@ export default {
 			   	params: {id, nickname }
 			   })
 		},
-		deleteItem(index,item){
+		deleteItem(index){
 			this.friendsList.splice(index,1);
-			console.log(item)
+			console.log(index)
 		},
 	},
 	mounted() {

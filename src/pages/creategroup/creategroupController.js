@@ -5,7 +5,7 @@ export default {
 		return {
 			gropName: '',
 			gropAnnouncement: '',
-			gropSrc: 'http://www.qqzhi.com/uploadpic/2014-09-24/084641953.jpg'
+			gropSrc: 'static/headImg/6.jpg'
 		}
 	},
 	methods: {
