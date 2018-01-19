@@ -62,9 +62,13 @@ export default {
 
 		//使用滚动插件
 		this.$nextTick(()=>{
-			new scroll(this.$refs['chatList'],{
-				click: true
-			})
+			if(!this.sc){
+				this.sc = new scroll(this.$refs['chatList'],{
+					click: true
+				})
+			}else{
+				this.sc.refresf()
+			}
 		})
 
 
@@ -82,11 +86,10 @@ export default {
 		},
 		enterGroupChatRoom(room) {
 
-			const {groupId, groupName} = room
-			//console.log(roomId, title)
+			const {groupId, groupName, id} = room
 			this.$router.push({
 				name: 'GroupChat',
-				params: {groupId, groupName}
+				params: {groupId, groupName, id}
 			})
 		},
 		openDeleteDialog(room) {

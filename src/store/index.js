@@ -58,6 +58,7 @@ const store = new Vuex.Store({
 			if(state.user)
 				state.user.pictureAddress = data
 		},
+
 		setFriendInfo (state, data) {
 			state.friendInfo = data
 		},
@@ -96,9 +97,7 @@ const store = new Vuex.Store({
 			state.selfUnReadInfos = []
 		},
 	},
-	actions: {
-		
+	actions: {	
 	},
 })
-
 export default store

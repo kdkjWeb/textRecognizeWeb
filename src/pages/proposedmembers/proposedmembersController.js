@@ -1,33 +1,83 @@
 import scroll from 'better-scroll'
 import axios from 'axios'
+import services from './proposedmembersServices'
 export default {
 	data() {
 		return {
 			groupMembers: [],
-			selectArr: [],
+			model: '',
 			isShow: false
 		}
 	},
 	methods: {
+		// 添加选中的用户到selectArr
+		/*inviteUser(id){
+			console.log(id)
+			const result = this.selectArr.findIndex((val=>{
+				return val == id;
+			}))
+			if(result < 0){
+				this.selectArr.push(id)
+			}else{
+				this.selectArr.splice(result,1)
+			}
+			
+		},*/
+		inviteUser(id){
+			this.model = id.toString();
+			//console.log(typeof this.model.toString())
+		},
 		goBack() {
 			this.$router.back(-1)
 		},
 		deleteMember() {
-			if(!this.selectArr.length){
+			if(this.model == ''){
 				this.$toast('你还没选择要删除的成员');
 			}else{
 				this.isShow = true;
 			}
 		},
+		//提交需要踢出的群成员
 		success() {
-			let userId = this.selectArr.map(item => item).join();
+			//let userId = this.selectArr.map(item => item).join();
+			let userId = this.model;
 				console.log(userId);
+			services.proposedMembers({
+				Vue: this,
+				model: {
+					groupId: this.$route.params.id,
+					userId: userId
+				}
+			}).then(res=>{
+				/*if(res.code == 0){
+					this.$router.push({
+						name: 'GroupChat'
+					})
+				}*/
+				//this.$toast(res.msg)
+				this._searchGroupMembers()
+			},err=>{
+				this.$toast(err.msg)
+			})
 			this.isShow = false;
-			this.selectArr = []
+			this.model = ''
 		},
 		cancel() {
 			this.isShow = false;
-			this.selectArr = []
+			this.mmodel = []
+		},
+			// 获取群成员的列表
+		_searchGroupMembers(){
+	        services.searchGroupMembers({
+	        		Vue: this,
+				model: {
+					id: this.$route.params.id
+				}
+	        })
+	        .then(res=>{
+	        		console.log(res)
+	        		this.$set(this, 'groupMembers', res)
+	        })
 		}
 	},
 	created() {
@@ -44,14 +94,8 @@ export default {
         window.addEventListener('resize', () => {
             this.height = (window.innerHeight-56) + 'px';
         })
-
-		// 请求接口数据
-        axios.get('/static/data.json')
-        .then(res=>{
-        	this.groupMembers = res.data.friendsList;
-        })
-        .catch(error=>{
-        	console.log(error)
-        })
+        //获取群成员的列表
+		this._searchGroupMembers();
+		
 	}
 }

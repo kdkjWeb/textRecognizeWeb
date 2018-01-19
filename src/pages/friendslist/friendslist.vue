@@ -20,7 +20,7 @@
 					 <div>
 						 <friendsDel v-for="(item,index) in friendsList" 
 						 :key="item.friendsId" 
-						 @deleteItem="deleteItem(index,item)"
+						 @deleteItem="deleteItem(index)"
 						 :index = "index">
 						 	<mu-list class="FriendsList_content_title">
 							 	<mu-list-item 

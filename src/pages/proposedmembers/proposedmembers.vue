@@ -14,23 +14,26 @@
 			@click="deleteMember" 
 			class="deleteMember">删除</button>
 		</div>
+	
 		<div class="proposedmembers_wrapper" ref="MembersWrapper" :style="{height:height}">
 			<div>
 				<mu-list 
 				v-for="(item,index) in groupMembers" 
 				:key="index"
 				class="proposedmembers_wrapper_title">
-					<mu-list-item disableRipple :title="item.friendsName">
+					<mu-list-item disableRipple 
+						:title="item.nickname"
+						@click.stop="inviteUser(item.id)">
 						<mu-avatar 
-						:src="item.friendsSrc" 
+						:src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
 						slot="leftAvatar"/>
-				        <mu-checkbox 
-				        :nativeValue="item.friendsId"
-				        v-model="selectArr" 
+				        <mu-radio 
+				        :nativeValue="item.id.toString()"
+				        v-model="model" 
 				        slot="right" 
 				        />
 				    </mu-list-item>
-
+		
 				</mu-list>
 			</div>
 		</div>

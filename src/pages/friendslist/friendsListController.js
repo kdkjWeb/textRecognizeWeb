@@ -41,6 +41,7 @@ export default {
 			   	params: {nickname,  username, password, pictureAddress}
 			   })
 		},
+
 		deleteItem(index,item){
 			this.deleteDialog.show = true
 			Object.assign(this.deleteDialog, {

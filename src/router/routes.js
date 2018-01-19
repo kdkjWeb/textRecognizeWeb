@@ -10,7 +10,8 @@ const FriendsNote = ()=>import('@/pages/friendsnote/friendsnote'),  //修改备�
 	  ProposedMembers = ()=>import('@/pages/proposedmembers/proposedmembers'),   //踢出群成员
 	  GroupChat = ()=>import('@/pages/groupchat/groupchat'),   //群聊天
 	  InviteFriends = ()=>import('@/pages/invitefriends/invitefriends'),    //邀请好友
-	  ChangeHeader = ()=>import('@/pages/changeheader/changeheader')    //修改头像
+	  ChangeHeader = ()=>import('@/pages/changeheader/changeheader'),    //修改头像
+	  ChangeGroupInfo = ()=>import('@/pages/changeGroupInfo/changegroupinfo')   //修改群资料
 
 const Login = ()=>import('@/pages/login/login'), // 登录
 	  Index = ()=>import('@/pages/index/index'), //主要一级页面
@@ -123,7 +124,7 @@ export default {
 		{
 			path: '/groupchat',
 			name: 'GroupChat',
-			component: GroupChat
+			component: GroupChat,
 		},
 		{
 			path: '/invitefriends',
@@ -139,6 +140,11 @@ export default {
 			path: '/userSearch',
 			name: 'UserSearch',
 			component: UserSearch
+		},
+		{
+			path: '/changegroupinfo',
+			name: 'ChangeGroupInfo',
+			component: ChangeGroupInfo
 		}
 	]
 }

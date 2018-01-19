@@ -50,9 +50,10 @@ export default {
 				params: model
 			})
 			.then(res=>{
+				
 				if(!hidenLoading)  Vue.$Loading.done()
 				if(res.data.code === 0){
-					resolve(res.data.data)
+					resolve(res.data.data || res.data)
 				}else{
 					Vue.$toast(res?res.data.msg:"网络好像出问题了 = v =")
 					reject(res)
@@ -78,10 +79,11 @@ export default {
 		if(!hidenLoading){
 			Vue.$Loading.process()
 		}
-		
 		return new Promise((resolve, reject)=>{
+			
 			Axios.post(url, model)
 			.then(res=>{
+			
 				if(!hidenLoading)  Vue.$Loading.done()
 				if(res.data.code === 0){
 					resolve(res.data.data || res.data)
@@ -105,3 +107,14 @@ export default {
 		})
 	}
 }
+/*{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset-utf-8' 
+				}
+			}*/
+			
+/*
+ 		var params = new URLSearchParams();
+			params.append('param1','value1');
+			params.append('param2','value2');
+ * */

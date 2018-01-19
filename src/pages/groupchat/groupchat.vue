@@ -1,25 +1,27 @@
 <template>
+
 	<div class="groupchat" style="height: 100%">
 		<!-- 头部 -->
+
 		<div class="header">
-			<mu-appbar 
-			style="text-align:center"
-			:title="roomDetail.groupName">
-				<mu-icon-button
-			    icon="chevron_left" 
-			    slot="left"
-			    @click="goBack"/>
-			    <mu-icon-button
-			    icon="more_vert" 
-			    slot="right"
-			    @click="menuShow"/>
-			 
-			</mu-appbar>
+			
+				<mu-appbar 
+				style="text-align:center"
+				:title="roomDetail.groupName">
+					<mu-icon-button
+				    icon="chevron_left" 
+				    slot="left"
+				    @click="goBack"/>
+				    <mu-icon-button
+				    icon="more_vert" 
+				    slot="right"
+				    @click="menuShow"/> 
+				</mu-appbar>
+		
 			<!-- 下拉列表 -->
 			<div class="menuDown" v-show="isShow">
-				<ul v-for="(item,index) in menuList">
+				<ul v-for="(item,index) in user.type != '0' ? menuList : menuList1">
 					<li 
-					:class="{active: index == menuIndex}"
 					@click="meunItem(index)">{{item}}</li>
 				</ul>
 			</div>
@@ -27,7 +29,7 @@
 
 		<!-- 内容 -->
 		<div class="content" :style="{height: height}" ref="groupChat">
-			<div class="contentMsg">
+			<div class="contentMsg" ref="Msg">
 				<div 
 				v-for="msg, index in chatHistory"
 				:key="index"
@@ -72,10 +74,25 @@
 		    @click="send"
 		   />
 		</div>
+		<!--确认清除聊天记录／确认解散该群／确认退出该群-->
+		<div class="delDilog" v-show="isShow1">
+			<div class="delDilog_text" v-text="user.type != '0'? (dialog ? '确认解散该群' : '确认清空聊天记录') : (dialog ? '确认退出该群' : '确认清空聊天记录')">
+			</div>
+			<div class="delDilog_btn">
+				<div class="delDilog_btn_success" 
+				@click="success">确定</div>
+				<div class="delDilog_btn_cancel"
+				@click="cancel">取消</div>
+			</div>
+		</div>
+		
+		
+		<!--遮罩层-->
 		<div class="layout" 
 		:style="{height:height1}"  
-		v-show="isShow"
-		@click="close"></div>
+		v-show="isShow2"
+		@click="close">
+		</div>
 
 		<mu-bottom-sheet :open="bottomSheet.show" @close="closeBottomSheet">
 		    <mu-list @itemClick="closeBottomSheet">
@@ -91,6 +108,7 @@
 		    </mu-list>
 		</mu-bottom-sheet>
 	</div>
+		
 </template>
 
 <script type="text/javascript">
@@ -114,10 +132,6 @@
 	text-align: center;
 	border-bottom: 1px solid #ddd;
 }
-.active{
-	color: #fff;
-	background-color: #666;
-}
 .content{
 	background: #f1f1f1;
 	position: relative;
@@ -125,10 +139,10 @@
 	/*height: calc(100% - 113px);*/
 	/*overflow-y: scroll;*/
 	overflow: hidden;
-	padding: 0 5%;
+	padding: 2% 5%;
 }
 .contentMsg{
-	margin-top: -10px;
+	margin-top: -15px;
 }
 .content_main{
 	display: flex;
@@ -178,6 +192,47 @@
 	z-index: 99;
 	width: 100%;
 	background-color: rgba(0,0,0,.1);
+}
+
+/*确认弹出框样式*/
+.delDilog{
+	position: fixed;
+	z-index: 999;
+	left: 50%;
+	top: 50%;
+	margin-top: -75px;
+	margin-left: -100px;
+	width: 200px;
+	height: 150px;
+	border-radius: 6px;
+	box-shadow: 3px 0px 5px 5px #ddd;
+}
+.delDilog_text{
+	width: 100%;
+	height: 110px;
+	text-align: center;
+	line-height: 110px;
+	background-color: #fff;
+	border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+}
+.delDilog_btn{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	display: flex;
+}
+.delDilog_btn div{
+	flex: 1;
+	text-align: center;
+}
+.delDilog_btn div.delDilog_btn_success{
+	background-color: red;
+	border-bottom-left-radius: 6px;
+}
+.delDilog_btn div.delDilog_btn_cancel{
+	background-color: #e6e6e6;
+	border-bottom-right-radius: 6px;
 }
 </style>
 
