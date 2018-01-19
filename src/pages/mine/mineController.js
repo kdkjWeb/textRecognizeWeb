@@ -1,4 +1,5 @@
 import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+import Ws from '@/utils/WebSocket'
 
 export default {
 	data() {
@@ -61,6 +62,8 @@ export default {
 		logout() {
 			//消除socket 以及保存的user信息
 			removeItem('token')
+			this.$store.commit('reset')
+			Ws.close()
 			this.$router.push({
 				name: 'Login'
 			})

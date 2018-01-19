@@ -2,6 +2,8 @@ import service from './chatListServices'
 import { mapGetters } from 'vuex'
 import scroll from 'better-scroll'
 import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+import {deepClone} from '@/utils/publicFunctions'
+import commonServices from '@/server/commonServices'
 // import {deepClone} from '@/utils/publicFunctions'
 
 export default {
@@ -24,13 +26,36 @@ export default {
 	},
 	computed:{
 		...mapGetters({
-			user: 'getUser'
+			user: 'getUser', //获取用户信息
+			selfUnReadInfos: 'getSelfUnReadInfos', //获取个人聊天未读信息
 		})
+	},
+	watch: {
+		'selfUnReadInfos': {
+			handler(val) {
+				console.log(val)
+				for(let elem of Object.values(val)){
+					this._setSelfChatUnReadCount(elem)
+				}
+				
+			},
+			deep: true
+		}
 	},
 	created() {
 		this.height = (window.innerHeight - 112) + 'px'
+
+		//获取聊天记录列表
+		this.$set(this, 'selfChatRoomList', deepClone(getItem('selfRoomList').reverse()))
+
 		console.log(getItem('selfRoomList'))
-		this.$set(this, 'selfChatRoomList', getItem('selfRoomList').reverse())
+
+		//设置未读的聊天信息数
+		for(let elem of Object.values(this.$store.getters.getSelfUnReadInfos)){
+			console.log(elem)
+			this._setSelfChatUnReadCount(elem)
+		}
+
 	},
 	mounted() {
 		this._fetchGroupList()
@@ -85,6 +110,7 @@ export default {
 				key: 'selfRoomList', 
 				value: selfRoomList
 			})
+			this.$set(this, 'selfChatRoomList', selfRoomList)
 			this.deleteDialog.show = false
 		},
 		deleteCancel() {
@@ -102,6 +128,36 @@ export default {
 			}, err=>{
 				console.log(err)
 			})
-		}
+		},
+		_setSelfChatUnReadCount(data) {
+			for(let elem of Object.values(this.selfChatRoomList)){
+				console.log(elem)
+				if(elem.username == data.msgFrom){
+					this.$set(elem, 'warnNum', data.count)
+					return
+				}
+			}
+
+			//没有该聊天记录，则重新新增一个聊天记录
+			commonServices.transport({
+				url: 'user/selectListByUser',
+				model: {
+					username: data.msgFrom,
+				},
+				Vue: this,
+				hidenLoading: true
+			})
+			.then(res=>{
+				console.log(res)
+				const {nickname, pictureAddress, username} = res.list[0]
+				let arr = getItem('selfRoomList') || []
+				arr.push({nickname, pictureAddress, username})
+				console.log(arr)
+				setItem({
+					key: 'selfRoomList', 
+					value: arr
+				})
+			})
+		},
 	}
 }

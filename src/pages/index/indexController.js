@@ -1,5 +1,6 @@
 import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
 import services from '../login/loginServices'
+import Ws from '@/utils/WebSocket'
 
 export default {
 	data() {
@@ -7,19 +8,28 @@ export default {
 			 bottomNav: ''
 		}
 	},
-	// beforeRouteEnter(to, from, next){
-	// 	console.log(from)
-	// 	if(!from.name || from.name == 'Login'){
-			
-	// 	}
-	// 	next()
-	// },
-	created() {
-		this._getUserInfoByToken()
+	beforeRouteEnter:(to, from, next) =>{
+		next(vm=>{
+			if(from.path == '/' || from.path == '/selfChatRoom'){
+				vm._connectWebsocket()
+			}
+		})
 	},
 	mounted() {
 		let str = this.$route.path
 		this.bottomNav = str.substring(7, str.length)
+
+		// this.$router.beforeEach((to, from, next)=>{
+		// 	console.log('sss', from.path)
+		// 	if(from.path == '/' || from.path == '/selfChatRoom'){
+		// 		this._connectWebsocket()
+		// 	}
+		// 	// next()
+		// })
+	},
+
+	computed: {
+		unReadCount() {return this.$store.state.unReadCount},
 	},
 	methods: {
 		handleChange (val) {
@@ -45,7 +55,33 @@ export default {
 					name: 'Login'
 				})
 			}
-	    }
+	    },
+	    _connectWebsocket() {
+	    	//建立总的消息提醒websokcet链接
+			if(!this.$store.state.user.username){
+				setTimeout(()=>{
+					this._getUserInfoByToken()
+					Ws.connect({
+						url: 'totalWs',
+						params: {
+							msgFrom: this.$store.state.user.username
+						},
+						model: this.chatHistory,
+						connector: this.$store.state.user
+					})
+				}, 500)
+			}else{
+				this._getUserInfoByToken()
+				Ws.connect({
+					url: 'totalWs',
+					params: {
+						msgFrom: this.$store.state.user.username
+					},
+					model: this.chatHistory,
+					connector: this.$store.state.user
+				})
+			}
+	    },
 	},
 
 }

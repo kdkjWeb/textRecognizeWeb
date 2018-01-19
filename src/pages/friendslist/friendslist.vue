@@ -24,7 +24,7 @@
 						 :index = "index">
 						 	<mu-list class="FriendsList_content_title">
 							 	<mu-list-item 
-							 	:title="item.password?item.password:item.nickname || '暂未设置昵称'"
+							 	:title="item.nickname || '暂未设置昵称'"
 							 	@click="enterSelfChatRoom(item)">
 							      <mu-avatar 
 							      :src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
@@ -108,11 +108,11 @@
 	border-top: 1px solid #ddd;
 }
 
-	footer{
-		margin-top: 30px;
-		display: flex;
-		justify-content: space-between;
-	}
+footer{
+	margin-top: 30px;
+	display: flex;
+	justify-content: space-between;
+}
 </style>
 
 

@@ -21,7 +21,7 @@ export function phoneRegExp(str){
 export function deepClone(obj){
 	let newobj = obj.constructor === Array ? [] : {};
     if(typeof obj !== 'object'){
-        return;
+        return obj;
     } else if(window.JSON){
         newobj = JSON.parse(JSON.stringify(obj))//系列化对象,还原
     } else {
