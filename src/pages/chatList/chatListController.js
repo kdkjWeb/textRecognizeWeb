@@ -30,7 +30,7 @@ export default {
 	created() {
 		this.height = (window.innerHeight - 112) + 'px'
 		console.log(getItem('selfRoomList'))
-		this.$set(this, 'selfChatRoomList', getItem('selfRoomList').reverse())
+		//this.$set(this, 'selfChatRoomList', getItem('selfRoomList').reverse())
 	},
 	mounted() {
 		this._fetchGroupList()

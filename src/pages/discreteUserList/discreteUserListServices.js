@@ -4,7 +4,7 @@ export default {
 	discreteUserList: ({model,Vue,hidenLoading})=>{
 		return new Promise((resolve,reject)=>{
 			commonServices.fetch({
-				url: '',
+				url: 'user/findNoGroupUsers',
 				model,
 				Vue,
 				hidenLoading
@@ -20,7 +20,7 @@ export default {
 	addDiscreteUserList:({model,Vue,hidenLoading})=>{
 		return new Promise((resolve,reject)=>{
 			commonServices.transport({
-				url: '',
+				url: 'group/addMembers',
 				model,
 				Vue,
 				hidenLoading
@@ -31,5 +31,21 @@ export default {
 				reject(err)
 			})
 		})
-	}
+	},
+	//收索离散用户
+	/*searchUserList:({model,Vue,hidenLoading})=>{
+		return new Promise((resolve,reject)=>{
+			commonServices.transport({
+				url: 'group/addMembers',
+				model,
+				Vue,
+				hidenLoading
+			})
+			.then(res=>{
+				resolve(res)
+			},err=>{
+				reject(err)
+			})
+		})
+	}*/
 }

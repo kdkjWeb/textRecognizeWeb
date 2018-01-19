@@ -20,8 +20,9 @@
 					 <div>
 						 <friendsDel v-for="(item,index) in friendsList" 
 						 :key="item.friendsId" 
-						 @deleteItem="deleteItem(index)"
-						 :index = "index">
+						 @deleteItem="deleteItem(index,item)"
+						 :index = "index" :item="item"
+						 >
 						 	<mu-list class="FriendsList_content_title">
 							 	<mu-list-item 
 							 	:title="item.password?item.password:item.nickname || '暂未设置昵称'"
@@ -88,7 +89,7 @@
 .FriendsList_content_title{
 	padding: 0;
 	border-bottom: 1px solid #ddd;
-	border-top: 1px solid #ddd;
+	/*border-top: 1px solid #ddd;*/
 }
 .FriendsList_model{
 	position: relative;
@@ -105,7 +106,7 @@
 	text-align: center;
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
-	border-top: 1px solid #ddd;
+	/*border-top: 1px solid #ddd;*/
 }
 
 	footer{

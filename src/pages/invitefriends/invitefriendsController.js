@@ -5,7 +5,8 @@ export default {
 		return {
 			groupMembers: [],
 			selectArr: [],
-			isShow: false
+			isShow: false,
+			height: 0
 		}
 	},
 	methods: {

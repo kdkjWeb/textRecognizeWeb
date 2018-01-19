@@ -24,7 +24,6 @@
                 moveX: 0,       //滑动时的位置
                 disX: 0,       //移动距离
                 txtStyle: '',
-                // txtStyle: [],
                 delWidth: 100,
                 userIndex:0,
             }
@@ -75,8 +74,8 @@
                 }
         	},
         	deleteItem(index){
-                
                 this.$emit('deleteItem',index);
+                this.txtStyle = "transform:translateX(0px)";
             }
         }
 	}
@@ -85,7 +84,7 @@
 <style type="text/css" scoped>
 .FriendsList_model{
 	position: relative;
-	transition: all .5s;
+	transition: all .6s;
 }
 .delete{
 	position: absolute;

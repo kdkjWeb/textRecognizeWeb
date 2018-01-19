@@ -17,31 +17,33 @@
 		<div class="content">
 			<div class="middle">
 				<div class="search">
-					<input type="text" placeholder="搜索用户">
+					<input type="text" placeholder="搜索用户" v-model="searchModel">
 					<div class="verLine"></div>
 					<mu-icon 
 					value="search"
 					@click="search"/>
 				</div>
 			</div>
-			<div class="userList">
-				<mu-list style="padding: 0">
-					<mu-list-item
-					v-for="user, index in userList"
-					:key="index"
-					style="border-bottom:1px solid #fafafa" 
-					:title="user.userName"
-					@click.stop="pushUser(user.id)">
-				      <mu-avatar 
-				      :src="user.header" 
-				      slot="leftAvatar"/>
-				      <mu-checkbox
-				      :nativeValue="user.id" 
-				      v-model="model"  
-				      slot="right" 
-				      class="demo-checkbox"/>
-				    </mu-list-item>
-				</mu-list>
+			<div class="userList" ref="discreateUserList" :style="{height:height}">
+				<div>
+					<mu-list style="padding: 0">
+						<mu-list-item
+						v-for="user, index in userList"
+						:key="index"
+						style="border-bottom:1px solid #fafafa" 
+						:title="user.username"
+						@click.stop="pushUser(user.id)">
+					      <mu-avatar 
+					      :src="user.pictureAddress? '/static/headImg/' + user.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+					      slot="leftAvatar"/>
+					      <mu-checkbox
+					      :nativeValue="user.id.toString()" 
+					      v-model="model"  
+					      slot="right" 
+					      class="demo-checkbox"/>
+					    </mu-list-item>
+					</mu-list>
+				</div>
 			</div>
 		</div>
 		<div class="delDilog" v-show="isShow">
@@ -96,6 +98,7 @@
 	}
 	.userList{
 		background-color: #fff;
+		overflow: hidden;
 	}
 	
 	

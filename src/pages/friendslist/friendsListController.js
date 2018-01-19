@@ -1,4 +1,4 @@
-import friendsNote from '../friendsnote/friendsnote'
+
 import friendsDel from '../delete/delete'
 import scroll from 'better-scroll'
 import services from './friendsListServices'
@@ -21,7 +21,6 @@ export default {
 		}
 	},
 	components: {
-		friendsNote,
 		friendsDel
 	},
 	created() {
@@ -96,7 +95,6 @@ export default {
         	console.log(res)
         	this.$set(this, 'friendsList', res)
         })
-        
-
+       
 	}
 }
