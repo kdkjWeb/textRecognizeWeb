@@ -2,7 +2,7 @@ import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 import Ws from '@/utils/WebSocket'
 import scroll from 'better-scroll'
 import {mapGetters} from 'vuex'
-import services from './groupchatServices'
+// import services from './groupchatServices'
 export default {
 	data() {
 		return {

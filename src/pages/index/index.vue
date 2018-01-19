@@ -33,7 +33,11 @@
 			    :to="{
 			    	name: 'Mine'
 			    }"/>
-			  </mu-bottom-nav>
+				    <span 
+				    class="navWarnNum"
+				    v-if="unReadCount > 0"
+				    v-text="unReadCount"></span>
+			    </mu-bottom-nav>
 			</mu-paper>
 		</div>
 		
@@ -58,5 +62,17 @@
 		bottom: 0;
 		right:  0;
 		left:  0;
+	}
+	.navWarnNum{
+		display: inline-block;
+		width: 17px;
+		height: 17px;
+		text-align: center;
+		line-height: 17px;
+		position: absolute;
+		background-color: red;
+		left: 17.5%;
+		top: 0;
+		border-radius: 50%;
 	}
 </style>

@@ -20,15 +20,22 @@ export default {
 			friendInfo: {},
 			chatHistory: [],
 			height: 0,
+			routeFrom: '',
 		}
 	},
 	created() {
 		console.log(this.$route.params)
 		if(Object.keys(this.$route.params).length > 0)
 			this.$store.commit('setFriendInfo', this.$route.params)
-		this.friendInfo = Object.keys(this.$route.params).length > 0? this.$route.params : this.$store.state.friendInfo
 
-		console.log(this.$store.state.friendInfo)
+		//避免从selfChatRoomConfig退回到该页面，无法获取params
+		this.friendInfo = Object.keys(this.$route.params).length > 0?
+						 this.$route.params : 
+						 this.$store.state.friendInfo
+
+        //清除未读信息数
+        console.log(this.$store.getters.getSelfUnReadInfos)
+        console.log(this.$store.state.selfUnReadInfos)
 
 		Object.assign(this.roomDetail, {
 			roomId: this.friendInfo.username + '_' + this.$store.state.user.username,
@@ -58,6 +65,11 @@ export default {
 		})
 
 	},
+	beforeRouteEnter (to, from, next) {
+	  next(vm=>{
+	  	vm.routeFrom = from.name
+	  })
+	},
 	mounted() {
 		this.$nextTick(() => {
 	        new betterScroll(this.$refs.wrapper, {
@@ -70,17 +82,17 @@ export default {
         //     this.height = (window.innerHeight-113) + 'px';
         // })
 	},
-	destroyed() {
-		if(Ws)
-			Ws.close()
-	},
 
 	methods: {
 		goBack() {
-			//断开socket链接
-			this.$router.push({
-				name: 'FriendsList'
-			})
+			if(this.routeFrom == 'SelfChatRoomConfig'){
+				this.$router.push({
+					name: 'FriendsList'
+				})
+			}else{
+				this.$router.goBack()
+			}
+			
 		},
 		enterRoomSetting() {
 			this.$router.push({
@@ -123,10 +135,13 @@ export default {
 				date: data.date
 			})
 
+			console.log(data.date)
+
 			setTimeout(()=>{
 				for(let i = this.chatHistory.length - 1; i > -1; i-- ){
 
 			 		if(this.chatHistory[i] == data){
+			 			console.log(this.chatHistory[i].status)
 			 			//找到这条发送的信息，检查状态是否发送成功
 
 			 			if(this.chatHistory[i].status != 'success'){
@@ -141,8 +156,9 @@ export default {
 						//第一次存在历史记录则将room信息放入 个人聊天记录列表中
 
 						if(this.chatHistory.length == 1){
-
-							let arr = getItem('selfRoomList')
+							console.log("首次存入聊天记录")
+							console.log(this.friendInfo)
+							let arr = getItem('selfRoomList') || []
 							arr.push(this.friendInfo)
 
 							setItem({

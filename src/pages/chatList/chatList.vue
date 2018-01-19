@@ -45,9 +45,6 @@
 					:key="room.id"
 					:title="room.password?room.password:room.nickname || '暂未设置昵称'"
 					@click="enterSelfChatRoom(room)">
-					  <!-- <mu-badge content="10" class="demo-icon-badge" circle secondary>
-					  	
-					  </mu-badge> -->
 				      <mu-avatar 
 				      :src="room.pictureAddress ? '/static/headImg/' + room.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
 				      slot="leftAvatar"/>
@@ -56,6 +53,9 @@
 				      color="red" 
 				      slot="right"
 				      @click.stop="openDeleteDialog(room)"/>
+				      <span class="msgWarn" 
+				      v-if="room.warnNum"
+				      v-text="room.warnNum"></span>
 				    </mu-list-item>
 				    <mu-content-block
 				    v-if="selfChatRoomList.length == 0">
@@ -86,16 +86,21 @@
 </script>
 
 <style type="text/css" scoped>
-	/*.header{
-		position: relative;
-		top: 0;
-		right: 0;
-		left: 0;
-	}*/
 	.content{
-		/*height: calc(100% - 56px);
-		overflow-y: scroll;*/
 		overflow: hidden;
+	}
+	.msgWarn{
+		display: inline-block;
+		width: 17px;
+		height: 17px;
+		text-align: center;
+		line-height: 17px;
+		position: absolute;
+		left: 12%;
+		top: 5%;
+		background-color: red;
+		color: #fff;
+		border-radius: 50%;
 	}
 	footer{
 		margin-top: 30px;
