@@ -30,7 +30,6 @@ export function getItem(key) {
   }
 
   const { value, duration, time } = myStorage[key] || {}
-
   if (Date.now() - time <= duration) {
     return value
   }

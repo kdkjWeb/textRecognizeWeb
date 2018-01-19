@@ -17,12 +17,13 @@
 		</div>
 		<div class="systemnews_title">
 			<mu-card-header 
-			:title="title" 
-			:subTitle="subTitle"
+			:title="text.title" 
+			:subTitle="text.date"
 			:titleClass="['titleSize']">
 			</mu-card-header>
 		</div>
-		<div class="systemnews_comtent">{{comtent}}</div>
+		<div class="systemnews_comtent"
+		v-text="text.content"></div>
 	</div>
 </template>
 

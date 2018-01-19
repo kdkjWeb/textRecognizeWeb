@@ -26,7 +26,7 @@
 				:key="index"
 				@click="$router.push({
 					name: 'SysMessageDetail',
-					query: { id: msg.id}
+					params: msg
 				})">
 					<mu-list-item 
 					:title="msg.title" 

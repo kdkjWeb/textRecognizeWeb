@@ -2,13 +2,22 @@ import friendsNote from '../friendsnote/friendsnote'
 import friendsDel from '../delete/delete'
 import scroll from 'better-scroll'
 import services from './friendsListServices'
+import commonServices from '@/server/commonServices'
+
 export default {
 	data() {
 		return {
 			height: 0,
 			title: '好友',
 			friendsList: [], //{uid2: 用户id}
-			isShow: false
+			isShow: false,
+
+			//删除确认框
+			deleteDialog: {
+				show: false,
+				friendId: null,
+				index: null,
+			},
 		}
 	},
 	components: {
@@ -20,22 +29,48 @@ export default {
 	},
 	methods: {
 		nodeList(val) {
-	
-			let data = val;
-			this.$router.push({name:'FriendsNote',params:data})
+			this.$router.push({name:'FriendsNote',params:val})
 
 			
 		},
 		enterSelfChatRoom(room){
-			 const {id, nickname} = room
+			 const {nickname, username, password, pictureAddress} = room
+			 console.log(room)
 			  this.$router.push({
 			   	name: 'SelfChatRoom',
-			   	params: {id, nickname }
+			   	params: {nickname,  username, password, pictureAddress}
 			   })
 		},
-		deleteItem(index){
-			this.friendsList.splice(index,1);
-			console.log(index)
+
+		deleteItem(index,item){
+			this.deleteDialog.show = true
+			Object.assign(this.deleteDialog, {
+				friendId: item.id,
+				index: index
+			})
+		},
+
+		deleteSubmit() {
+			//提交删除好友信息
+			commonServices.fetch({
+				url: 'user/delFriend',
+				model: {
+					id: this.deleteDialog.friendId
+				},
+				Vue: this,
+			})
+			.then(res=>{
+			    console.log(res)
+			    if(res == '删除成功'){
+			    	this.friendsList.splice(this.deleteDialog.index,1);
+			    }
+			}, err=>{
+				console.log(err)
+			})
+			this.deleteDialog.show = false
+		},
+		deleteCancel() {
+			this.deleteDialog.show = false
 		},
 	},
 	mounted() {

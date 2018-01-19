@@ -75,6 +75,7 @@
                 }
         	},
         	deleteItem(index){
+                
                 this.$emit('deleteItem',index);
             }
         }

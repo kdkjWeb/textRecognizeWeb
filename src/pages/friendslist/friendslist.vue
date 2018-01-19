@@ -41,7 +41,21 @@
 				</div>
 			</div>
 		</div>
-		<!-- <friendsNote ref="nodeShowList" v-show="isShow"></friendsNote> -->
+
+		<!-- 删除确认框 -->
+		<mu-dialog :open="deleteDialog.show" @close="deleteCancel">
+			您确定要删除该好友么?
+			<footer>
+				<mu-raised-button 
+				secondary 
+				@click="deleteSubmit" 
+				label="确定"/>
+				<mu-raised-button 
+				@click="deleteCancel" 
+				primary 
+				label="取消"/>
+			</footer>
+		</mu-dialog>
 	</div>
 </template>
 
@@ -93,6 +107,12 @@
 	border-bottom: 1px solid #ddd;
 	border-top: 1px solid #ddd;
 }
+
+	footer{
+		margin-top: 30px;
+		display: flex;
+		justify-content: space-between;
+	}
 </style>
 
 
