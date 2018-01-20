@@ -24,7 +24,15 @@ const initStore = {
 		pictureAddress: '', //头像
 		username: '', //用户名
 	},
-
+	
+	//群的数据信息
+	groupInfo:{
+		groupId: '',   //群号码
+		groupName: '',   //群名字
+		id: '',      //群id
+	},
+	
+	
 	//聊天历史
 	chatHistory: [],
 
@@ -57,6 +65,10 @@ const store = new Vuex.Store({
 		setUserHead (state, data) {
 			if(state.user)
 				state.user.pictureAddress = data
+		},
+
+		setGroupInfo (state,data){
+			state.groupInfo = data
 		},
 
 		setFriendInfo (state, data) {

@@ -22,10 +22,20 @@ export default {
 			})
 			.then(res=>{
 				console.log(res)
-				this.$router.push({
-					name: 'GroupChat',
-					params: res
-				})
+				if(res.code == 0){
+					const groupInfo = {
+						groupName: this.gropName,
+						id: this.$route.params.id,
+						notice: this.gropAnnouncement,
+					}
+					//console.log(groupInfo)
+						this.$router.push({
+						name: 'GroupChat',
+						params: groupInfo
+					})
+				}
+			
+				
 			}, err=>{
 				this.$toast(err.data.msg)
 				console.log(err)

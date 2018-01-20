@@ -31,7 +31,20 @@ export default {
 	created() {
 		this.height = (window.innerHeight-113) + 'px';
 		this.height1 = (window.innerHeight) + 'px';
-		this.roomDetail = Object.assign({}, this.$route.params)
+		//获取从聊天列表传递过来的数据
+		//this.roomDetail = Object.assign({}, this.$route.params)
+		//console.log(this.$route.params)
+		
+		
+		if(Object.keys(this.$route.params).length > 0)
+			this.$store.commit('setGroupInfo', this.$route.params)
+		//避免从selfChatRoomConfig退回到该页面，无法获取params
+		const {groupId, groupName, id} = this.$route.params
+		this.roomDetail = Object.keys(this.$route.params).length > 0?
+						 {groupId, groupName, id} : 
+						 this.$store.state.groupInfo
+		
+		
 		//获取localStorage的聊天历史记录
 		const res = getItem(this.roomDetail.groupId)
 		this.$set(this, 'chatHistory', res || [])
