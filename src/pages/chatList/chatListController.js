@@ -50,7 +50,7 @@ export default {
 
 		console.log(getItem('selfRoomList'))
 
-		//this.$set(this, 'selfChatRoomList', getItem('selfRoomList').reverse())
+
 
 
 		//设置未读的聊天信息数

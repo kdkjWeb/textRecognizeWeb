@@ -18,15 +18,16 @@
 			<div>
 				<div class="FriendsList_content" ref="FriendsListWrapper" :style="{height:height}">
 					 <div>
-						 <friendsDel v-for="(item,index) in friendsList" 
+						 <friendsDel v-for="(item,index) in friendsList"
 						 :key="item.friendsId" 
 						 @deleteItem="deleteItem(index,item)"
-						 :index = "index" :item="item"
-						 >
+						 :index = "index" 
+						 :item="item"
+						 :arr="friendsList">
 						 	<mu-list class="FriendsList_content_title">
 							 	<mu-list-item 
 							 	:title="item.nickname || '暂未设置昵称'"
-							 	@click="enterSelfChatRoom(item)">
+							 	@click.stop="enterSelfChatRoom(item)">
 							      <mu-avatar 
 							      :src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
 							      slot="leftAvatar"/>
@@ -38,6 +39,7 @@
 							    </mu-list-item>
 							 </mu-list>
 						 </friendsDel>
+						
 					 </div>
 				</div>
 			</div>
@@ -114,6 +116,10 @@ footer{
 	display: flex;
 	justify-content: space-between;
 }
+
+
+
+
 </style>
 
 

@@ -18,6 +18,7 @@ export default {
 				friendId: null,
 				index: null,
 			},
+			
 		}
 	},
 	components: {
@@ -71,6 +72,7 @@ export default {
 		deleteCancel() {
 			this.deleteDialog.show = false
 		},
+			
 	},
 	mounted() {
 		//使用better-scroll添加滚动效果
@@ -95,6 +97,9 @@ export default {
         	console.log(res)
         	this.$set(this, 'friendsList', res)
         })
+      
+    
        
+      
 	}
 }

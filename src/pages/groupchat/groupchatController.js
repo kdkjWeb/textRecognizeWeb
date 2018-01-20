@@ -56,6 +56,10 @@ export default {
 					this.sc = new scroll(this.$refs['groupChat'],{
 						click: true
 					})
+					 //如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+					if(this.getMsgHeight() > 0){
+						this.sc.scrollTo(0,-(this.getMsgHeight()));
+					}
 				}else{
 					this.sc.refresf()
 				}
@@ -73,6 +77,17 @@ export default {
 	destroyed() {
 		Ws.close()
 	},
+	/*watch: {
+		'chatHistory': {
+			handler(val){
+				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+					if(this.getMsgHeight() > 0){
+						this.sc.scrollTo(0,-(this.getMsgHeight()));
+					}
+			},
+			deep:true,
+		}
+	},*/
 	methods: {
 		
 		
@@ -295,10 +310,7 @@ export default {
 			 		}
 			 	}
 			 }, 3000)
-			 //如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-				if(this.getMsgHeight() > 0){
-					this.sc.scrollTo(0,-(this.getMsgHeight()));
-				}
+			
 			 	
 			
 			
