@@ -21,27 +21,28 @@ export default {
 			chatHistory: [],
 			height: 0,
 			routeFrom: '',
+			scroll: null,
 		}
 	},
 	created() {
-		console.log(this.$route.params)
 		if(Object.keys(this.$route.params).length > 0)
 			this.$store.commit('setFriendInfo', this.$route.params)
 
 		//避免从selfChatRoomConfig退回到该页面，无法获取params
+		const {nickname, pictureAddress, username} = this.$route.params
 		this.friendInfo = Object.keys(this.$route.params).length > 0?
-						 this.$route.params : 
+						 {nickname, pictureAddress, username} : 
 						 this.$store.state.friendInfo
 
+
+		console.log(this.friendInfo)
+		console.log(this.$store.state.user)
         //清除未读信息数
-        console.log(this.$store.getters.getSelfUnReadInfos)
-        console.log(this.$store.state.selfUnReadInfos)
+        //进入聊天室后台自动清除
 
 		Object.assign(this.roomDetail, {
 			roomId: this.friendInfo.username + '_' + this.$store.state.user.username,
-			title: this.friendInfo.password?
-					this.friendInfo.password:
-					this.friendInfo.nickname || '暂未设置昵称'
+			title: this.friendInfo.nickname || '暂未设置昵称'
 		})
 		
 		
@@ -72,15 +73,29 @@ export default {
 	},
 	mounted() {
 		this.$nextTick(() => {
-	        new betterScroll(this.$refs.wrapper, {
+	        this.scroll = new betterScroll(this.$refs.wrapper, {
 	        	click: true
 	        })
+
+	        if(this._getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this._getMsgHeight() - 57));
+			}
+
 	    })
 
-	    // 监听窗口改变重置高度
-        // window.addEventListener('resize', () => {
-        //     this.height = (window.innerHeight-113) + 'px';
-        // })
+
+	},
+
+	watch: {
+		'chatHistory': {
+			handler(val) {
+				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+				if(this.scroll && this._getMsgHeight() > 0){
+					this.scroll.scrollTo(0,-(this._getMsgHeight()));
+				}
+			},
+			deep: true,
+		}
 	},
 
 	methods: {
@@ -119,7 +134,7 @@ export default {
 			let data = {
 				username: this.$store.state.user.username,
 				message: this.message,
-				header:  this.$store.state.user.pictureAddress || '6',
+				header:  this.$store.state.user.pictureAddress,
 				date: new Date(),
 			}
 			this.message = ''
@@ -127,6 +142,8 @@ export default {
 			//2.发送消息到后台,回调如果发送失败将此消息的状态设置为error,将结果存入localStorage
 
 			this.chatHistory.push(data)
+
+			
 
 			Ws.send({
 				msg: data.message,
@@ -160,6 +177,7 @@ export default {
 							console.log(this.friendInfo)
 							let arr = getItem('selfRoomList') || []
 							arr.push(this.friendInfo)
+							console.log(this.friendInfo)
 
 							setItem({
 								key: 'selfRoomList', 
@@ -170,6 +188,11 @@ export default {
 			 		}
 			 	}
 			}, 3000)
+
+			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+			if(this._getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this._getMsgHeight()));
+			}
 		},
 
 		/**
@@ -248,5 +271,11 @@ export default {
 	    	})
 	    	console.log(this.bottomSheet)
 	    },
+
+	    //计算装消息盒子的高度
+		_getMsgHeight() {
+	 		let MsgHeight = this.$refs.content.offsetHeight - parseInt(this.height) + 57;
+	 		return MsgHeight;
+		},
 	},
 }

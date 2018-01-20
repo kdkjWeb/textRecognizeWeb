@@ -15,13 +15,17 @@
 			</mu-appbar>
 		</div>
 		<div class="wrapper" :style="{height: height}" ref="wrapper">
-			<div class="content">
+			<div class="content" ref="content">
 				<div 
 				v-for="msg, index in chatHistory"
 				:key="index"
-				class="content_main"
-				:style="{'flex-direction':msg.username == $store.state.user.username?'row-reverse':'row'}">
-					 <mu-avatar :src="msg.header ? '/static/headImg/' + msg.header + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
+				:style="{'flex-direction':msg.username == $store.state.user.username?'row-reverse':'row'}"
+				class="content_main">
+					 <mu-avatar 
+					 :src="msg.username == $store.state.user.username?
+							 ($store.state.user.pictureAddress ? '/static/headImg/' + $store.state.user.pictureAddress + '.jpg' : '/static/headImg/6.jpg') :
+							 (friendInfo.pictureAddress ? '/static/headImg/' + friendInfo.pictureAddress + '.jpg' : '/static/headImg/6.jpg')"
+					 slot="leftAvatar"/>
 					 <div 
 					 class="content_msg">
 					    <div class="content_msg_icon" 

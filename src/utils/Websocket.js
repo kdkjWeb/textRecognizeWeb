@@ -74,10 +74,10 @@ export default {
 			console.log(ws.readyState)
 			switch(ws.readyState){
 				case 0 || 1://正在连接、连接成功
-				console.log('关闭ws请求发送ing...')
-				ws.close()
 				let timer1 = setInterval(()=>{
 					console.log(ws.readyState)
+					console.log('关闭ws请求发送ing...')
+					ws.close()
 					if(ws.readyState == 3){
 						clearInterval(timer1)
 						ws = new WebSocket(url)
@@ -90,6 +90,8 @@ export default {
 
 				case 2://正在关闭
 				let timer2 = setInterval(()=>{
+					console.log(ws.readyState)
+					ws.close()
 					if(ws.readyState == 3){
 						clearInterval(timer2)
 						ws = new WebSocket(url)

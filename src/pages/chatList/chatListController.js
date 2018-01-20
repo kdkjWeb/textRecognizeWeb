@@ -1,7 +1,7 @@
 import service from './chatListServices'
 import { mapGetters } from 'vuex'
 import scroll from 'better-scroll'
-import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 import {deepClone} from '@/utils/publicFunctions'
 import commonServices from '@/server/commonServices'
 // import {deepClone} from '@/utils/publicFunctions'
@@ -46,7 +46,7 @@ export default {
 		this.height = (window.innerHeight - 112) + 'px'
 
 		//获取聊天记录列表
-		this.$set(this, 'selfChatRoomList', deepClone(getItem('selfRoomList').reverse()))
+		this.$set(this, 'selfChatRoomList', deepClone((getItem('selfRoomList') || []).reverse()))
 
 		console.log(getItem('selfRoomList'))
 
@@ -59,6 +59,7 @@ export default {
 			this._setSelfChatUnReadCount(elem)
 		}
 
+		// clear()
 
 	},
 	mounted() {
@@ -136,6 +137,10 @@ export default {
 				console.log(err)
 			})
 		},
+
+		/**
+		 * 登录在线时候设置个人聊天记录未读信息数
+		 */
 		_setSelfChatUnReadCount(data) {
 			for(let elem of Object.values(this.selfChatRoomList)){
 				console.log(elem)
@@ -155,15 +160,22 @@ export default {
 				hidenLoading: true
 			})
 			.then(res=>{
-				console.log(res)
 				const {nickname, pictureAddress, username} = res.list[0]
 				let arr = getItem('selfRoomList') || []
 				arr.push({nickname, pictureAddress, username})
-				console.log(arr)
 				setItem({
 					key: 'selfRoomList', 
-					value: arr
+					value: deepClone(arr)
 				})
+				
+				this.$set(this, 'selfChatRoomList', deepClone(arr.reverse()))
+				for(let elem of Object.values(this.selfChatRoomList)){
+					console.log(elem)
+					if(elem.username == data.msgFrom){
+						this.$set(elem, 'warnNum', data.count)
+						return
+					}
+				}
 			})
 		},
 	}

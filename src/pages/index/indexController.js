@@ -1,4 +1,4 @@
-import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 import services from '../login/loginServices'
 import Ws from '@/utils/WebSocket'
 
@@ -19,13 +19,6 @@ export default {
 		let str = this.$route.path
 		this.bottomNav = str.substring(7, str.length)
 
-		// this.$router.beforeEach((to, from, next)=>{
-		// 	console.log('sss', from.path)
-		// 	if(from.path == '/' || from.path == '/selfChatRoom'){
-		// 		this._connectWebsocket()
-		// 	}
-		// 	// next()
-		// })
 	},
 
 	computed: {
