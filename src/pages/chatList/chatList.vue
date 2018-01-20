@@ -29,7 +29,9 @@
 				      slot="leftAvatar"/>
 				      <mu-icon 
 				      value="chat_bubble" 
-				      slot="right"/>
+				      slot="right"
+				      />
+				      <!--<span class="news"></span>-->
 				    </mu-list-item>
 				    <mu-content-block
 				    v-if="groupChatRoomList.length == 0">
@@ -46,7 +48,7 @@
 					:title="room.password?room.password:room.nickname || '暂未设置昵称'"
 					@click="enterSelfChatRoom(room)">
 				      <mu-avatar 
-				      :src="room.pictureAddress ? '/static/headImg/' + room.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+				      :src="room.pictureAddress ? 'static/headImg/' + room.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
 				      slot="leftAvatar"/>
 				      <mu-icon 
 				      value="delete_forever"
@@ -86,6 +88,10 @@
 </script>
 
 <style type="text/css" scoped>
+
+
+
+
 	.content{
 		overflow: hidden;
 	}
@@ -102,6 +108,21 @@
 		color: #fff;
 		border-radius: 50%;
 	}
+	
+	/*.news{
+		display: inline-block;
+	    width: 15px;
+	    height: 15px;
+	    text-align: center;
+	    line-height: 15px;
+	    position: absolute;
+	    right: 7.5%;
+	    top: 32%;
+	    color: #fff;
+	    z-index: 999;
+	}*/
+	
+	
 	footer{
 		margin-top: 30px;
 		display: flex;

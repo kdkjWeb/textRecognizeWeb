@@ -34,7 +34,7 @@
 						:title="user.username"
 						@click.stop="pushUser(user.id)">
 					      <mu-avatar 
-					      :src="user.pictureAddress? '/static/headImg/' + user.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+					      :src="user.pictureAddress? 'static/headImg/' + user.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
 					      slot="leftAvatar"/>
 					      <mu-checkbox
 					      :nativeValue="user.id.toString()" 

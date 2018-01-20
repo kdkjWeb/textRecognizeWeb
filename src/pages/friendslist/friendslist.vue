@@ -29,7 +29,7 @@
 							 	:title="item.nickname || '暂未设置昵称'"
 							 	@click.stop="enterSelfChatRoom(item)">
 							      <mu-avatar 
-							      :src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+							      :src="item.pictureAddress? 'static/headImg/' + item.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
 							      slot="leftAvatar"/>
 							      <mu-icon 
 							      value="border_color" 

@@ -45,6 +45,11 @@ const initStore = {
 	],
 	//总的未读消息数量
 	unReadCount: 0,
+	
+	// 未读群消息 
+//	groupUnReadInfos: [],
+	//总的未读群消息
+//	unGroupCount: 0,
 }
 
 const store = new Vuex.Store({
@@ -57,6 +62,11 @@ const store = new Vuex.Store({
 
 		//获取未读消息总数
 		getUnReadCount: state => state.unReadCount,
+		
+		//获取未读群消息 
+		//getGroupUnReadInfos: state=>state.groupUnReadInfos,
+		//获取群消息未读总数
+		//getUnGroupCount: state => state.unGroupCount
 	},
 	mutations: {
 		setUser (state, data){
@@ -108,6 +118,35 @@ const store = new Vuex.Store({
 			state.unReadCount = 0
 			state.selfUnReadInfos = []
 		},
+		
+		
+		
+		/*addGroupUnReadCount (state, data) {
+			//先检查是否存在该人的聊天室
+			let index = false
+			for(let elem of Object.values(state.groupUnReadInfos)){
+				//存在则将count 相加
+				if(elem.msgFrom == data.msgFrom){
+					elem.count += data.count
+					index = true
+					break
+				}
+			}
+			if(!index){
+				//不存在则push 一个新的聊天记录
+				state.groupUnReadInfos.push(data)
+			}
+		},
+		addUnGroupCount(state,data) {
+			state.unGroupCount += parseInt(data)
+		},
+		reduceUnGroupCount(state,data) {
+			state.unGroupCount -= parseInt(data)
+		},
+		resetUnReadInfoNum(state) {
+			state.unGroupCount = 0
+			state.groupUnReadInfos = []
+		},*/
 	},
 	actions: {	
 	},

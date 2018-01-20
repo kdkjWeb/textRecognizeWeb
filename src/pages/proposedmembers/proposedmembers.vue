@@ -25,7 +25,7 @@
 						:title="item.nickname"
 						@click.stop="inviteUser(item.id)">
 						<mu-avatar 
-						:src="item.pictureAddress? '/static/headImg/' + item.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" 
+						:src="item.pictureAddress? 'static/headImg/' + item.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
 						slot="leftAvatar"/>
 				        <mu-radio 
 				        :nativeValue="item.id.toString()"

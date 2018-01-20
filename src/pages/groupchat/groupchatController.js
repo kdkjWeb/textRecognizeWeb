@@ -1,8 +1,8 @@
 import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 import Ws from '@/utils/WebSocket'
-import scroll from 'better-scroll'
+import betterScroll from 'better-scroll'
 import {mapGetters} from 'vuex'
-// import services from './groupchatServices'
+import services from './groupchatServices'
 export default {
 	data() {
 		return {
@@ -25,16 +25,13 @@ export default {
 				message_index: null,
 				show: false,
 			}, 
-			chatHistory: []
+			chatHistory: [],
+			scroll: null,
 		}
 	},
 	created() {
 		this.height = (window.innerHeight-113) + 'px';
 		this.height1 = (window.innerHeight) + 'px';
-		//获取从聊天列表传递过来的数据
-		//this.roomDetail = Object.assign({}, this.$route.params)
-		//console.log(this.$route.params)
-		
 		
 		if(Object.keys(this.$route.params).length > 0)
 			this.$store.commit('setGroupInfo', this.$route.params)
@@ -62,21 +59,35 @@ export default {
 
 		
 	},
+
 	mounted() {
 		//使用better-scroll添加滚动效果
-		this.$nextTick(()=>{
-				if(!this.sc){
-					this.sc = new scroll(this.$refs['groupChat'],{
+		/*this.$nextTick(()=>{
+				if(!this.scroll){
+					this.scroll = new scroll(this.$refs['groupChat'],{
 						click: true
 					})
-					 //如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+					 
 					if(this.getMsgHeight() > 0){
-						this.sc.scrollTo(0,-(this.getMsgHeight()));
+						this.scroll.scrollTo(0,-(this.getMsgHeight()));
 					}
 				}else{
-					this.sc.refresf()
+					this.scroll.refresf()
 				}
-			})
+			})*/
+		
+		this.$nextTick(() => {
+	        this.scroll = new betterScroll(this.$refs['groupChat'], {
+	        	click: true
+	        })
+			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+	        if(this.getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this.getMsgHeight() - 57));
+			}
+
+	    })
+		
+		
 	    // 监听窗口改变重置高度
         window.addEventListener('resize', () => {
             this.height = (window.innerHeight-113) + 'px';
@@ -90,17 +101,17 @@ export default {
 	destroyed() {
 		Ws.close()
 	},
-	/*watch: {
+	watch: {
 		'chatHistory': {
 			handler(val){
 				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-					if(this.getMsgHeight() > 0){
-						this.sc.scrollTo(0,-(this.getMsgHeight()));
+					if(this.scroll && this.getMsgHeight() > 0){
+						this.scroll.scrollTo(0,-(this.getMsgHeight()));
 					}
 			},
 			deep:true,
 		}
-	},*/
+	},
 	methods: {
 		
 		
@@ -285,8 +296,8 @@ export default {
 				username: this.$store.state.user.username,
 				message: this.message,
 				header: this.$store.state.user.pictureAddress ?
-				 '/static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
-				  '/static/headImg/6.jpg',
+				 'static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
+				  'static/headImg/6.jpg',
 				date: new Date()
 			}
 
@@ -324,7 +335,10 @@ export default {
 			 	}
 			 }, 3000)
 			
-			 	
+			 	//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+			if(this.getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this.getMsgHeight()));
+			}
 			
 			
 		},
@@ -337,7 +351,7 @@ export default {
 			let data = {
 				senderId: '-1',
 				message: this.chatHistory[this.bottomSheet.message_index].message,
-				header: '/static/header2.jpg'
+				header: 'static/header2.jpg'
 			}
 
 			//clear 

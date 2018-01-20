@@ -23,8 +23,8 @@
 				class="content_main">
 					 <mu-avatar 
 					 :src="msg.username == $store.state.user.username?
-							 ($store.state.user.pictureAddress ? '/static/headImg/' + $store.state.user.pictureAddress + '.jpg' : '/static/headImg/6.jpg') :
-							 (friendInfo.pictureAddress ? '/static/headImg/' + friendInfo.pictureAddress + '.jpg' : '/static/headImg/6.jpg')"
+							 ($store.state.user.pictureAddress ? 'static/headImg/' + $store.state.user.pictureAddress + '.jpg' : 'static/headImg/6.jpg') :
+							 (friendInfo.pictureAddress ? 'static/headImg/' + friendInfo.pictureAddress + '.jpg' : 'static/headImg/6.jpg')"
 					 slot="leftAvatar"/>
 					 <div 
 					 class="content_msg">

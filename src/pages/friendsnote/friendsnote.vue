@@ -18,7 +18,7 @@
 				<img 
 				width="75" 
 				height="75" 
-				:src="userInfo.pictureAddress? '/static/headImg/' + userInfo.pictureAddress + '.jpg' : '/static/headImg/6.jpg'">
+				:src="userInfo.pictureAddress? 'static/headImg/' + userInfo.pictureAddress + '.jpg' : 'static/headImg/6.jpg'">
 			</div>
 			<div class="userName">
 				<h3>昵称</h3>

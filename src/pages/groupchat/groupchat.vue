@@ -35,7 +35,7 @@
 				:key="index"
 				class="content_main"
 				:style="{'flex-direction': msg.username == $store.state.user.username?'row-reverse':'row'}">
-					 <mu-avatar :src="msg.pictureAddress ? '/static/headImg/' + msg.pictureAddress + '.jpg' : '/static/headImg/6.jpg'" slot="leftAvatar"/>
+					 <mu-avatar :src="msg.pictureAddress ? 'static/headImg/' + msg.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" slot="leftAvatar"/>
 					 <div 
 					 class="content_msg">
 					    <div class="content_msg_icon" 
