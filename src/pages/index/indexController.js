@@ -10,7 +10,7 @@ export default {
 	},
 	beforeRouteEnter:(to, from, next) =>{
 		next(vm=>{
-			if(from.path == '/' || from.path == '/selfChatRoom'){
+			if(from.path == '/' || from.path == '/selfChatRoom' || from.path == '/groupchat'){
 				vm._connectWebsocket()
 			}
 		})
