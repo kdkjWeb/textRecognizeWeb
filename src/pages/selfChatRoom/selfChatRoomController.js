@@ -105,7 +105,9 @@ export default {
 					name: 'FriendsList'
 				})
 			}else{
-				this.$router.goBack()
+				this.$router.push({
+					name: 'ChatList'
+				})
 			}
 			
 		},

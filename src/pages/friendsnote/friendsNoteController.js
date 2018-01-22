@@ -16,7 +16,7 @@ export default {
 		console.log(this.$route.params)
 		this.status = this.$route.params.status
 		this.userInfo = this.$route.params
-		this.noteName = this.$route.params.password
+		//this.noteName = this.$route.params.nickname
 	},
 	computed: {
 		title() {

@@ -25,7 +25,7 @@
 						 :item="item"
 						 :arr="friendsList">
 						 	<mu-list class="FriendsList_content_title">
-							 	<mu-list-item 
+							 	<!--<mu-list-item 
 							 	:title="item.nickname || '暂未设置昵称'"
 							 	@click.stop="enterSelfChatRoom(item)">
 							      <mu-avatar 
@@ -36,7 +36,22 @@
 							      :size="18" 
 							      slot="right" 
 							      @click.stop="nodeList(item)"/>
+							    </mu-list-item>-->
+							   
+							    <mu-list-item 
+							 	:title="item.password? item.password : item.nickname"
+							 	@click.stop="enterSelfChatRoom(item)">
+							      <mu-avatar 
+							      :src="item.pictureAddress? 'static/headImg/' + item.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
+							      slot="leftAvatar"/>
+							      <mu-icon 
+							      value="border_color" 
+							      :size="18" 
+							      slot="right" 
+							      @click.stop="nodeList(item)"/>
 							    </mu-list-item>
+							    
+							    
 							 </mu-list>
 						 </friendsDel>
 						

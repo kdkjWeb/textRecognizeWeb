@@ -77,9 +77,13 @@ export default {
 			})*/
 		
 		this.$nextTick(() => {
-	        this.scroll = new betterScroll(this.$refs['groupChat'], {
-	        	click: true
-	        })
+	        if(!this.scroll){
+		        	this.scroll = new betterScroll(this.$refs['groupChat'], {
+		        	click: true
+		        })
+	        }else{
+	        		this.scroll.refresf()
+	        }
 			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
 	        if(this.getMsgHeight() > 0){
 				this.scroll.scrollTo(0,-(this.getMsgHeight() - 57));
@@ -212,8 +216,7 @@ export default {
 		//确认操作解散该群／退出该群／清空聊天记录
 		success() {
 			this.isShow1 = this.isShow2 = false;
-			//console.log(this.user.type)
-			//判断是普通用户还是管理员
+			//如果是管理员
 			if(this.user.type != '0'){
 				if(this.dialog){
 					console.log('确认解散该群')
@@ -225,8 +228,6 @@ export default {
 							userId: this.$store.state.user.id
 						}
 					}).then(res=>{
-						//var data =(new Function("","return "+res))(); 
-						//console.log(res)
 						if(res.code == 0){
 							this.$router.push({
 								name: 'ChatList'
@@ -238,10 +239,32 @@ export default {
 					})
 				}else{
 					
-					console.log('确认清空聊天记录')
+					//console.log('确认清空聊天记录')
 					
-					removeItem(this.roomDetail.groupId)
-					this.chatHistory = []
+					//removeItem(this.roomDetail.groupId)
+					//this.chatHistory = []
+					
+					if(this.chatHistory){
+						console.log('确认清空聊天记录')
+						removeItem(this.roomDetail.groupId)
+						this.chatHistory = []
+						
+						//清除聊天记录后重新建立聊天室的websokcet链接
+						Ws.connect({
+							url: 'groupWs',
+							params: {
+								groupId: this.roomDetail.groupId,
+								msgFrom: this.$store.state.user.username
+							},
+							model: this.chatHistory,
+							connector: this.$store.state.user
+						})
+						
+					}else{
+						this.$toast('暂时还没有聊天记录')
+					}
+					
+					
 				}
 			}else{
 				//如果是普通用户
@@ -265,9 +288,26 @@ export default {
 						this.$toast(res.msg)
 					})
 				}else{
-					console.log('确认清空聊天记录')
-					removeItem(this.roomDetail.groupId)
-					this.chatHistory = []
+					
+					if(this.chatHistory){
+						console.log('确认清空聊天记录')
+						removeItem(this.roomDetail.groupId)
+						this.chatHistory = []
+						
+						//清除聊天记录后重新建立聊天室的websokcet链接
+						Ws.connect({
+							url: 'groupWs',
+							params: {
+								groupId: this.roomDetail.groupId,
+								msgFrom: this.$store.state.user.username
+							},
+							model: this.chatHistory,
+							connector: this.$store.state.user
+						})
+						
+					}else{
+						this.$toast('暂时还没有聊天记录')
+					}
 				}
 			}
 			
