@@ -9,7 +9,6 @@ export default {
 		return {
 			height: 0,
 			title: '好友',
-			friendsList: [], //{uid2: 用户id}
 			isShow: false,
 
 			//删除确认框
@@ -19,6 +18,11 @@ export default {
 				index: null,
 			},
 			
+		}
+	},
+	computed: {
+		friendsList() {
+			return this.$store.getters.getFriendList
 		}
 	},
 	components: {
@@ -91,11 +95,13 @@ export default {
         	Vue: this,
         	model: {
         		id: this.$store.state.user.id
-        	}
+        	},
+        	hidenLoading: true,
         })
         .then(res=>{
-        	console.log(res)
-        	this.$set(this, 'friendsList', res)
+        	if(res){
+				this.$store.commit('setFriendList', res)
+			} 
         })
       
     

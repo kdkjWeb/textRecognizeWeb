@@ -11,6 +11,9 @@ const initStore = {
 	//用户
 	user: {},
 
+	groupsList: [], //群列表
+	friendList: [], //好友列表
+
 	//房间信息
 	roomDetail: {
 		id: '',
@@ -31,6 +34,8 @@ const initStore = {
 		groupName: '',   //群名字
 		id: '',      //群id
 	},
+
+
 	
 	
 	//聊天历史
@@ -62,7 +67,13 @@ const store = new Vuex.Store({
 
 		//获取未读消息总数
 		getUnReadCount: state => state.unReadCount,
+
+		//获取群列表
+		getGroupsList: state => state.groupsList,
 		
+		//获取好友列表
+		getFriendList: state => state.friendList,
+
 		//获取未读群消息 
 		//getGroupUnReadInfos: state=>state.groupUnReadInfos,
 		//获取群消息未读总数
@@ -75,6 +86,12 @@ const store = new Vuex.Store({
 		setUserHead (state, data) {
 			if(state.user)
 				state.user.pictureAddress = data
+		},
+		setGroupsList (state, data) {
+			state.groupsList = deepClone(data)
+		},
+		setFriendList (state, data) {
+			state.friendList = deepClone(data)
 		},
 
 		setGroupInfo (state,data){

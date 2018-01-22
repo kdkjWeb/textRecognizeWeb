@@ -11,7 +11,7 @@ export default {
 		return {
 			height: 0,
 			//群聊天室
-			groupChatRoomList: [],
+			// groupChatRoomList: [],
 
 			//个人聊天室记录
 			selfChatRoomList: [],
@@ -28,12 +28,12 @@ export default {
 		...mapGetters({
 			user: 'getUser', //获取用户信息
 			selfUnReadInfos: 'getSelfUnReadInfos', //获取个人聊天未读信息
+			groupChatRoomList: 'getGroupsList', //群列表
 		})
 	},
 	watch: {
 		'selfUnReadInfos': {
 			handler(val) {
-				console.log(val)
 				for(let elem of Object.values(val)){
 					this._setSelfChatUnReadCount(elem)
 				}
@@ -43,10 +43,14 @@ export default {
 		}
 	},
 	created() {
+		console.log(this.groupChatRoomList)
+		console.log(this.$store.state.getGroupsList)
 		this.height = (window.innerHeight - 112) + 'px'
+		this._fetchGroupList()
 
 		//获取聊天记录列表
 		this.$set(this, 'selfChatRoomList', deepClone((getItem('selfRoomList') || []).reverse()))
+		console.log(JSON.parse(localStorage.textRecognize_app))
 
 		console.log(getItem('selfRoomList'))
 
@@ -63,7 +67,7 @@ export default {
 
 	},
 	mounted() {
-		this._fetchGroupList()
+		
 
 		//使用滚动插件
 		this.$nextTick(()=>{
@@ -130,9 +134,13 @@ export default {
 					userId: this.$store.state.user.id
 				},
 				Vue: this,
+				hidenLoading: true,
 			})
 			.then(res=>{
-				if(res) this.$set(this, 'groupChatRoomList', res)
+				if(res){
+					this.$store.commit('setGroupsList', res)
+				} 
+					
 			}, err=>{
 				console.log(err)
 			})

@@ -35,9 +35,6 @@ export default {
 						 this.$store.state.friendInfo
 
 
-		console.log(this.friendInfo)
-		console.log(this.$store.state.user)
-        //清除未读信息数
         //进入聊天室后台自动清除
 
 		Object.assign(this.roomDetail, {
@@ -48,8 +45,9 @@ export default {
 		
 
 		//获取localStorage的聊天历史记录
-		const res = getItem(this.roomDetail.roomId) ||
-					getItem(this.$store.state.user.username + '_' + this.$route.params.username )
+
+		const res = getItem(this.friendInfo.username + '_' + this.$store.state.user.username )
+		console.log(res)
 		this.$set(this, 'chatHistory', res || [])
 
 		this.height = (window.innerHeight-113) + 'px';
@@ -100,14 +98,20 @@ export default {
 
 	methods: {
 		goBack() {
+			//退出时将history存入localStorage
+			setItem({
+				key: this.roomDetail.roomId,
+				value: this.chatHistory
+			})
+
+			console.log(this.chatHistory)
+
 			if(this.routeFrom == 'SelfChatRoomConfig'){
 				this.$router.push({
 					name: 'FriendsList'
 				})
 			}else{
-				this.$router.push({
-					name: 'ChatList'
-				})
+				this.$router.goBack()
 			}
 			
 		},
@@ -175,12 +179,12 @@ export default {
 						//第一次存在历史记录则将room信息放入 个人聊天记录列表中
 
 						if(this.chatHistory.length == 1){
-							console.log("首次存入聊天记录")
-							console.log(this.friendInfo)
 							let arr = getItem('selfRoomList') || []
+							for(let elem of Object.values(arr)){
+								if(elem.username == this.friendInfo.username)
+									return
+							}
 							arr.push(this.friendInfo)
-							console.log(this.friendInfo)
-
 							setItem({
 								key: 'selfRoomList', 
 								value: arr

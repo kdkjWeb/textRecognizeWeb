@@ -40,7 +40,7 @@ export function getItem(key) {
 
 export function setItem({key, value }) {
   const duration = Number.MAX_SAFE_INTEGER
-  myStorage[key] = {
+  myStorage[key] = {  
     value,
     duration,
     time: Date.now()
