@@ -30,6 +30,7 @@ export default {
 	},
 	created() {
 		this.height = (window.innerHeight-112) + 'px';
+		// this.$Loading.process()
 	},
 	methods: {
 		nodeList(val) {

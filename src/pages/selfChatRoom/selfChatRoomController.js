@@ -104,9 +104,9 @@ export default {
 				value: this.chatHistory
 			})
 
-			console.log(this.chatHistory)
 
-			if(this.routeFrom == 'SelfChatRoomConfig'){
+			if(this.routeFrom == 'SelfChatRoomConfig' || 
+				this.routeFrom ==  'FriendsNote'){
 				this.$router.push({
 					name: 'FriendsList'
 				})

@@ -37,7 +37,8 @@ export default {
 					model: {
 						token: getItem('token')
 					},
-					Vue: this
+					Vue: this,
+					hidenLoading: true,
 				})
 				.then(res=>{
 					//存入vuex

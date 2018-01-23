@@ -33,7 +33,7 @@
 	  width: 60px;
 	  height: 60px;
 	  top: 48%;
-	  left: 48%;
+	  left: 42%;
 	  position: relative;
 	}
 	 
@@ -41,7 +41,7 @@
 	  width: 100%;
 	  height: 100%;
 	  border-radius: 50%;
-	  background-color: #67CF22;
+	  background-color: #696969;
 	  opacity: 0.6;
 	  position: absolute;
 	  top: 0;
