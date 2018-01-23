@@ -1,6 +1,6 @@
 import services from './loginServices'
 import {phoneRegExp} from '@/utils/publicFunctions'
-import {has, getItem , setItem, removeItem} from '@/utils/localStorage'
+import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 
 export default {
 	data() {
@@ -10,7 +10,7 @@ export default {
 		}
 	},
 	created() {
-		console.log(getItem('token'))
+		console.log(JSON.parse(localStorage.textRecognize_app))
 		if(getItem('token')){
 			services.tokenLogin({
 				model: {
@@ -26,6 +26,8 @@ export default {
 				})
 			})
 		}
+
+		// clear()
 	},
 	methods: {
 		login() {
@@ -45,15 +47,17 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
-				//存入localStorage
-				setItem({
-					key: 'token',
-					value: res.token
-				})
 				//存入vuex
 				this.$store.commit('setUser', res)
 				this.$router.push({
-					path: '/index'
+					name: 'Index'
+				})
+
+				//存入localStorage
+				console.log('开始存入localStorage..')
+				setItem({
+					key: 'token',
+					value: res.token
 				})
 			})
 

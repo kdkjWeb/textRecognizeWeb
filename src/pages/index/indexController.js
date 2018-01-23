@@ -53,8 +53,8 @@ export default {
 	    _connectWebsocket() {
 	    	//建立总的消息提醒websokcet链接
 			if(!this.$store.state.user.username){
+				this._getUserInfoByToken()
 				setTimeout(()=>{
-					this._getUserInfoByToken()
 					Ws.connect({
 						url: 'totalWs',
 						params: {

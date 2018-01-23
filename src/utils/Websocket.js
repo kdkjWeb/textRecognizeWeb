@@ -5,7 +5,7 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-const baseURL = 'ws://192.168.20.125:8080'
+const baseURL = 'ws://192.168.20.126:8080'
 let ws
 const bindFunc = (cntor, model) =>{
 	if(!ws)
@@ -71,7 +71,6 @@ export default {
 
 		
 		if(ws){
-			console.log(ws.readyState)
 			switch(ws.readyState){
 				case 0 || 1://正在连接、连接成功
 				let timer1 = setInterval(()=>{

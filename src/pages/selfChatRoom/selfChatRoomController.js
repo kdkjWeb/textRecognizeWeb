@@ -193,7 +193,7 @@ export default {
 						}
 			 		}
 			 	}
-			}, 3000)
+			}, 1500)
 
 			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
 			if(this._getMsgHeight() > 0){
@@ -241,7 +241,6 @@ export default {
 			 		console.log(this.chatHistory[i])
 			 		if(this.chatHistory[i] == data){
 			 			//找到这条发送的信息，检查状态是否发送成功
-			 			console.log(this.chatHistory[i].status)
 			 			if(this.chatHistory[i].status != 'success'){
 			 				this.$set(data, 'status', 'error')
 			 			}
@@ -253,7 +252,12 @@ export default {
 						break
 			 		}
 			 	}
-			}, 3000)
+			}, 1500)
+
+			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
+			if(this._getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this._getMsgHeight()));
+			}
 		},
 
 		/* 删除 */

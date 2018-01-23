@@ -43,16 +43,12 @@ export default {
 		}
 	},
 	created() {
-		console.log(this.groupChatRoomList)
-		console.log(this.$store.state.getGroupsList)
 		this.height = (window.innerHeight - 112) + 'px'
 		this._fetchGroupList()
 
 		//获取聊天记录列表
 		this.$set(this, 'selfChatRoomList', deepClone((getItem('selfRoomList') || []).reverse()))
 		console.log(JSON.parse(localStorage.textRecognize_app))
-
-		console.log(getItem('selfRoomList'))
 
 
 
@@ -128,10 +124,11 @@ export default {
 		deleteCancel() {
 			this.deleteDialog.show = false
 		},
-		_fetchGroupList() {
+		async _fetchGroupList() {
+			const userId = await this._fetchUserId()
 			service.fetchGroupList({
 				model: {
-					userId: this.$store.state.user.id
+					userId: userId
 				},
 				Vue: this,
 				hidenLoading: true,
@@ -143,6 +140,21 @@ export default {
 					
 			}, err=>{
 				console.log(err)
+			})
+		},
+		_fetchUserId() {
+			return new Promise((resolve, reject) =>{
+				try{
+					let timer = setInterval(()=>{
+						if(this.$store.state.user.id){
+							clearInterval(timer)
+							resolve(this.$store.state.user.id)
+						}
+					},100)
+				}catch(e){
+					reject(e)
+				}
+				
 			})
 		},
 

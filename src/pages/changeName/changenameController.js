@@ -13,7 +13,6 @@ export default {
 	},
 	methods: {
 		save(){
-			console.log(this.userName)
 			services.userInfoUpdate({
 				Vue: this,
 				model: {
@@ -24,6 +23,7 @@ export default {
 			.then(res=>{
 				if(res.code === 0){
 					this.successDialog.show = true
+					this.$store.commit('setNickName', this.userName)
 				}
 			}, err=>{
 				console.log(err)
