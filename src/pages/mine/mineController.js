@@ -63,7 +63,8 @@ export default {
 			//消除socket 以及保存的user信息
 			removeItem('token')
 			this.$store.commit('reset')
-			Ws.close()
+			console.log(Ws)
+			Ws.close('root')
 			this.$router.push({
 				name: 'Login'
 			})

@@ -50,6 +50,37 @@ export default {
 		this.$set(this, 'selfChatRoomList', deepClone((getItem('selfRoomList') || []).reverse()))
 		console.log(JSON.parse(localStorage.textRecognize_app))
 
+		console.log(this.selfChatRoomList)
+		//获取好友信息, 如果发现好友信息不匹配则修改对应信息
+		commonServices.fetch({
+			url: 'user/findMyFriends',
+			model: {
+				id: this.$store.state.user.id
+			},
+			Vue: this,
+			hidenLoading: true, 
+		})
+		.then(res=>{
+		    console.log(res)
+		    for(let elem of Object.values(res)){
+		    	for(let val of Object.values(this.selfChatRoomList)){
+		    		if(val.username == elem.username){
+		    			//比较nickname 和 pictureAddress是否相等
+		    			if(val.nickname != elem.nickname || val.pictureAddress != elem.pictureAddress){
+		    				//不相等
+		    				Object.assign(val, {
+		    					nickname: elem.nickname,
+		    					pictureAddress: elem.pictureAddress
+		    				})
+		    				break
+		    			}
+		    		}
+		    	}
+		    }
+		}, err=>{
+			console.log(err)
+		})
+
 
 
 

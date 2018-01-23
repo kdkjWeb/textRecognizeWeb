@@ -104,6 +104,9 @@ export default {
 				value: this.chatHistory
 			})
 
+			//关闭聊天websocket
+			Ws.close('chat')
+
 
 			if(this.routeFrom == 'SelfChatRoomConfig' || 
 				this.routeFrom ==  'FriendsNote'){

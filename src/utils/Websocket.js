@@ -6,15 +6,15 @@ if(!'WebSocket' in window){
 }
 
 const baseURL = 'ws://192.168.20.126:8080'
-let ws
-const bindFunc = (cntor, model) =>{
-	if(!ws)
+let ws = {}
+const bindFunc = (cntor, model, type) =>{
+	if(!ws[type])
 		return
-	ws.onopen = (res) =>{
+	ws[type].onopen = (res) =>{
 		console.log('链接成功')
 	}
 
-	ws.onmessage = (res)=>{
+	ws[type].onmessage = (res)=>{
 		console.log('接收信息成功')
 		let result = JSON.parse(res.data)
 		console.log(result)
@@ -47,11 +47,11 @@ const bindFunc = (cntor, model) =>{
 		}
 	}
 
-	ws.onclose = (res)=> {
+	ws[type].onclose = (res)=> {
 		console.log('链接已被关闭')
 	}
 
-	ws.onerror = (err) =>{
+	ws[type].onerror = (err) =>{
 		console.log(err)
 	}
 }
@@ -59,6 +59,7 @@ const bindFunc = (cntor, model) =>{
 export default {
 	connect({url, params, model, connector}){
 		const cntor = deepClone(connector)
+		const type = url == 'totalWs' ? 'root': 'chat'
 
 		url? url = baseURL + '/' + url : url = baseURL
 		if(JSON.stringify(params) != '{}'){
@@ -70,18 +71,18 @@ export default {
 		}
 
 		
-		if(ws){
+		if(ws[type]){
 			switch(ws.readyState){
 				case 0 || 1://正在连接、连接成功
 				let timer1 = setInterval(()=>{
-					console.log(ws.readyState)
+					console.log(ws[type].readyState)
 					console.log('关闭ws请求发送ing...')
-					ws.close()
-					if(ws.readyState == 3){
+					ws[type].close()
+					if(ws[type].readyState == 3){
 						clearInterval(timer1)
-						ws = new WebSocket(url)
+						ws[type] = new WebSocket(url)
 						store.commit('resetUnReadInfoNum')
-						bindFunc(cntor, model)
+						bindFunc(cntor, model, type)
 						
 					}
 				}, 500)
@@ -89,42 +90,42 @@ export default {
 
 				case 2://正在关闭
 				let timer2 = setInterval(()=>{
-					console.log(ws.readyState)
-					ws.close()
-					if(ws.readyState == 3){
+					console.log(ws[type].readyState)
+					ws[type].close()
+					if(ws[type].readyState == 3){
 						clearInterval(timer2)
-						ws = new WebSocket(url)
+						ws[type] = new WebSocket(url)
 						store.commit('resetUnReadInfoNum')
-						bindFunc(cntor, model)
+						bindFunc(cntor, model, type)
 					}
 				}, 500)
 				break
 
 				default: //为空
-				ws = new WebSocket(url)
+				ws[type] = new WebSocket(url)
 				store.commit('resetUnReadInfoNum')
-				bindFunc(cntor, model)
+				bindFunc(cntor, model, type)
 			}
 		}else{
 			store.commit('resetUnReadInfoNum')
-			ws = new WebSocket(url)
+			ws[type] = new WebSocket(url)
 		}
 		
 
-		if(!ws.onmessage){
-			bindFunc(cntor, model)
+		if(!ws[type].onmessage){
+			bindFunc(cntor, model, type)
 		}
 		
 	},
 	send(msg) {
-		console.log(ws)
-		if(!ws || ws.readyState != 1)
+		if(!ws['chat'] || ws['chat'].readyState != 1)
 			return '当前不存在websocket链接信息'
 
-		ws.send(JSON.stringify(msg))
+		ws['chat'].send(JSON.stringify(msg))
 	},
-	close() {
-		if(ws)
-			ws.close()
+	close(type) {
+		if(type){
+			ws[type].close()
+		}
 	},
 }
