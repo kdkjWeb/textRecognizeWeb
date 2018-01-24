@@ -127,7 +127,8 @@ export default {
 		ws['chat'].send(JSON.stringify(msg))
 	},
 	close(type) {
-		if(type){
+		if(type && ws && ws[type]){
+			console.log(ws[type])
 			ws[type].close()
 		}
 	},
