@@ -15,9 +15,7 @@ const bindFunc = (cntor, model, type) =>{
 	}
 
 	ws[type].onmessage = (res)=>{
-		console.log('接收信息成功')
 		let result = JSON.parse(res.data)
-		console.log(result)
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
 		if(result.msgFrom == cntor.username){
 			for(let i = model.length - 1; i > -1 ; i--){
@@ -75,8 +73,6 @@ export default {
 			switch(ws.readyState){
 				case 0 || 1://正在连接、连接成功
 				let timer1 = setInterval(()=>{
-					console.log(ws[type].readyState)
-					console.log('关闭ws请求发送ing...')
 					ws[type].close()
 					if(ws[type].readyState == 3){
 						clearInterval(timer1)
@@ -90,7 +86,6 @@ export default {
 
 				case 2://正在关闭
 				let timer2 = setInterval(()=>{
-					console.log(ws[type].readyState)
 					ws[type].close()
 					if(ws[type].readyState == 3){
 						clearInterval(timer2)

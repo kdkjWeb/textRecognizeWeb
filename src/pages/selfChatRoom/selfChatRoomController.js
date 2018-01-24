@@ -47,7 +47,6 @@ export default {
 		//获取localStorage的聊天历史记录
 
 		const res = getItem(this.friendInfo.username + '_' + this.$store.state.user.username )
-		console.log(res)
 		this.$set(this, 'chatHistory', res || [])
 
 		this.height = (window.innerHeight-113) + 'px';
@@ -161,13 +160,10 @@ export default {
 				date: data.date
 			})
 
-			console.log(data.date)
-
 			setTimeout(()=>{
 				for(let i = this.chatHistory.length - 1; i > -1; i-- ){
 
 			 		if(this.chatHistory[i] == data){
-			 			console.log(this.chatHistory[i].status)
 			 			//找到这条发送的信息，检查状态是否发送成功
 
 			 			if(this.chatHistory[i].status != 'success'){
@@ -213,7 +209,6 @@ export default {
 
 		/* 重新发送 */
 		sendAgain() {
-			console.log(this.bottomSheet.message_index)
 
 			let data = {
 				username: this.$store.state.user.username,
@@ -241,7 +236,6 @@ export default {
 
 			setTimeout(()=>{
 				for(let i = this.chatHistory.length - 1; i > -1; i-- ){
-			 		console.log(this.chatHistory[i])
 			 		if(this.chatHistory[i] == data){
 			 			//找到这条发送的信息，检查状态是否发送成功
 			 			if(this.chatHistory[i].status != 'success'){
@@ -265,7 +259,6 @@ export default {
 
 		/* 删除 */
 		deleteMsg() {
-			// console.log('asd')
 			this.chatHistory.splice(this.bottomSheet.message_index , 1)
 			setItem({
 				key: this.roomDetail.roomId,
@@ -277,12 +270,10 @@ export default {
 	      this.bottomSheet.show = false
 	    },
 	    openBottomSheet (index) {
-	    	console.log(index)
 	    	Object.assign(this.bottomSheet, {
 	    		show: true,
 	    		message_index: index
 	    	})
-	    	console.log(this.bottomSheet)
 	    },
 
 	    //计算装消息盒子的高度

@@ -23,7 +23,6 @@ let init = ()=>{
 
 let saveLocalStorage = ()=>{
   try{
-    console.log(myStorage)
     localStorage.setItem(KEY, JSON.stringify(myStorage))
   }catch(e){
     console.log(e)
@@ -46,7 +45,6 @@ export function has(key) {
   if(key == 'token'){
     return Object.hasOwnProperty.call(myStorage, key)
   }
-  console.log(key)
   if(!username || username != store.state.user.username) 
     getUserName()
   return Object.hasOwnProperty.call(myStorage[username], key)
@@ -59,7 +57,6 @@ export function getItem(key) {
   if(key == 'token'){
     return myStorage[key]
   }
-  console.log(key)
   if(!username || username != store.state.user.username) 
     getUserName()
 
@@ -74,7 +71,6 @@ export function setItem({key, value }) {
   if(!key || !value){
     throw new Error('必须传入键值对')
   }
-  console.log(key)
   if(key == 'token'){
     myStorage[key] = value
   }else{

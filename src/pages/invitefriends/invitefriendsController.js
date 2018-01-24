@@ -12,7 +12,6 @@ export default {
 	methods: {
 		// 添加选中的用户到selectArr
 		inviteUser(id){
-			console.log(id)
 			const result = this.selectArr.findIndex((val=>{
 				return val == id;
 			}))
@@ -38,8 +37,6 @@ export default {
 		//点击确定提交选中的成员
 		success() {
 			let userId = this.selectArr.map(item => item).join();
-			//	console.log(userId);
-			//console.log(this.selectArr);
 			
 			services.addMembersList({
 				Vue: this,
@@ -73,7 +70,6 @@ export default {
 				}
 			})
 			.then(res=>{
-				console.log(res)
 				this.$set(this, 'groupMembers', res)
 			})
 		}

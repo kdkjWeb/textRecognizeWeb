@@ -10,7 +10,6 @@ export default {
 	},
 	methods: {
 		save(){
-			console.log(this.gropName, this.gropAnnouncement)
 			services.updateGroupName({
 				Vue: this,
 				model: {
@@ -21,14 +20,12 @@ export default {
 				}
 			})
 			.then(res=>{
-				console.log(res)
 				if(res.code == 0){
 					const groupInfo = {
 						groupName: this.gropName,
 						id: this.$route.params.id,
 						notice: this.gropAnnouncement,
 					}
-					//console.log(groupInfo)
 						this.$router.push({
 						name: 'GroupChat',
 						params: groupInfo

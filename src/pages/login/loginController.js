@@ -10,7 +10,6 @@ export default {
 		}
 	},
 	created() {
-		console.log(JSON.parse(localStorage.textRecognize_app))
 		if(getItem('token')){
 			services.tokenLogin({
 				model: {
@@ -54,7 +53,6 @@ export default {
 				})
 
 				//存入localStorage
-				console.log('开始存入localStorage..')
 				setItem({
 					key: 'token',
 					value: res.token

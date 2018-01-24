@@ -41,8 +41,22 @@ export default {
 					hidenLoading: true,
 				})
 				.then(res=>{
-					//存入vuex
-					this.$store.commit('setUser', res)
+					
+					if(res){
+						//存入vuex
+						this.$store.commit('setUser', res)
+					}else{
+						removeItem('token')
+						this.$router.push({
+							name: 'Login'
+						})
+					}
+					
+				}, err=>{
+					removeItem('token')
+					this.$router.push({
+						name: 'Login'
+					})
 				})
 			}else{
 				this.$router.push({

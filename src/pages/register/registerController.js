@@ -28,7 +28,6 @@ export default {
 				       2.验证码 是否正确*/
 				this._verifyVerificationCode()
 				.then(res=>{
-					console.log(res)
 					if(true)
 						this.activeStep++
 				})
@@ -46,7 +45,6 @@ export default {
 						Vue: this
 					})
 					.then(res=>{
-						// console.log(res)
 						//将返回的用户信息进行赋值
 						
 						this.activeStep++
@@ -89,7 +87,6 @@ export default {
 	    	let times = 60,
 		    	timer = setInterval(()=>{
 		    		times --
-		    		console.log(times)
 		    		if(!times){
 		    			try{
 		    				clearInterval(timer)
@@ -120,7 +117,6 @@ export default {
 	    	}
 	    	//后端验证 是否正确
 	    	// const result = await services.verifyVerificationCode() 
-	    	// console.log(result)
 	    	// return result
 	    	return true
 	    },

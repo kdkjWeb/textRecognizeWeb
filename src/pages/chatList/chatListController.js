@@ -48,9 +48,7 @@ export default {
 
 		//获取聊天记录列表
 		this.$set(this, 'selfChatRoomList', deepClone((getItem('selfRoomList') || []).reverse()))
-		console.log(JSON.parse(localStorage.textRecognize_app))
 
-		console.log(this.selfChatRoomList)
 		//获取好友信息, 如果发现好友信息不匹配则修改对应信息
 		commonServices.fetch({
 			url: 'user/findMyFriends',
@@ -61,7 +59,6 @@ export default {
 			hidenLoading: true, 
 		})
 		.then(res=>{
-		    console.log(res)
 		    for(let elem of Object.values(res)){
 		    	for(let val of Object.values(this.selfChatRoomList)){
 		    		if(val.username == elem.username){
@@ -77,6 +74,7 @@ export default {
 		    		}
 		    	}
 		    }
+		    
 		}, err=>{
 			console.log(err)
 		})
@@ -86,7 +84,6 @@ export default {
 
 		//设置未读的聊天信息数
 		for(let elem of Object.values(this.$store.getters.getSelfUnReadInfos)){
-			console.log(elem)
 			this._setSelfChatUnReadCount(elem)
 		}
 
@@ -137,7 +134,6 @@ export default {
 			//1.删除该聊天室的消息记录
 			removeItem(this.deleteDialog.roomId)
 			//2.从个人聊天室记录列表中删除该聊天室信息
-			console.log(getItem('selfRoomList'))
 			let selfRoomList = getItem('selfRoomList')
 			for(let [index, elem] of Object.entries(selfRoomList)){
 				if(elem.username == this.deleteDialog.roomDetail.username){
@@ -194,7 +190,6 @@ export default {
 		 */
 		_setSelfChatUnReadCount(data) {
 			for(let elem of Object.values(this.selfChatRoomList)){
-				console.log(elem)
 				if(elem.username == data.msgFrom){
 					this.$set(elem, 'warnNum', data.count)
 					return
@@ -221,7 +216,6 @@ export default {
 				
 				this.$set(this, 'selfChatRoomList', deepClone(arr.reverse()))
 				for(let elem of Object.values(this.selfChatRoomList)){
-					console.log(elem)
 					if(elem.username == data.msgFrom){
 						this.$set(elem, 'warnNum', data.count)
 						return
