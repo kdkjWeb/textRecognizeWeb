@@ -20,7 +20,8 @@
 				v-for="msg, index in chatHistory"
 				:key="index"
 				:style="{'flex-direction':msg.username == $store.state.user.username?'row-reverse':'row'}"
-				class="content_main">
+				class="content_main"
+				ref="content_main">
 					 <mu-avatar 
 					 :src="msg.username == $store.state.user.username?
 							 ($store.state.user.pictureAddress ? 'static/headImg/' + $store.state.user.pictureAddress + '.jpg' : 'static/headImg/6.jpg') :
@@ -116,6 +117,8 @@
 		padding: 0 10px;
 		border-radius: 10px;
 		position: relative;
+		word-wrap: break-word; 
+		word-break: normal; 
 		z-index: 2;
 	}
 	.content_msg_icon{

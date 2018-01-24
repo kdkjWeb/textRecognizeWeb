@@ -29,18 +29,26 @@
 
 		<!-- 内容 -->
 		<div class="content" :style="{height: height}" ref="groupChat">
-			<div class="contentMsg" ref="Msg">
+			<div class="contentMsg" ref="content">
 				<div 
 				v-for="msg, index in chatHistory"
 				:key="index"
 				class="content_main"
+				ref="content_main"
 				:style="{'flex-direction': msg.username == $store.state.user.username?'row-reverse':'row'}">
 					 <mu-avatar :src="msg.pictureAddress ? 'static/headImg/' + msg.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" slot="leftAvatar"/>
 					 <div 
 					 class="content_msg">
 					    <div class="content_msg_icon" 
 					    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
-					    <span v-text="msg.message"></span>
+					    <span
+					    v-if="msg.message" 
+					    v-text="msg.message"></span>
+					    <img
+					    style="margin-top:10px"
+					    width="182px" 
+					    v-if="msg.img"
+					    :src="msg.img">
 					    <mu-icon
 					    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
 					    style="position:absolute;top:8px;left:-27px" 
@@ -157,6 +165,8 @@
 	margin: 0 15px;
 	padding: 0 10px;
 	border-radius: 10px;
+	word-wrap: break-word; 
+	word-break: normal; 
 	position: relative;
 	z-index: 2;
 }

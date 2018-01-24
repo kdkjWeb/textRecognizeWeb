@@ -75,7 +75,7 @@ export default {
 	        })
 
 	        if(this._getMsgHeight() > 0){
-				this.scroll.scrollTo(0,-(this._getMsgHeight() - 57));
+				this.scroll.scrollTo(0,-(this.$refs.content.offsetHeight - parseInt(this.height)));
 			}
 
 	    })
@@ -87,8 +87,12 @@ export default {
 		'chatHistory': {
 			handler(val) {
 				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-				if(this.scroll && this._getMsgHeight() > 0){
-					this.scroll.scrollTo(0,-(this._getMsgHeight()));
+				
+				if(this.scroll && this._getMsgHeight() > 0 && !val[val.length -1].status){
+					this._setMsgHeigh()
+					.then(height=>{
+						this.scroll.scrollTo(0,-height);
+					})
 				}
 			},
 			deep: true,
@@ -97,7 +101,7 @@ export default {
 
 	methods: {
 		goBack() {
-			//退出时将history存入localStorage
+			//退出时将history存入lnnocalStorage
 			setItem({
 				key: this.roomDetail.roomId,
 				value: this.chatHistory
@@ -193,11 +197,6 @@ export default {
 			 		}
 			 	}
 			}, 1500)
-
-			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-			if(this._getMsgHeight() > 0){
-				this.scroll.scrollTo(0,-(this._getMsgHeight()));
-			}
 		},
 
 		/**
@@ -251,10 +250,6 @@ export default {
 			 	}
 			}, 1500)
 
-			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-			if(this._getMsgHeight() > 0){
-				this.scroll.scrollTo(0,-(this._getMsgHeight()));
-			}
 		},
 
 		/* 删除 */
@@ -280,6 +275,25 @@ export default {
 		_getMsgHeight() {
 	 		let MsgHeight = this.$refs.content.offsetHeight - parseInt(this.height) + 57;
 	 		return MsgHeight;
+		},
+
+		async _setMsgHeigh() {
+			await this._getHeight()
+			return this.$refs.content.offsetHeight - parseInt(this.height) 
+		},
+		_getHeight() {
+			return new Promise((resolve, reject)=>{
+				try{
+					let timer = setInterval(()=>{
+						if(this.chatHistory.length - 1 == this.$refs.content_main.length -1){
+							clearInterval(timer)
+							resolve(true)
+						}
+					},50)
+				}catch(e){
+					reject(e)
+				}
+			})
 		},
 	},
 }

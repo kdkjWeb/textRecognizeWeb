@@ -15,7 +15,7 @@ const bindFunc = (cntor, model, type) =>{
 	}
 
 	ws[type].onmessage = (res)=>{
-		let result = JSON.parse(res.data)
+		let result = typeof res.data == 'string' ?JSON.parse(res.data) : res.data
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
 		if(result.msgFrom == cntor.username){
 			for(let i = model.length - 1; i > -1 ; i--){
@@ -26,6 +26,14 @@ const bindFunc = (cntor, model, type) =>{
 					break
 				}
 			}
+		}else if(typeof res.data == 'object' && model){
+			// 二进制图片
+			model.push({
+				username: result.msgFrom,
+				img: URL.createObjectURL(res.data),
+				groupId: result.groupId,
+				date: new Date(result.date)
+			})
 		}else if(model){
 			model.push({
 				username: result.msgFrom,
