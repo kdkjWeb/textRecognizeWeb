@@ -62,19 +62,6 @@ export default {
 
 	mounted() {
 		//使用better-scroll添加滚动效果
-		/*this.$nextTick(()=>{
-				if(!this.scroll){
-					this.scroll = new scroll(this.$refs['groupChat'],{
-						click: true
-					})
-					 
-					if(this.getMsgHeight() > 0){
-						this.scroll.scrollTo(0,-(this.getMsgHeight()));
-					}
-				}else{
-					this.scroll.refresf()
-				}
-			})*/
 		
 		this.$nextTick(() => {
 	        if(!this.scroll){
@@ -85,8 +72,8 @@ export default {
 	        		this.scroll.refresf()
 	        }
 			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-	        if(this.getMsgHeight() > 0){
-				this.scroll.scrollTo(0,-(this.getMsgHeight() - 57));
+	        if(this._getMsgHeight() > 0){
+				this.scroll.scrollTo(0,-(this.$refs.content.offsetHeight - parseInt(this.height)));
 			}
 
 	    })
@@ -102,31 +89,34 @@ export default {
 			user: 'getUser'
 		})
 	},
-	destroyed() {
-		Ws.close()
-	},
 	watch: {
 		'chatHistory': {
 			handler(val){
 				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-					if(this.scroll && this.getMsgHeight() > 0){
-						this.scroll.scrollTo(0,-(this.getMsgHeight()));
+					if(this.scroll && this._getMsgHeight() > 0  && !val[val.length -1].status){
+						this._setMsgHeigh()
+						.then(height=>{
+							this.scroll.scrollTo(0,-height);
+					    })
 					}
 			},
 			deep:true,
 		}
 	},
 	methods: {
-		
-		
-		//计算装消息盒子的高度
-		getMsgHeight() {
-		 		var MsgHeight = 0;
-		 		MsgHeight = this.$refs.Msg.offsetHeight - parseInt(this.height) + 57;
-		 		return MsgHeight;
-		 },
 		goBack() {
-			 this.$router.push({
+			//如果存在图片则从记录中删除
+			for(let i = 0; i < this.chatHistory.length; i++){
+				if(this.chatHistory[i].img){
+					this.chatHistory.splice(i, 1)
+				}
+			}
+			setItem({
+				key: this.roomDetail.groupId,
+				value: this.chatHistory
+			})
+			Ws.close('chat')
+			this.$router.push({
 				name: 'ChatList'
 			})
 		},
@@ -239,13 +229,11 @@ export default {
 					})
 				}else{
 					
-					//console.log('确认清空聊天记录')
 					
 					//removeItem(this.roomDetail.groupId)
 					//this.chatHistory = []
 					
 					if(this.chatHistory){
-						console.log('确认清空聊天记录')
 						removeItem(this.roomDetail.groupId)
 						this.chatHistory = []
 						
@@ -269,7 +257,6 @@ export default {
 			}else{
 				//如果是普通用户
 				if(this.dialog){
-					console.log('确认退出该群')
 					
 					services.exitGroup({
 						Vue: this,
@@ -284,13 +271,11 @@ export default {
 							})
 						}
 					},err=>{
-						console.log(res);
 						this.$toast(res.msg)
 					})
 				}else{
 					
 					if(this.chatHistory){
-						console.log('确认清空聊天记录')
 						removeItem(this.roomDetail.groupId)
 						this.chatHistory = []
 						
@@ -358,10 +343,8 @@ export default {
 			 //到达时间上限检查消息是否发送成功
 			 setTimeout(()=>{
 			 	for(let i = this.chatHistory.length - 1; i > -1; i-- ){
-			 		console.log(this.chatHistory[i] == data)
 			 		if(this.chatHistory[i] == data){
 			 			//找到这条发送的信息，检查状态是否发送成功
-			 			console.log(this.chatHistory[i].status)
 			 			if(this.chatHistory[i].status != 'success'){
 			 				this.$set(data, 'status', 'error')
 			 			}
@@ -375,11 +358,6 @@ export default {
 			 	}
 			 }, 3000)
 			
-			 	//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-			if(this.getMsgHeight() > 0){
-				this.scroll.scrollTo(0,-(this.getMsgHeight()));
-			}
-			
 			
 		},
 
@@ -387,11 +365,14 @@ export default {
 
 		/* 重新发送 */
 		sendAgain() {
-			console.log(this.bottomSheet.message_index)
 			let data = {
-				senderId: '-1',
-				message: this.chatHistory[this.bottomSheet.message_index].message,
-				header: 'static/header2.jpg'
+				groupId: this.roomDetail.groupId,
+				username: this.$store.state.user.username,
+				message: this.message,
+				header: this.$store.state.user.pictureAddress ?
+				 'static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
+				  'static/headImg/6.jpg',
+				date: new Date()
 			}
 
 			//clear 
@@ -403,13 +384,30 @@ export default {
 
 
 			this.chatHistory.push(data)
+
+			Ws.send({
+				msg: this.message,
+				groupId: this.roomDetail.groupId,
+				msgFrom: this.$store.state.user.username,
+				date: data.date
+			})
+
 			setTimeout(()=>{
-				this.$set(data, 'error', true)
-				setItem({
-					key: this.roomDetail.roomId,
-					value: this.chatHistory
-				})
-			}, 2000)
+			 	for(let i = this.chatHistory.length - 1; i > -1; i-- ){
+			 		if(this.chatHistory[i] == data){
+			 			//找到这条发送的信息，检查状态是否发送成功
+			 			if(this.chatHistory[i].status != 'success'){
+			 				this.$set(data, 'status', 'error')
+			 			}
+			 			//将聊天记录存入历史localStorage中
+			 			setItem({
+							key: this.roomDetail.groupId,
+							value: this.chatHistory
+						})
+						break
+			 		}
+			 	}
+			 }, 2000)
 		},
 
 		/* 删除 */
@@ -433,5 +431,30 @@ export default {
 	    	})
 	    	console.log(this.bottomSheet)
 	    },
+
+	     //计算装消息盒子的高度
+		_getMsgHeight() {
+	 		let MsgHeight = this.$refs.content.offsetHeight - parseInt(this.height) + 57;
+	 		return MsgHeight;
+		},
+
+		async _setMsgHeigh() {
+			await this._getHeight()
+			return this.$refs.content.offsetHeight - parseInt(this.height) 
+		},
+		_getHeight() {
+			return new Promise((resolve, reject)=>{
+				try{
+					let timer = setInterval(()=>{
+						if(this.chatHistory.length - 1 == this.$refs.content_main.length -1){
+							clearInterval(timer)
+							resolve(true)
+						}
+					},50)
+				}catch(e){
+					reject(e)
+				}
+			})
+		},
 	}
 }

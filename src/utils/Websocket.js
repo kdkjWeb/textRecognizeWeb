@@ -5,19 +5,17 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-const baseURL = 'ws://192.168.20.125:8080'
-let ws
-const bindFunc = (cntor, model) =>{
-	if(!ws)
+const baseURL = 'ws://192.168.20.126:8080'
+let ws = {}
+const bindFunc = (cntor, model, type) =>{
+	if(!ws[type])
 		return
-	ws.onopen = (res) =>{
+	ws[type].onopen = (res) =>{
 		console.log('链接成功')
 	}
 
-	ws.onmessage = (res)=>{
-		console.log('接收信息成功')
-		let result = JSON.parse(res.data)
-		console.log(result)
+	ws[type].onmessage = (res)=>{
+		let result = typeof res.data == 'string' ?JSON.parse(res.data) : res.data
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
 		if(result.msgFrom == cntor.username){
 			for(let i = model.length - 1; i > -1 ; i--){
@@ -28,6 +26,14 @@ const bindFunc = (cntor, model) =>{
 					break
 				}
 			}
+		}else if(typeof res.data == 'object' && model){
+			// 二进制图片
+			model.push({
+				username: result.msgFrom,
+				img: URL.createObjectURL(res.data),
+				groupId: result.groupId,
+				date: new Date(result.date)
+			})
 		}else if(model){
 			model.push({
 				username: result.msgFrom,
@@ -47,11 +53,11 @@ const bindFunc = (cntor, model) =>{
 		}
 	}
 
-	ws.onclose = (res)=> {
+	ws[type].onclose = (res)=> {
 		console.log('链接已被关闭')
 	}
 
-	ws.onerror = (err) =>{
+	ws[type].onerror = (err) =>{
 		console.log(err)
 	}
 }
@@ -59,6 +65,7 @@ const bindFunc = (cntor, model) =>{
 export default {
 	connect({url, params, model, connector}){
 		const cntor = deepClone(connector)
+		const type = url == 'totalWs' ? 'root': 'chat'
 
 		url? url = baseURL + '/' + url : url = baseURL
 		if(JSON.stringify(params) != '{}'){
@@ -70,19 +77,16 @@ export default {
 		}
 
 		
-		if(ws){
-			console.log(ws.readyState)
+		if(ws[type]){
 			switch(ws.readyState){
 				case 0 || 1://正在连接、连接成功
 				let timer1 = setInterval(()=>{
-					console.log(ws.readyState)
-					console.log('关闭ws请求发送ing...')
-					ws.close()
-					if(ws.readyState == 3){
+					ws[type].close()
+					if(ws[type].readyState == 3){
 						clearInterval(timer1)
-						ws = new WebSocket(url)
+						ws[type] = new WebSocket(url)
 						store.commit('resetUnReadInfoNum')
-						bindFunc(cntor, model)
+						bindFunc(cntor, model, type)
 						
 					}
 				}, 500)
@@ -90,42 +94,42 @@ export default {
 
 				case 2://正在关闭
 				let timer2 = setInterval(()=>{
-					console.log(ws.readyState)
-					ws.close()
-					if(ws.readyState == 3){
+					ws[type].close()
+					if(ws[type].readyState == 3){
 						clearInterval(timer2)
-						ws = new WebSocket(url)
+						ws[type] = new WebSocket(url)
 						store.commit('resetUnReadInfoNum')
-						bindFunc(cntor, model)
+						bindFunc(cntor, model, type)
 					}
 				}, 500)
 				break
 
 				default: //为空
-				ws = new WebSocket(url)
+				ws[type] = new WebSocket(url)
 				store.commit('resetUnReadInfoNum')
-				bindFunc(cntor, model)
+				bindFunc(cntor, model, type)
 			}
 		}else{
 			store.commit('resetUnReadInfoNum')
-			ws = new WebSocket(url)
+			ws[type] = new WebSocket(url)
 		}
 		
 
-		if(!ws.onmessage){
-			bindFunc(cntor, model)
+		if(!ws[type].onmessage){
+			bindFunc(cntor, model, type)
 		}
 		
 	},
 	send(msg) {
-		console.log(ws)
-		if(!ws || ws.readyState != 1)
+		if(!ws['chat'] || ws['chat'].readyState != 1)
 			return '当前不存在websocket链接信息'
 
-		ws.send(JSON.stringify(msg))
+		ws['chat'].send(JSON.stringify(msg))
 	},
-	close() {
-		if(ws)
-			ws.close()
+	close(type) {
+		if(type && ws && ws[type]){
+			console.log(ws[type])
+			ws[type].close()
+		}
 	},
 }

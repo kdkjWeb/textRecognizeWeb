@@ -15,7 +15,6 @@ export default {
 			if(!reg.test(this.userPhone) || this.userPhone == ''){
 				this.$toast('手机号格式不正确');
 			}
-			console.log(this.userPhone)
 			services.userInfoUpdate({
 				Vue: this,
 				model: {
@@ -24,7 +23,7 @@ export default {
 				}
 			})
 			.then(res=>{	
-				console.log(res)
+
 				this.successDialog.show = true
 			}, err=>{
 				console.log(err)

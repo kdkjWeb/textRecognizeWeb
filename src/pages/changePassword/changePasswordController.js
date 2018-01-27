@@ -44,7 +44,6 @@ export default {
 				}
 			})
 			.then(res=>{
-				console.log(res)
 				this.successDialog.show = true
 			}, err=>{
 				this.$toast(err.data.msg)

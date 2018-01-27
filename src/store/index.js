@@ -105,6 +105,9 @@ const store = new Vuex.Store({
 			state.friendInfo = data
 		},
 		setChatHistory (state, data) {},
+		setNickName(state, data) {
+			state.user.nickname = data
+		},
 
 		addSelfUnReadCount (state, data) {
 			//先检查是否存在该人的聊天室
@@ -168,7 +171,8 @@ const store = new Vuex.Store({
 			state.groupUnReadInfos = []
 		},*/
 	},
-	actions: {	
+	actions: {
+			
 	},
 })
 export default store

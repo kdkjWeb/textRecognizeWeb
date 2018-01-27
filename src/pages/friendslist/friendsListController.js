@@ -40,7 +40,6 @@ export default {
 		},
 		enterSelfChatRoom(room){
 			 const {nickname, username, password, pictureAddress} = room
-			 console.log(room)
 			  this.$router.push({
 			   	name: 'SelfChatRoom',
 			   	params: {nickname,  username, password, pictureAddress}
@@ -65,7 +64,6 @@ export default {
 				Vue: this,
 			})
 			.then(res=>{
-			    console.log(res)
 			    if(res == '删除成功'){
 			    	this.friendsList.splice(this.deleteDialog.index,1);
 			    }

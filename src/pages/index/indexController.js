@@ -41,8 +41,22 @@ export default {
 					hidenLoading: true,
 				})
 				.then(res=>{
-					//存入vuex
-					this.$store.commit('setUser', res)
+					
+					if(res){
+						//存入vuex
+						this.$store.commit('setUser', res)
+					}else{
+						removeItem('token')
+						this.$router.push({
+							name: 'Login'
+						})
+					}
+					
+				}, err=>{
+					removeItem('token')
+					this.$router.push({
+						name: 'Login'
+					})
 				})
 			}else{
 				this.$router.push({
@@ -53,8 +67,8 @@ export default {
 	    _connectWebsocket() {
 	    	//建立总的消息提醒websokcet链接
 			if(!this.$store.state.user.username){
+				this._getUserInfoByToken()
 				setTimeout(()=>{
-					this._getUserInfoByToken()
 					Ws.connect({
 						url: 'totalWs',
 						params: {

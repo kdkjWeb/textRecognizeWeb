@@ -13,7 +13,6 @@ export default {
 		}
 	},
 	created() {
-		console.log(this.$route.params)
 		this.status = this.$route.params.status
 		this.userInfo = this.$route.params
 		//this.noteName = this.$route.params.nickname
@@ -25,7 +24,6 @@ export default {
 	},
 	methods: {
 		save(){
-			console.log(this.userInfo)
 			commonServices.fetch({
 				url: 'user/modifyRemarkName',
 				model: {
@@ -35,7 +33,6 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
-				console.log(res)
 				this.$router.goBack()
 			})
 		},
