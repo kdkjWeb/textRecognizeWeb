@@ -80,6 +80,9 @@ const store = new Vuex.Store({
 		//getUnGroupCount: state => state.unGroupCount
 	},
 	mutations: {
+		setNickname(state,data){
+			state.user.nickname = data
+		},
 		setUser (state, data){
 			state.user = data
 		},

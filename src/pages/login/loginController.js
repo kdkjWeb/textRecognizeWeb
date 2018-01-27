@@ -45,6 +45,7 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
+				
 				//存入localStorage
 				setItem({
 					key: 'token',
