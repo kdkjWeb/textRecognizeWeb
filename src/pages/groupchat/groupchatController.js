@@ -96,7 +96,8 @@ export default {
 					if(this.scroll && this._getMsgHeight() > 0  && !val[val.length -1].status){
 						this._setMsgHeigh()
 						.then(height=>{
-							this.scroll.scrollTo(0,-height);
+							this.scroll.scrollTo(0,-height)
+							this.scroll.refresh()
 					    })
 					}
 			},

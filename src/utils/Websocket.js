@@ -5,7 +5,7 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-const baseURL = 'ws://192.168.20.126:8080'
+const BASEURL = 'ws://192.168.20.50:8081'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
 	if(!ws[type])
@@ -15,6 +15,7 @@ const bindFunc = (cntor, model, type) =>{
 	}
 
 	ws[type].onmessage = (res)=>{
+		console.log(res)
 		let result = typeof res.data == 'string' ?JSON.parse(res.data) : res.data
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
 		if(result.msgFrom == cntor.username){
@@ -58,7 +59,7 @@ const bindFunc = (cntor, model, type) =>{
 	}
 
 	ws[type].onerror = (err) =>{
-		console.log(err)
+		console.log(`WebSocket建立失败,失败原因为: ${err}`)
 	}
 }
 
@@ -67,7 +68,7 @@ export default {
 		const cntor = deepClone(connector)
 		const type = url == 'totalWs' ? 'root': 'chat'
 
-		url? url = baseURL + '/' + url : url = baseURL
+		url? url = BASEURL + '/' + url : url = BASEURL
 		if(JSON.stringify(params) != '{}'){
 			url += '?'
 			for(let [index, elem] of Object.entries(params)){
@@ -128,7 +129,6 @@ export default {
 	},
 	close(type) {
 		if(type && ws && ws[type]){
-			console.log(ws[type])
 			ws[type].close()
 		}
 	},
