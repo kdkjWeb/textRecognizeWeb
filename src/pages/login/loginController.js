@@ -46,12 +46,16 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
+<<<<<<< HEAD
+				
+=======
 				//存入vuex
 				this.$store.commit('setUser', res)
 				this.$router.push({
 					name: 'Index'
 				})
 
+>>>>>>> 8963ec077c2d0627dfe1ac2d4b3b444c10ff529f
 				//存入localStorage
 				setItem({
 					key: 'token',
