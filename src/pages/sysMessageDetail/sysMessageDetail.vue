@@ -10,20 +10,20 @@
 			    icon="chevron_left" 
 			    slot="left"
 			    @click="goBack"/>
-			    <mu-icon-button
-			    icon="" 
-			    slot="right"/>
 			</mu-appbar>
 		</div>
-		<div class="systemnews_title">
-			<mu-card-header 
-			:title="text.title" 
-			:subTitle="text.date"
-			:titleClass="['titleSize']">
-			</mu-card-header>
+		<div class="content" :style="{height: height}" ref="content">
+			<div>
+			<div class="systemnews_title">
+				<mu-card-header 
+				:title="text.title" 
+				:subTitle="text.date"
+				:titleClass="['titleSize']">
+				</mu-card-header>
+			</div>
+			<div class="systemnews_comtent" v-text="text.content"></div>
+			</div>
 		</div>
-		<div class="systemnews_comtent"
-		v-text="text.content"></div>
 	</div>
 </template>
 
@@ -47,6 +47,9 @@
 .systemnews_comtent{
 	padding: 15px 20px;
 	font-size: 14px;
+}
+.content{
+	overflow: hidden;
 }
 </style>
 

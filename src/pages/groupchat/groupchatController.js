@@ -62,7 +62,8 @@ export default {
 
 	mounted() {
 		//使用better-scroll添加滚动效果
-		
+		console.log(this.chatHistory)
+		// console.log(this.$refs.contentMsg.height)
 		this.$nextTick(() => {
 	        if(!this.scroll){
 		        	this.scroll = new betterScroll(this.$refs['groupChat'], {

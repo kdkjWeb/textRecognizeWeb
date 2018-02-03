@@ -70,9 +70,14 @@ export default {
 	},
 	mounted() {
 		this.$nextTick(() => {
-	        this.scroll = new betterScroll(this.$refs.wrapper, {
-	        	click: true
-	        })
+			if(!this.scroll){
+				this.scroll = new betterScroll(this.$refs.wrapper, {
+					click: true
+				})
+			}else{
+					this.scroll.refresf()
+			}
+	        
 
 	        if(this._getMsgHeight() > 0){
 				this.scroll.scrollTo(0,-(this.$refs.content.offsetHeight - parseInt(this.height)));
