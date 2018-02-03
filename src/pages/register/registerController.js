@@ -28,7 +28,7 @@ export default {
 				       2.验证码 是否正确*/
 				this._verifyVerificationCode()
 				.then(res=>{
-					if(true)
+					if(res)
 						this.activeStep++
 				})
 				break;
