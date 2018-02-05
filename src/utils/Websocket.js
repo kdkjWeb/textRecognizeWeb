@@ -21,6 +21,7 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].detectAliveTimer = setInterval(()=>{
 		if(ws[type].readyState != 1){
+			console.log('关闭心跳 定时器...')
 			ws[type].close()
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)

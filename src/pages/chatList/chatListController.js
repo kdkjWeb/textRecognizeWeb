@@ -189,9 +189,10 @@ export default {
 		 * 登录在线时候设置个人聊天记录未读信息数
 		 */
 		_setSelfChatUnReadCount(data) {
-			for(let elem of Object.values(this.selfChatRoomList)){
+			for(let [index, elem] of Object.entries(this.selfChatRoomList)){
 				if(elem.username == data.msgFrom){
 					this.$set(elem, 'warnNum', data.count)
+					this.selfChatRoomList.unshift(this.selfChatRoomList.splice(index, 1)[0])
 					return
 				}
 			}
@@ -215,9 +216,10 @@ export default {
 				})
 				
 				this.$set(this, 'selfChatRoomList', deepClone(arr.reverse()))
-				for(let elem of Object.values(this.selfChatRoomList)){
+				for(let [index, elem] of Object.entries(this.selfChatRoomList)){
 					if(elem.username == data.msgFrom){
 						this.$set(elem, 'warnNum', data.count)
+						this.selfChatRoomList.unshift(this.selfChatRoomList.splice(index, 1)[0])
 						return
 					}
 				}
