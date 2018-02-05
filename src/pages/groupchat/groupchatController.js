@@ -70,7 +70,7 @@ export default {
 		        	click: true
 		        })
 	        }else{
-	        		this.scroll.refresf()
+	        		this.scroll.refresh()
 	        }
 			//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
 	        if(this._getMsgHeight() > 0){

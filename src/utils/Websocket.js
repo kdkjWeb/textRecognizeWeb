@@ -12,11 +12,32 @@ const bindFunc = (cntor, model, type) =>{
 		return
 	ws[type].onopen = (res) =>{
 		console.log('链接成功')
-	}
+		console.log(ws)
+	}//sss
+
+	ws[type].keepAliveTimer = setInterval(()=>{
+		ws[type].send('ping')
+	}, 5000)
+
+	ws[type].detectAliveTimer = setInterval(()=>{
+		if(ws[type].readyState != 1){
+			ws[type].close()
+			clearInterval(ws[type].keepAliveTimer)
+			clearInterval(ws[type].detectAliveTimer)
+		}
+	}, 5000)
 
 	ws[type].onmessage = (res)=>{
-		console.log(res)
-		let result = typeof res.data == 'string' ?JSON.parse(res.data) : res.data
+		let result
+		if(!res.data)
+			return
+		try{
+			result = typeof res.data == 'string' ?JSON.parse(res.data.replace('\n', '<br/>')) : res.data
+		}catch(e){
+			return false
+		}
+		
+
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
 		if(result.msgFrom == cntor.username){
 			for(let i = model.length - 1; i > -1 ; i--){
@@ -56,6 +77,7 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].onclose = (res)=> {
 		console.log('链接已被关闭')
+		console.log(ws)
 	}
 
 	ws[type].onerror = (err) =>{
@@ -79,7 +101,7 @@ export default {
 
 		
 		if(ws[type]){
-			switch(ws.readyState){
+			switch(ws[type].readyState){
 				case 0 || 1://正在连接、连接成功
 				let timer1 = setInterval(()=>{
 					ws[type].close()
@@ -124,11 +146,13 @@ export default {
 	send(msg) {
 		if(!ws['chat'] || ws['chat'].readyState != 1)
 			return '当前不存在websocket链接信息'
-
+		console.log('发送消息ing...')
 		ws['chat'].send(JSON.stringify(msg))
-	},
+	},//sss
 	close(type) {
 		if(type && ws && ws[type]){
+			clearInterval(ws[type].keepAliveTimer)
+			clearInterval(ws[type].detectAliveTimer)
 			ws[type].close()
 		}
 	},

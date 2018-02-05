@@ -34,7 +34,6 @@ export default {
 						 {nickname, pictureAddress, username} : 
 						 this.$store.state.friendInfo
 
-
         //进入聊天室后台自动清除
 
 		Object.assign(this.roomDetail, {
@@ -42,13 +41,12 @@ export default {
 			title: this.friendInfo.nickname || '暂未设置昵称'
 		})
 		
-		
-
 		//获取localStorage的聊天历史记录
 
 		const res = getItem(this.friendInfo.username + '_' + this.$store.state.user.username )
-		this.$set(this, 'chatHistory', res || [])
 
+		this.$set(this, 'chatHistory', res || [])
+		
 		this.height = (window.innerHeight-113) + 'px';
 
 	    //建立聊天室的websokcet链接
@@ -92,7 +90,6 @@ export default {
 		'chatHistory': {
 			handler(val) {
 				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
-				
 				if(this.scroll && this._getMsgHeight() > 0 && !val[val.length -1].status){
 					this._setMsgHeigh()
 					.then(height=>{
