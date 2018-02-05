@@ -17,7 +17,7 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].keepAliveTimer = setInterval(()=>{
 		ws[type].send('ping')
-	}, 5000)
+	}, 30000)
 
 	ws[type].detectAliveTimer = setInterval(()=>{
 		if(ws[type].readyState != 1){
@@ -25,7 +25,7 @@ const bindFunc = (cntor, model, type) =>{
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
 		}
-	}, 5000)
+	}, 30000)
 
 	ws[type].onmessage = (res)=>{
 		let result
