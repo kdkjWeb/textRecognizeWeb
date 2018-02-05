@@ -45,7 +45,9 @@ export default {
 					userIds: userId
 				}
 			}).then(res=>{
+				console.log(res)
 				if(res.code == 0){
+				
 					this.$router.push({
 						name: 'GroupChat'
 					})

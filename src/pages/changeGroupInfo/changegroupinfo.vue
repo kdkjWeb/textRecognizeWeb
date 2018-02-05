@@ -12,6 +12,7 @@
 			    @click="backFriends"/>
 			</mu-appbar>
 		</div>
+		
 		<div class="Creategroup_wrapper">
 			<div class="group_header_photo">
 				<img width="100" height="100" :src="gropSrc">

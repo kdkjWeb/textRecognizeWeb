@@ -122,7 +122,7 @@ export default {
 				name: 'ChatList'
 			})
 		},
-		meunItem(index) {
+		meunItem(index) {			
 			this.isShow = false;
 			this.flag = !this.flag
 			//当是管理员的时候

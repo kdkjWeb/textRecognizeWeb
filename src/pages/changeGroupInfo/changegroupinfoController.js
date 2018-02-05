@@ -41,5 +41,8 @@ export default {
 		backFriends(){
 			this.$router.back(-1)
 		}
+	},
+	created(){
+		this.gropName = this.$route.params.groupName
 	}
 }
