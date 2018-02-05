@@ -5,7 +5,7 @@ export default {
     sendMsg:({model, Vue, hidenLoading})=>{
         return new Promise((resolve,reject)=>{
             commonServices.transport({
-                url: 'admin/addBroadCast',
+                url: 'message/addAdvice',
 				model,
 				Vue,
 				hidenLoading 
