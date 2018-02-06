@@ -4,7 +4,7 @@ export default{
 	groupMembersList: ({model, Vue, hidenLoading})=>{
 		return new Promise((resolve, reject)=>{
 			commonServices.fetch({
-				url: 'user/findMyFriends',
+				url: 'user/findNewMembers',
 				model,
 				Vue,
 				hidenLoading 

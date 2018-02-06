@@ -11,6 +11,10 @@ export default {
 			this.$router.goBack()
 		},
 		submit() {
+			if(!this.userName){
+				this.$toast('你还没输入任何内容');
+				return
+			}
 			services.search({
 				Vue: this,
 				model: {
@@ -18,7 +22,6 @@ export default {
 				}
 			})
 			.then(res=>{
-				console.log(res)
 				if(res.list.length == 0){
 					this.$toast("未查询到相应用户!!")
 				}else{

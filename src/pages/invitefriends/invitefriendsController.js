@@ -45,9 +45,7 @@ export default {
 					userIds: userId
 				}
 			}).then(res=>{
-				console.log(res)
 				if(res.code == 0){
-				
 					this.$router.push({
 						name: 'GroupChat'
 					})
@@ -68,7 +66,8 @@ export default {
 			services.groupMembersList({
 				Vue: this,
 				model: {
-					id: this.$store.state.user.id
+					id: this.$store.state.user.id,
+					groupId: this.$route.params.id
 				}
 			})
 			.then(res=>{

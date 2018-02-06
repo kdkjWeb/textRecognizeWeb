@@ -10,7 +10,11 @@ export default {
 	},
 	methods: {
 		save(){
-			console.log(this.gropName, this.gropAnnouncement)
+			// console.log(this.gropName, this.gropAnnouncement)
+			if(!this.gropName){
+				this.$toast('创建群失败,群昵称不能为空')
+				return;
+			}
 			services.create({
 				Vue: this,
 				model: {

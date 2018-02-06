@@ -27,13 +27,14 @@
 		</div>
 	
 		<div class="userInfo">
-			<!-- <mu-text-field 
+			<p>设置备注</p>
+			<mu-text-field 
 			hintText="设置备注名称"
 			:fullWidth="true"
 			v-model="noteName"
-			class="demo-divider-form"/> -->
-			<p>更多介绍</p>
-			<textarea class="userMessage" placeholder="暂无" v-model="noteRudece"></textarea>
+			class="demo-divider-form"/>
+			<!-- <p>更多介绍</p>
+			<textarea class="userMessage" placeholder="暂无" v-model="noteRudece"></textarea> -->
 			<div
 			v-if="status == 'add'"
 			class="userBtn"

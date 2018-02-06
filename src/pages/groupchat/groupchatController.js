@@ -325,7 +325,8 @@ export default {
 				header: this.$store.state.user.pictureAddress ?
 				 'static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
 				  'static/headImg/6.jpg',
-				date: new Date()
+				date: new Date(),
+				pictureAddress: this.$store.state.user.pictureAddress
 			}
 
 			this.chatHistory.push(data)

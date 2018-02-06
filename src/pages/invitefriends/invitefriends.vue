@@ -14,6 +14,7 @@
 			@click="addMember" 
 			class="deleteMember">确定</button>
 		</div>
+	
 		<div class="proposedmembers_wrapper" ref="MembersWrapper" :style="{height:height}">
 			<div>
 				<mu-list 
@@ -32,7 +33,6 @@
 				        slot="right" 
 				        />
 				    </mu-list-item>
-
 				</mu-list>
 			</div>
 		</div>

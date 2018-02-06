@@ -5,7 +5,8 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-const BASEURL = 'ws://192.168.20.50:8081'
+//const BASEURL = 'ws://192.168.20.50:8081'
+const BASEURL = 'ws://192.168.20.3:8080/chatroom'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
 	if(!ws[type])

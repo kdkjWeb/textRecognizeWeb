@@ -15,7 +15,7 @@ export default {
 	created() {
 		this.status = this.$route.params.status
 		this.userInfo = this.$route.params
-		//this.noteName = this.$route.params.nickname
+		this.noteName = this.$route.params.remark1
 	},
 	computed: {
 		title() {
@@ -33,7 +33,10 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
-				this.$router.goBack()
+				 if(res.code == 0){
+				 	this.$router.goBack()
+				 }
+				
 			})
 		},
 		backFriends(){
@@ -51,12 +54,14 @@ export default {
 			.then(res=>{
 				if(res == '添加好友成功'){
 					this.$router.push({
-						name: 'SelfChatRoom',
+						name: 'FriendsList',
 						params: Object.assign(this.userInfo, {
 							password: this.noteName
 						})
 					})
 				}
+			}).catch(err=>{
+				this.$toast('操作失败')
 			})
 		},
 	}

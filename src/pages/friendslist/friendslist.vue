@@ -26,7 +26,8 @@
 						 :arr="friendsList">
 						 	<mu-list class="FriendsList_content_title">
 							 	<mu-list-item 
-							 	:title="item.nickname || '暂未设置昵称'"
+							 	
+								:title="item.remark1?item.remark1:(item.nickname?item.nickname:'暂未设置昵称')"
 							 	@click.stop="enterSelfChatRoom(item)">
 							      <mu-avatar 
 							      :src="item.pictureAddress? 'static/headImg/' + item.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
@@ -39,6 +40,7 @@
 							    </mu-list-item>
 							   
 							   <!--  <mu-list-item 
+							   :title="item.nickname || '暂未设置昵称'"
 							 	:title="item.nickname || "
 							 	@click.stop="enterSelfChatRoom(item)">
 							      <mu-avatar 

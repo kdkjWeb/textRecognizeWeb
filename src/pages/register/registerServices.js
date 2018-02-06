@@ -27,7 +27,25 @@ const services = {
 				reject(err)
 			})
 		})
-	}
+	},
+
+
+	//第一次点击下一步验证数据库中是否存在正在注册的手机号
+	/*verfiyPhone: ({model, Vue, hidenLoading})=>{
+		return new Promise((resolve, reject)=>{
+			commonServices.transport({
+				url: 'phoneifexist',
+				model,
+				Vue,
+				hidenLoading 
+			})
+			.then(res=>{
+				resolve(res)
+			}, err=>{
+				reject(err)
+			})
+		})
+	}*/
 }
 
 export default services

@@ -25,11 +25,13 @@ export default {
 			switch(this.activeStep){
 				case 0:
 				/**验证 1.手机号是否正确
-				       2.验证码 是否正确*/
+					   2.验证码 是否正确*/
 				this._verifyVerificationCode()
-				.then(res=>{
-					if(res)
-						this.activeStep++
+				.then(res=>{			
+					if(res){
+						this.activeStep++						
+					}
+						
 				})
 				break;
 
@@ -117,7 +119,8 @@ export default {
 	    	}
 	    	//后端验证 是否正确
 	    	// const result = await services.verifyVerificationCode() 
-	    	// return result
+			// return result
+			
 	    	return true
 	    },
 
