@@ -35,6 +35,10 @@
 					<!-- <mu-divider/> -->
 				</div>
 			</mu-list>
+			<mu-content-block
+			v-if="sysMsgList.length <= 0">
+				暂无管理员推送消息！！！
+			</mu-content-block>
 		</div>
 
 		<!-- 建议弹出框 -->
