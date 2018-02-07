@@ -1,5 +1,6 @@
 import {deepClone} from './publicFunctions'
 import store from '@/store'
+import Shock from './Shock'
 
 if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
@@ -21,7 +22,10 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].detectAliveTimer = setInterval(()=>{
 		if(ws[type].readyState != 1){
+			console.log(ws[type].readyState)
 			console.log('关闭心跳 定时器...')
+			console.log(ws[type].detectAliveTimer)
+			console.log(ws[type].keepAliveTimer)
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
 		}
@@ -63,6 +67,10 @@ const bindFunc = (cntor, model, type) =>{
 				groupId: result.groupId,
 				date: new Date(result.date)
 			})
+			if(getItem('mute')){
+				Shock()
+			}
+			
 		}else{
 			//主要未读消息提醒
 			//先清空未读消息
@@ -71,7 +79,10 @@ const bindFunc = (cntor, model, type) =>{
 			store.commit('addSelfUnReadCount', { //设置单个聊天室的未读消息
 				msgFrom: result.msgFrom,
 				count: result.count
-			})	
+			})
+			if(result.count && getItem('mute')){
+				Shock()	
+			}
 		}
 	}
 

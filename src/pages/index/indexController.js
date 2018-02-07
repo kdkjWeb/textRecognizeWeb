@@ -16,11 +16,7 @@ export default {
 			}
 		})
 	},
-	mounted() {
-		let str = this.$route.path
-		this.bottomNav = str.substring(7, str.length)
-		Shock()
-	},
+	
 
 	computed: {
 		unReadCount() {return this.$store.state.unReadCount},
@@ -28,11 +24,22 @@ export default {
 	watch: {
 		'unReadCount': {
 			handler(val) {
-				if(val)
+				if(val && getItem('mute'))
 					Shock()
 			},
 			deep: true
 		}
+	},
+	created() {
+		let isSupportVibrate = 'vibrate' in navigator
+		if(!isSupportVibrate)
+			this.$toast('您的手机暂时不支持h5的震动功能')
+	},
+
+	mounted() {
+		let str = this.$route.path
+		this.bottomNav = str.substring(7, str.length)
+		
 	},
 	methods: {
 		handleChange (val) {

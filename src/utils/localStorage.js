@@ -68,7 +68,7 @@ export function getItem(key) {
 }
 
 export function setItem({key, value }) {
-  if(!key || !value){
+  if(!key || value == undefined){
     throw new Error('必须传入键值对')
   }
   if(key == 'token'){
