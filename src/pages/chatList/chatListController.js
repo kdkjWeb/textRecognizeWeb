@@ -69,6 +69,13 @@ export default {
 		    					nickname: elem.nickname,
 		    					pictureAddress: elem.pictureAddress
 		    				})
+
+		    				//保存修改的信息到
+		    				setItem({
+		    					key: 'selfRoomList', 
+								value: this.selfChatRoomList
+		    				})
+
 		    				break
 		    			}
 		    		}

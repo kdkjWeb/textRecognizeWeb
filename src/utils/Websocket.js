@@ -1,6 +1,7 @@
 import {deepClone} from './publicFunctions'
 import store from '@/store'
 import Shock from './Shock'
+import {getItem} from './localStorage'
 
 if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
@@ -36,7 +37,8 @@ const bindFunc = (cntor, model, type) =>{
 		if(!res.data)
 			return
 		try{
-			result = typeof res.data == 'string' ?JSON.parse(res.data.replace('\n', '<br/>')) : res.data
+			let reg = /\\n/g;
+			result = typeof res.data == 'string' ?JSON.parse(res.data.replace(reg, '<br/>')) : res.data
 		}catch(e){
 			return false
 		}
