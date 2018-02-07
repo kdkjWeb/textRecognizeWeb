@@ -4,9 +4,9 @@ export default function() {
 		return false
 	// 振动1秒
 	if (navigator.vibrate) {
-	    navigator.vibrate(1000);
+	    navigator.vibrate(500);
 	} else if (navigator.webkitVibrate) {
-	    navigator.webkitVibrate(1000);
+	    navigator.webkitVibrate(500);
 	}
 
 	return true
