@@ -25,7 +25,7 @@ export default {
 			switch(this.activeStep){
 				case 0:
 				/**验证 1.手机号是否正确
-					   2.验证码 是否正确*/
+					   2.手机号是否存在*/
 				this._verifyVerificationCode()
 				.then(res=>{			
 					if(res){
@@ -118,10 +118,13 @@ export default {
 	    		return false
 	    	}
 	    	//后端验证 是否正确
-	    	// const result = await services.verifyVerificationCode() 
-			// return result
-			
-	    	return true
+	    	const result = await services.verifyVerificationCode({
+	    		model: {
+	    			phone: this.registerForm.userName
+	    		},
+	    		Vue: this,
+	    	}) 
+			return result
 	    },
 
 	    /**
@@ -138,6 +141,7 @@ export default {
 	    	}
 	    	return true
 	    },
+
 
 	}
 }

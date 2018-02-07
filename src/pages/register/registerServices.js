@@ -1,10 +1,24 @@
 import commonServices from '@/server/commonServices'
 
 const services = {
-	verifyVerificationCode: ()=>{
+	verifyVerificationCode: ({model, Vue, hidenLoading})=>{
 		return new Promise((resolve, reject)=>{
-			//...
-			resolve(true)
+			commonServices.transport({
+				url: 'phoneifexist',
+				model,
+				Vue,
+			})
+			.then(res=>{
+				console.log(res)
+				if(res.code === 0){
+					resolve(true)
+				}
+			}, err=>{
+				console.log(err)
+				if(err.data.code === 10)
+					Vue.$toast('该手机号已被注册')
+				reject(false)
+			})
 		})
 	},
 	/**

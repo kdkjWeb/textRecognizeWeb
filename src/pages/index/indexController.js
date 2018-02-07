@@ -1,6 +1,7 @@
 import {has, getItem , setItem, removeItem, clear} from '@/utils/localStorage'
 import services from '../login/loginServices'
 import Ws from '@/utils/WebSocket'
+import Shock from '@/utils/Shock'
 
 export default {
 	data() {
@@ -18,11 +19,20 @@ export default {
 	mounted() {
 		let str = this.$route.path
 		this.bottomNav = str.substring(7, str.length)
-
+		Shock()
 	},
 
 	computed: {
 		unReadCount() {return this.$store.state.unReadCount},
+	},
+	watch: {
+		'unReadCount': {
+			handler(val) {
+				if(val)
+					Shock()
+			},
+			deep: true
+		}
 	},
 	methods: {
 		handleChange (val) {

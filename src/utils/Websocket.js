@@ -5,15 +5,14 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-//const BASEURL = 'ws://192.168.20.50:8081'
-const BASEURL = 'ws://192.168.20.3:8080/chatroom'
+const BASEURL = 'ws://192.168.20.50:8081'
+// const BASEURL = 'ws://192.168.20.3:8080/chatroom'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
 	if(!ws[type])
 		return
 	ws[type].onopen = (res) =>{
 		console.log('链接成功')
-		console.log(ws)
 	}//sss
 
 	ws[type].keepAliveTimer = setInterval(()=>{
@@ -23,7 +22,6 @@ const bindFunc = (cntor, model, type) =>{
 	ws[type].detectAliveTimer = setInterval(()=>{
 		if(ws[type].readyState != 1){
 			console.log('关闭心跳 定时器...')
-			ws[type].close()
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
 		}
