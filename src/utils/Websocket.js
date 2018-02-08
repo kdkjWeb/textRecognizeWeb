@@ -60,14 +60,17 @@ const bindFunc = (cntor, model, type) =>{
 				username: result.msgFrom,
 				img: URL.createObjectURL(res.data),
 				groupId: result.groupId,
-				date: new Date(result.date)
+				date: new Date(result.date),
+				pictureAddress: result.pictureAddress
 			})
 		}else if(model){
+			console.log(result)
 			model.push({
 				username: result.msgFrom,
 				message: result.msg,
 				groupId: result.groupId,
-				date: new Date(result.date)
+				date: new Date(result.date),
+				pictureAddress: result.pictureAddress
 			})
 			if(getItem('mute')){
 				Shock()

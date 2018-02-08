@@ -339,7 +339,8 @@ export default {
 				msg: this.message,
 				groupId: this.roomDetail.groupId,
 				msgFrom: this.$store.state.user.username,
-				date: data.date
+				date: data.date,
+				pictureAddress: this.$store.state.user.pictureAddress
 			})
 
 			//发送之后清空输入框内容
