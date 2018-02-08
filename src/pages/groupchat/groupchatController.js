@@ -3,6 +3,7 @@ import Ws from '@/utils/WebSocket'
 import betterScroll from 'better-scroll'
 import {mapGetters} from 'vuex'
 import services from './groupchatServices'
+
 export default {
 	data() {
 		return {
@@ -33,10 +34,11 @@ export default {
 		this.height = (window.innerHeight-113) + 'px';
 		this.height1 = (window.innerHeight) + 'px';
 		
-		if(Object.keys(this.$route.params).length > 0)
+		if(Object.keys(this.$route.params).length > 0 && this.$route.params.groupId)
 			this.$store.commit('setGroupInfo', this.$route.params)
 		//避免从selfChatRoomConfig退回到该页面，无法获取params
-		const {groupId, groupName, id} = this.$route.params
+		const {groupId, groupName, id} = this.$store.state.groupInfo || this.$route.params
+
 		this.roomDetail = Object.keys(this.$route.params).length > 0?
 						 {groupId, groupName, id} : 
 						 this.$store.state.groupInfo

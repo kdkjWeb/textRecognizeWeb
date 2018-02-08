@@ -26,18 +26,18 @@ const bindFunc = (cntor, model, type) =>{
 			console.log(ws[type].readyState)
 			console.log('关闭心跳 定时器...')
 			console.log(ws[type].detectAliveTimer)
-			console.log(ws[type].keepAliveTimer)
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
 		}
 	}, 30000)
+
 
 	ws[type].onmessage = (res)=>{
 		let result
 		if(!res.data)
 			return
 		try{
-			let reg = /\\n/g;
+			let reg = /\\n/g
 			result = typeof res.data == 'string' ?JSON.parse(res.data.replace(reg, '<br/>')) : res.data
 		}catch(e){
 			return false
