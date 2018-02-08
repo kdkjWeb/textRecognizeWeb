@@ -21,9 +21,9 @@
 				<div class="grop_comtent_name">
 					<input type="text" name="" placeholder="昵称" v-model="gropName">
 				</div>
-				<h4>群公告</h4>
+				<!-- <h4>群公告</h4>
 				
-				<textarea class="userMessage" placeholder="暂无" v-model="gropAnnouncement"></textarea>
+				<textarea class="userMessage" placeholder="暂无" v-model="gropAnnouncement"></textarea> -->
 				<div class="userBtn" @click="save">保存</div>
 			</div>
 		</div>
