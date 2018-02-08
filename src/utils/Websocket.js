@@ -11,6 +11,7 @@ const BASEURL = 'ws://192.168.20.50:8081'
 // const BASEURL = 'ws://192.168.20.3:8080/chatroom'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
+
 	if(!ws[type])
 		return
 	ws[type].onopen = (res) =>{
@@ -64,7 +65,7 @@ const bindFunc = (cntor, model, type) =>{
 				pictureAddress: result.pictureAddress
 			})
 		}else if(model){
-			console.log(result)
+
 			model.push({
 				username: result.msgFrom,
 				message: result.msg,
@@ -93,7 +94,7 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].onclose = (res)=> {
 		console.log('链接已被关闭')
-		console.log(ws)
+
 	}
 
 	ws[type].onerror = (err) =>{
@@ -166,6 +167,7 @@ export default {
 		ws['chat'].send(JSON.stringify(msg))
 	},//sss
 	close(type) {
+
 		if(type && ws && ws[type]){
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
