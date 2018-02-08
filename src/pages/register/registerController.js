@@ -22,6 +22,8 @@ export default {
 		 * 下一步
 		 */
 		handleNext () {
+			
+
 			switch(this.activeStep){
 				case 0:
 				/**验证 1.手机号是否正确
@@ -132,7 +134,12 @@ export default {
 	     * @return Boolean
 	     */
 	    _verifyPassword() {
-	    	if(!this.registerForm.password || !this.registerForm.confirmPwd){
+	    	//8-20位字母数字组合
+			let reg = /^[A-Za-z0-9]{8,20}$/
+	    	if(!reg.test(this.registerForm.password) || !reg.test(this.registerForm.confirmPwd)){
+	    		this.$toast('请输入8-20位字母数字组合格式')
+	    		return false
+	    	}else if(!this.registerForm.password || !this.registerForm.confirmPwd){
 	    		this.$toast('请输入您的密码')
 	    		return false
 	    	}else if(this.registerForm.password != this.registerForm.confirmPwd){
