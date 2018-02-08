@@ -42,12 +42,11 @@
 					 class="content_msg">
 					    <div class="content_msg_icon" 
 					    :class="[msg.username == $store.state.user.username?'rightIcon':'leftIcon']"></div>
-					    <span
-					    v-if="msg.message" 
-					    v-text="msg.message"></span>
+					    <span 
+					    v-html="msg.message"></span>
 					    <img
 					    style="margin-top:10px"
-					    width="182px" 
+					    width="182px"
 					    v-if="msg.img"
 					    :src="msg.img">
 					    <mu-icon
