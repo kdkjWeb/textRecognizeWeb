@@ -328,7 +328,8 @@ export default {
 				 'static/headImg/' + this.$store.state.user.pictureAddress + '.jpg' :
 				  'static/headImg/6.jpg',
 				date: new Date(),
-				pictureAddress: this.$store.state.user.pictureAddress
+				pictureAddress: this.$store.state.user.pictureAddress,
+				nickname: this.$store.state.user.nickname
 			}
 
 			this.chatHistory.push(data)
@@ -340,7 +341,8 @@ export default {
 				groupId: this.roomDetail.groupId,
 				msgFrom: this.$store.state.user.username,
 				date: data.date,
-				pictureAddress: this.$store.state.user.pictureAddress
+				pictureAddress: this.$store.state.user.pictureAddress,
+				nickname: this.$store.state.user.nickname
 			})
 
 			//发送之后清空输入框内容
