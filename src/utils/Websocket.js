@@ -7,8 +7,8 @@ if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-const BASEURL = 'ws://192.168.20.50:8081'
-// const BASEURL = 'ws://192.168.20.3:8080/chatroom'
+//const BASEURL = 'ws://192.168.20.50:8081'
+ const BASEURL = 'ws://192.168.20.3:8080/chatroom'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
 
@@ -46,7 +46,7 @@ const bindFunc = (cntor, model, type) =>{
 		
 
 		//先判断这条信息是否是这个人发送的， 是则再判断对应的消息设置发送状态为成功，不是则直接将信息push到history中
-		if(result.msgFrom == cntor.username){
+		if(result.msgFrom == cntor.username && result.masterName == undefined){
 			for(let i = model.length - 1; i > -1 ; i--){
 				if(model[i].message == result.msg 
 					&& model[i].date - new Date(result.date) == 0){
