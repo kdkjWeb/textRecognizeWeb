@@ -39,19 +39,7 @@
 							      @click.stop="nodeList(item)"/>
 							    </mu-list-item>
 							   
-							   <!--  <mu-list-item 
-							   :title="item.nickname || '暂未设置昵称'"
-							 	:title="item.nickname || "
-							 	@click.stop="enterSelfChatRoom(item)">
-							      <mu-avatar 
-							      :src="item.pictureAddress? 'static/headImg/' + item.pictureAddress + '.jpg' : 'static/headImg/6.jpg'" 
-							      slot="leftAvatar"/>
-							      <mu-icon 
-							      value="border_color" 
-							      :size="18" 
-							      slot="right" 
-							      @click.stop="nodeList(item)"/>
-							    </mu-list-item> -->
+				
 							    
 							    
 							 </mu-list>

@@ -16,7 +16,7 @@
 		</div>
 		<div class="mineContent">
 			<ul>
-				<li v-for="(item,index) in mineLsit" @click="mineList(index)">
+				<li v-for="(item,index) in mineLsit" @click="mineList(index)" :key="index">
 					<i class="iconfont icon_right" 
 					:class="item.icon" 
 					:style="{color: item.color}"></i>

@@ -34,10 +34,7 @@ export default {
 				this.$toast("请输入用户名以及密码")
 				return 
 			}
-			// else if(!phoneRegExp(this.userName)){
-			// 	this.$toast("请输入正确的用户名")
-			// 	return 
-			// }
+			
 			services.login({
 				model: {
 					phone: this.userName,
@@ -46,6 +43,7 @@ export default {
 				Vue: this
 			})
 			.then(res=>{
+				console.log(res)
 				//存入vuex
 				this.$store.commit('setUser', res)
 				this.$router.push({

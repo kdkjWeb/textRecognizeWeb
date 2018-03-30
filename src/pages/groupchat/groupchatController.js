@@ -7,6 +7,10 @@ import services from './groupchatServices'
 export default {
 	data() {
 		return {
+			hintText: '请输入内容',
+			disabled: false,
+			shoePhoto: false,
+			src: '',
 			dialog: 0,
 			isShow: false,   //右侧菜单显示状态
 			isShow1: false,    //确认弹出框状态
@@ -57,9 +61,7 @@ export default {
 			},
 			model: this.chatHistory,
 			connector: this.$store.state.user
-		})
-
-		
+		})		
 	},
 
 	mounted() {
@@ -85,14 +87,41 @@ export default {
 	    // 监听窗口改变重置高度
         window.addEventListener('resize', () => {
             this.height = (window.innerHeight-113) + 'px';
-        })
+		})
+		this.ban();
+
+		//判断是否被禁言给用户提示
+		// if(this.banValue){
+		// 	this.$toast('你已经被禁言！')
+		// }
 	},
 	computed: {
 		...mapGetters({
-			user: 'getUser'
-		})
+			user: 'getUser',
+			banValue: 'getBan',
+			kickOut: 'getKickOut'
+		}),
+		//  banValue() {
+		//  	return this.$store.getters.getBan
+		//  }
 	},
 	watch: {
+		kickOut(val,oldval){
+			if(val){
+				this.$toast(val);
+				this.$router.push('/index');
+			}
+		},
+		//判断是否被禁言给用户提示
+		banValue(val,oldval){
+			console.log("修改前卫：" + val);  
+            console.log("修改后为：" + oldval); 
+			if(val){
+				 this.$toast('你已经被禁言！')
+				 this.disabled = true;
+				 this.hintText ='禁言中'
+			 }
+		},
 		'chatHistory': {
 			handler(val){
 				//如果发送的消息已经占满屏幕，那么每次发的消息都从底部开始显示
@@ -106,8 +135,37 @@ export default {
 			},
 			deep:true,
 		}
+		
 	},
 	methods: {
+		//是否禁言
+		ban(){
+			services.Ban({
+				Vue: this,
+				model: {
+					groupId: this.roomDetail.groupId,
+					userId: this.$store.state.user.id
+				}
+			}).then(res=>{
+				if(res.block == 1){
+					this.disabled = true;
+					this.hintText ='禁言中'
+					//this.$store.commit('setBan','你已被禁言！')
+				}
+			},err=>{
+				console.log(err)
+			})
+		},
+		//点击放大图片并弹出放大图片遮罩层
+		scale(val){
+			this.shoePhoto = true;
+			this.src = val
+			console.log('点击图片')
+		},
+		//关闭放大图片遮罩层
+		closephoto(){
+			this.shoePhoto = false;
+		},
 		goBack() {
 			//如果存在图片则从记录中删除
 			for(let i = 0; i < this.chatHistory.length; i++){
@@ -318,6 +376,10 @@ export default {
 		},
 		//发送聊天消息
 		send() {
+			if(this.disabled){
+				this.$toast('你已经被禁言！')
+				return;
+			}
 			if(!this.message) return
 			//往后台发送的数据
 			let data = {

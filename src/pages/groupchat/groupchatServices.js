@@ -31,5 +31,21 @@ export default{
 				reject(err)
 			})
 		})
+	},
+	//是否禁言
+	Ban: ({model,Vue,hidenLoading})=>{
+		return new Promise((resolve,reject)=>{
+			commonServices.transport({
+				url: 'group/getUserBlock',
+				model,
+				Vue,
+				hidenLoading
+			}).then(res=>{
+				resolve(res)
+			},err=>{
+				reject(err)
+			})
+		})
 	}
+
 }

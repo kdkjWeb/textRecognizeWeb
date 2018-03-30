@@ -2,7 +2,6 @@
 
 	<div class="groupchat" style="height: 100%">
 		<!-- 头部 -->
-
 		<div class="header">
 			
 				<mu-appbar 
@@ -29,9 +28,10 @@
 
 		<!-- 内容 -->
 		<div class="content" :style="{height: height}" ref="groupChat">
+		
 			<div class="contentMsg" ref="content">
 				<div 
-				v-for="msg, index in chatHistory"
+				v-for="(msg, index) in chatHistory"
 				:key="index"
 				class="content_main"
 				ref="content_main"
@@ -48,9 +48,10 @@
 					    v-html="msg.message"></span>
 					    <img
 					    style="margin-top:10px"
-					    width="182px"
+					    width="100%"
 					    v-if="msg.img"
-					    :src="msg.img">
+					    :src="msg.img"
+						@click="scale(msg.img)">
 					    <mu-icon
 					    v-if="msg.status == 'error' && msg.username == $store.state.user.username" 
 					    style="position:absolute;top:8px;left:-27px" 
@@ -71,7 +72,9 @@
 		    @click="voiceEnter"
 		    />
 		    <mu-text-field
-		    v-model="message" 
+			:disabled="disabled"
+		    v-model="message"
+			:hintText="hintText" 
 		    fullWidth/>
 		    <mu-icon-button 
 		    icon="panorama" 
@@ -96,6 +99,13 @@
 			</div>
 		</div>
 		
+		<!-- 放大图片遮罩层 -->
+		<div class="layout layout1" 
+		:style="{height:height1}"
+		v-show="shoePhoto"
+		@click="closephoto">
+			<img class="layout_img" v-if="src" :src="src" alt="" ref="images">
+		</div>
 		
 		<!--遮罩层-->
 		<div class="layout" 
@@ -245,6 +255,22 @@
 .delDilog_btn div.delDilog_btn_cancel{
 	background-color: #e6e6e6;
 	border-bottom-right-radius: 6px;
+}
+
+.layout1{
+	/* position: relative; */
+	background-color: #000;
+}
+.layout_img{
+	position: absolute;
+	width: 100%;
+	/* margin-top: 50%; */
+	top: 50%;
+	transform: translateY(-50%);
+}
+.face{
+	width: 15px;
+	height: 15px;
 }
 </style>
 

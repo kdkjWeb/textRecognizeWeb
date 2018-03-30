@@ -88,7 +88,7 @@ export default {
 				if(res.data.code === 0){
 					resolve(res.data.data || res.data)
 				}else{
-					// Vue.$toast(res.data && res.data.msg?res.data.msg:"网络好像出问题了 = v =")
+					 Vue.$toast(res.data && res.data.msg?res.data.msg:"网络好像出问题了 = v =")
 					reject(res)
 					console.log(res)
 				}

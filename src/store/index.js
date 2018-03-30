@@ -51,10 +51,9 @@ const initStore = {
 	//总的未读消息数量
 	unReadCount: 0,
 	
-	// 未读群消息 
-//	groupUnReadInfos: [],
-	//总的未读群消息
-//	unGroupCount: 0,
+	//是否被禁言
+	ban: '',
+	KickOut: ''
 }
 
 const store = new Vuex.Store({
@@ -74,12 +73,21 @@ const store = new Vuex.Store({
 		//获取好友列表
 		getFriendList: state => state.friendList,
 
-		//获取未读群消息 
-		//getGroupUnReadInfos: state=>state.groupUnReadInfos,
-		//获取群消息未读总数
-		//getUnGroupCount: state => state.unGroupCount
+		//获取是否被禁言
+		getBan: state=>state.ban,
+		//获取是否被提出群聊
+		getKickOut: state=>state.KickOut
+
 	},
 	mutations: {
+		//设置是否被提出群聊
+		setKickOut(state,data){
+			state.KickOut = data
+		},
+		//设置是否被禁言
+		setBan(state,data){
+			state.ban = data
+		},
 		setNickname(state,data){
 			state.user.nickname = data
 		},

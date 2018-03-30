@@ -1,14 +1,19 @@
 import {deepClone} from './publicFunctions'
 import store from '@/store'
 import Shock from './Shock'
-import {getItem} from './localStorage'
+import {getItem,setItem} from './localStorage'
+
+
+
+
 
 if(!'WebSocket' in window){
 	alert("当前浏览器不支持在线聊天功能，请更换版本较新的浏览器")
 }
 
-//const BASEURL = 'ws://192.168.20.50:8081'
- const BASEURL = 'ws://192.168.20.3:8080/chatroom'
+const BASEURL = 'ws://192.168.20.50:8081'
+ //const BASEURL = 'ws://192.168.20.3:8080/chatroom'
+ //const BASEURL = 'ws://192.168.20.136:8088/chatroom'
 let ws = {}
 const bindFunc = (cntor, model, type) =>{
 
@@ -24,9 +29,9 @@ const bindFunc = (cntor, model, type) =>{
 
 	ws[type].detectAliveTimer = setInterval(()=>{
 		if(ws[type].readyState != 1){
-			console.log(ws[type].readyState)
-			console.log('关闭心跳 定时器...')
-			console.log(ws[type].detectAliveTimer)
+			//console.log(ws[type].readyState)
+			//console.log('关闭心跳 定时器...')
+			//console.log(ws[type].detectAliveTimer)
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
 		}
@@ -34,12 +39,21 @@ const bindFunc = (cntor, model, type) =>{
 
 
 	ws[type].onmessage = (res)=>{
+		// console.log(res)
+		if(res.data == '禁言'){
+			console.log(666)
+			store.commit('setBan','你已被禁言！') 
+			return;
+		}else{
+			store.commit('setBan','') 
+		}
 		let result
 		if(!res.data)
 			return
 		try{
-			let reg = /\\n/g
+			let reg = /\\n/g;
 			result = typeof res.data == 'string' ?JSON.parse(res.data.replace(reg, '<br/>')) : res.data
+			console.log(result)	
 		}catch(e){
 			return false
 		}
@@ -65,10 +79,33 @@ const bindFunc = (cntor, model, type) =>{
 				pictureAddress: result.pictureAddress
 			})
 		}else if(model){
-
+			//console.log(result.msg)
+			let str = result.msg;
+			let arr = [];
+			let arr1 = [];
+			let resultMsg;
+			if(str.includes('`]')){
+				console.log(666)
+				arr = str.split('[`');
+				for(var i=0; i<arr.length; i++){
+					if(arr[i].includes('`]')){
+						let b = arr[i];
+						arr1.push(b.split('`]')[0].replace(b.split('`]')[0],'<img style="width:15px;height:15px;" class="face" src="static/icon/'+b.split('`]')[0]+'.png"/>'));
+						
+						arr1.push(arr[i].split('`]')[1])
+					}else if(arr[i]){
+						arr1.push(arr[i])
+					}
+				}
+				resultMsg = arr1.join('');
+			}else{
+				resultMsg = str
+				console.log(resultMsg)
+			}
 			model.push({
 				username: result.msgFrom,
-				message: result.msg,
+				//message: result.msg,
+				message: resultMsg,
 				groupId: result.groupId,
 				date: new Date(result.date),
 				pictureAddress: result.pictureAddress
@@ -93,6 +130,14 @@ const bindFunc = (cntor, model, type) =>{
 	}
 
 	ws[type].onclose = (res)=> {
+		console.log(res)
+		if(res.reason){
+			console.log(res.reason)
+			store.commit('setKickOut',res.reason) 
+			return;	
+		}else{
+			store.commit('setKickOut','') 
+		}
 		console.log('链接已被关闭')
 
 	}
@@ -167,7 +212,6 @@ export default {
 		ws['chat'].send(JSON.stringify(msg))
 	},//sss
 	close(type) {
-
 		if(type && ws && ws[type]){
 			clearInterval(ws[type].keepAliveTimer)
 			clearInterval(ws[type].detectAliveTimer)
