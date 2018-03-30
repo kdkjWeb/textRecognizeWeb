@@ -91,9 +91,10 @@ export default {
 		this.ban();
 
 		//判断是否被禁言给用户提示
-		// if(this.banValue){
-		// 	this.$toast('你已经被禁言！')
-		// }
+		 if(this.$store.state.banValue == undefined){
+			this.disabled = true;
+			this.hintText ='禁言中'
+		 }
 	},
 	computed: {
 		...mapGetters({
