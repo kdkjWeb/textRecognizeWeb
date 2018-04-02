@@ -91,10 +91,10 @@ export default {
 		this.ban();
 
 		//判断是否被禁言给用户提示
-		 if(this.$store.state.banValue == undefined){
+		 /*if(this.$store.state.banValue == undefined){
 			this.disabled = true;
 			this.hintText ='禁言中'
-		 }
+		 }*/
 	},
 	computed: {
 		...mapGetters({
@@ -102,9 +102,6 @@ export default {
 			banValue: 'getBan',
 			kickOut: 'getKickOut'
 		}),
-		//  banValue() {
-		//  	return this.$store.getters.getBan
-		//  }
 	},
 	watch: {
 		kickOut(val,oldval){
@@ -151,7 +148,6 @@ export default {
 				if(res.block == 1){
 					this.disabled = true;
 					this.hintText ='禁言中'
-					//this.$store.commit('setBan','你已被禁言！')
 				}
 			},err=>{
 				console.log(err)
